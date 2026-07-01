@@ -3,10 +3,22 @@
 from __future__ import annotations
 
 from datetime import datetime
+from enum import Enum
 from typing import Any, Optional
 from uuid import UUID
 
 from pydantic import BaseModel
+
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+
+class UserRole(str, Enum):
+    employee = "employee"
+    manager = "manager"
+    hr_admin = "hr_admin"
 
 
 # ---------------------------------------------------------------------------
@@ -39,6 +51,7 @@ class UserResponse(BaseModel):
     department: str
     is_active: bool
     created_at: datetime
+    updated_at: datetime
 
     class Config:
         from_attributes = True
