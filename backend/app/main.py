@@ -1,9 +1,12 @@
 from contextlib import asynccontextmanager
 
 import asyncpg
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from jose import JWTError
 
+from app.auth.router import router as auth_router
 from app.config import settings
 from app.database import ASYNCPG_URL, init_db
 from app.seed import seed_users
@@ -30,6 +33,27 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ---------------------------------------------------------------------------
+# Auth router
+# ---------------------------------------------------------------------------
+
+app.include_router(auth_router)
+
+
+# ---------------------------------------------------------------------------
+# Exception handlers
+# ---------------------------------------------------------------------------
+
+
+@app.exception_handler(JWTError)
+async def jwt_error_handler(request: Request, exc: JWTError) -> JSONResponse:
+    """Safety net — catch any JWTError that escapes the auth module."""
+    return JSONResponse(
+        status_code=401,
+        content={"detail": "Could not validate credentials"},
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
 
 @app.get("/health")

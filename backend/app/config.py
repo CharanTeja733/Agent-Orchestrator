@@ -1,3 +1,4 @@
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 
@@ -16,6 +17,15 @@ class Settings(BaseSettings):
     # API keys & secrets
     GEMINI_API_KEY: str
     SECRET_KEY: str
+
+    @field_validator("SECRET_KEY")
+    @classmethod
+    def validate_secret_key(cls, v: str) -> str:
+        if len(v) < 32:
+            raise ValueError(
+                "SECRET_KEY must be at least 32 characters long for security"
+            )
+        return v
 
     class Config:
         env_file = ".env"
