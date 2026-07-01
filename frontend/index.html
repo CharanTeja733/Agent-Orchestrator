@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Q&A Agent</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #f1f5f9;
+        }
+        .status-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #334155;
+            padding: 0.875rem 1.25rem;
+            border-radius: 8px;
+        }
+        .status-label {
+            font-weight: 500;
+            color: #94a3b8;
+        }
+        .status-value {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.green  { background: #22c55e; }
+        .dot.red    { background: #ef4444; }
+        .dot.yellow { background: #eab308; }
+        .loading {
+            text-align: center;
+            color: #64748b;
+            padding: 1rem;
+        }
+        .error {
+            color: #ef4444;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .overall {
+            text-align: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .overall.healthy  { background: #166534; color: #86efac; }
+        .overall.unhealthy { background: #7f1d1d; color: #fca5a5; }
+        .overall.degraded { background: #713f12; color: #fde68a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HR Q&A Agent</h1>
+        <div id="loading" class="loading">Connecting to backend...</div>
+        <div id="error" class="error" style="display:none;"></div>
+        <div id="dashboard" style="display:none;">
+            <div id="overall" class="overall"></div>
+            <div class="status-grid">
+                <div class="status-row">
+                    <span class="status-label">Backend Health</span>
+                    <span id="backendStatus" class="status-value"></span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">Database</span>
+                    <span id="dbStatus" class="status-value"></span>
+                </div>
+                <div class="status-row">
+                    <span class="status-label">Gemini API</span>
+                    <span id="geminiStatus" class="status-value"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchHealth() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const dashboard = document.getElementById('dashboard');
+
+            try {
+                const response = await fetch('http://backend:8000/health');
+                const data = await response.json();
+
+                loading.style.display = 'none';
+                error.style.display = 'none';
+                dashboard.style.display = 'block';
+
+                // Overall status
+                const overall = document.getElementById('overall');
+                overall.className = 'overall ' + data.status;
+                overall.textContent = 'Status: ' + data.status.charAt(0).toUpperCase() + data.status.slice(1);
+
+                // Backend status
+                document.getElementById('backendStatus').innerHTML =
+                    '<span class="dot ' + (data.status === 'unhealthy' ? 'red' : 'green') + '"></span> ' +
+                    (data.status === 'healthy' ? 'Running' : data.status);
+
+                // Database status
+                document.getElementById('dbStatus').innerHTML =
+                    '<span class="dot ' + (data.database === 'connected' ? 'green' : 'red') + '"></span> ' +
+                    data.database.charAt(0).toUpperCase() + data.database.slice(1);
+
+                // Gemini API status
+                const geminiOk = data.gemini_api === 'configured';
+                document.getElementById('geminiStatus').innerHTML =
+                    '<span class="dot ' + (geminiOk ? 'green' : 'yellow') + '"></span> ' +
+                    data.gemini_api.charAt(0).toUpperCase() + data.gemini_api.slice(1);
+
+            } catch (err) {
+                loading.style.display = 'none';
+                dashboard.style.display = 'none';
+                error.style.display = 'block';
+                error.textContent = 'Unable to connect to backend. Is the server running?';
+            }
+        }
+
+        fetchHealth();
+    </script>
+</body>
+</html>
