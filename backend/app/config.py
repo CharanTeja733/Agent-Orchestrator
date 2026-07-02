@@ -18,6 +18,15 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str
     SECRET_KEY: str
 
+    # Document ingestion
+    MAX_FILE_SIZE_MB: int = 20
+    CHUNK_SIZE: int = 1000
+    CHUNK_OVERLAP: int = 200
+    EMBEDDING_MODEL: str = "gemini-embedding-001"
+    EMBEDDING_DIMENSIONS: int = 768
+    EMBEDDING_BATCH_SIZE: int = 50
+    ALLOWED_FILE_TYPES: list[str] = ["pdf", "docx", "txt"]
+
     @field_validator("SECRET_KEY")
     @classmethod
     def validate_secret_key(cls, v: str) -> str:

@@ -1,0 +1,126 @@
+## Performance Management Policy
+
+### 1. Purpose
+This policy establishes the framework for setting expectations, evaluating performance, providing feedback, and supporting employee growth at Company Inc. The goal is to foster a high-performance culture where employees understand what is expected of them and receive the support needed to succeed.
+
+### 2. Performance Management Philosophy
+We believe performance management is a continuous process, not an annual event. Our approach prioritizes:
+- Clear, measurable goals aligned with company objectives
+- Regular, constructive feedback in both directions
+- Employee development and career growth
+- Fair and consistent evaluation across the organization
+- Early intervention when performance concerns arise
+
+### 3. Goal Setting
+
+#### 3.1 OKR Framework
+Company Inc uses the Objectives and Key Results (OKR) framework:
+- Objectives: Qualitative, inspirational goals set quarterly
+- Key Results: Quantifiable measures of progress (3-5 per objective)
+- Each employee has 3-5 objectives per quarter
+- At least one objective must relate to personal development
+
+#### 3.2 Goal Alignment
+- Company OKRs are set by the executive team at the start of each fiscal year
+- Department OKRs cascade from company objectives
+- Individual OKRs align with department priorities
+- 70% of individual OKRs should be business-driven, 30% can be self-initiated
+
+#### 3.3 Goal Tracking
+- OKRs are documented in Lattice (our performance management system)
+- Progress updates are required every two weeks
+- Managers review OKR progress in weekly one-on-one meetings
+- Quarterly OKR scoring uses a 0.0 to 1.0 scale (0.7 is the target sweet spot)
+
+### 4. Feedback and Check-Ins
+
+#### 4.1 Weekly One-on-Ones
+- Every employee must have a weekly 30-minute one-on-one with their direct manager
+- Agenda is shared responsibility between manager and employee
+- Topics cover: OKR progress, blockers, development, well-being
+- Brief notes are documented in Lattice for reference
+
+#### 4.2 Continuous Feedback
+- Employees are encouraged to give and request feedback at any time
+- Feedback should be specific, timely, and actionable
+- The SBI model is recommended: Situation, Behavior, Impact
+- Recognition can be given publicly through the company Slack channel (#kudos)
+
+#### 4.3 360-Degree Feedback
+- Formal 360-degree feedback is collected semi-annually (June and December)
+- Each employee selects 4-8 reviewers including peers, stakeholders, and direct reports
+- Feedback is anonymous unless the reviewer opts to share their identity
+- Managers synthesize feedback into a summary discussed during the review
+
+### 5. Performance Reviews
+
+#### 5.1 Quarterly Performance Conversations
+- End-of-quarter conversation between employee and manager
+- Review OKR scores and key accomplishments
+- Discuss strengths, growth areas, and career aspirations
+- Set development goals for the next quarter
+- No formal rating at this stage
+
+#### 5.2 Annual Performance Review (January)
+- Comprehensive review covering the entire calendar year
+- Performance rating assigned on a 5-point scale:
+  1. Exceptional (top 10%): Consistently exceeds expectations, demonstrates leadership
+  2. Exceeds Expectations (next 20%): Frequently goes above and beyond
+  3. Meets Expectations (middle 60%): Consistently delivers on commitments
+  4. Needs Improvement (bottom 10%): Inconsistent performance, requires development
+  5. Unsatisfactory: Fails to meet minimum requirements
+- Rating calibration meetings ensure consistency across teams
+- Rating informs compensation decisions, promotion eligibility, and development planning
+
+### 6. Performance Improvement Plans (PIPs)
+
+#### 6.1 Initiation
+A PIP may be initiated when:
+- An employee receives a "Needs Improvement" or "Unsatisfactory" annual rating
+- A manager identifies sustained performance gaps despite coaching
+- Specific, documented incidents of poor performance occur
+
+#### 6.2 PIP Structure
+- Duration: 30, 60, or 90 days depending on the nature of the gap
+- 3-5 specific, measurable objectives
+- Weekly check-ins with manager and bi-weekly HR review
+- Resources and support provided (training, mentoring, reduced workload)
+- Written documentation of progress at each checkpoint
+
+#### 6.3 PIP Outcomes
+- Successful completion: Employee meets all objectives; PIP is closed and employee returns to regular performance cycle
+- Extension: Additional 30 days if progress is significant but incomplete
+- Unsuccessful: Failure to meet objectives may result in reassignment, demotion, or termination of employment
+
+### 7. Promotions and Career Development
+
+#### 7.1 Promotion Criteria
+- Sustained performance at or above the next level for at least 6 months
+- Demonstrated competency in the skills required at the target level
+- Manager recommendation and skip-level approval
+- Availability of a business need at the higher level
+
+#### 7.2 Promotion Process
+- Promotions are reviewed during the annual cycle (January) and mid-year cycle (July)
+- Manager submits promotion packet including: performance history, 360-degree feedback, skills assessment, and business justification
+- Promotion committee reviews and approves or denies within 4 weeks
+- Average promotion increase is 10-15% of base salary
+
+#### 7.3 Internal Mobility
+- Employees may apply for internal positions after 12 months in their current role
+- Inform your current manager before applying (they will be notified by the system)
+- Internal transfers maintain tenure, benefits, and vacation balance
+- Transition period is typically 2-4 weeks depending on role complexity
+
+### 8. Separations
+- Voluntary resignations require 2 weeks of written notice (4 weeks for L5 and above)
+- Exit interviews are conducted by HR for all departing employees
+- Final paycheck includes accrued unused vacation (per state law)
+- Company property must be returned within 5 business days of the last day
+
+### 9. Document Control
+- Version: 2.4
+- Effective Date: January 1, 2026
+- Last Updated: December 5, 2025
+- Owner: Talent Management, Human Resources
+- Review Cycle: Annual

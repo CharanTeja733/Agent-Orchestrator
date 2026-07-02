@@ -1,0 +1,3934 @@
+# Company Inc Employee Handbook
+
+**Version:** 3.2
+**Effective Date:** January 1, 2026
+**Applies To:** All employees of Company Inc.
+**Company Size:** Approximately 500 Employees
+
+---
+
+# Table of Contents
+
+1. Welcome Letter from the CEO
+2. Company History and Mission
+3. Employment Classifications
+4. Onboarding Process
+5. Compensation and Payroll
+6. Benefits Overview
+7. Time Off Policies
+8. Remote Work Guidelines
+9. Learning and Development
+10. Workplace Safety and Ergonomics
+11. Employee Recognition Programs
+12. Diversity, Equity, and Inclusion
+13. Employee Grievance Procedure
+14. Offboarding and Exit Process
+15. Policy Acknowledgments and Amendments
+16. Document Control
+
+---
+
+# 1. Welcome Letter from the CEO
+
+Welcome to Company Inc.
+
+On behalf of our executive leadership team and every member of our organization, I would like to personally welcome you to Company Inc. We are excited that you have chosen to become part of our growing technology company. Every employee who joins us brings unique experiences, perspectives, and talents that strengthen our culture and help us build exceptional products for our customers around the world.
+
+Since our founding, Company Inc. has believed that innovation begins with people. Technology changes rapidly, but our commitment to integrity, collaboration, accountability, and continuous learning remains constant. We believe that every employee—regardless of role, department, or tenure—has the opportunity to make meaningful contributions that shape our future.
+
+Our success has never been measured solely by financial performance. While sustainable growth is important, we equally value creating an environment where employees feel respected, supported, challenged, and empowered. Whether you work from one of our offices or remotely, you are an important part of our community.
+
+This Employee Handbook has been developed to help you understand our policies, expectations, and available resources. It is designed to answer common questions while providing guidance throughout your employment journey—from your first day through career development and beyond.
+
+As our organization continues to evolve, our policies will also adapt to meet changing business needs, legal requirements, and industry best practices. We encourage every employee to review this handbook carefully and refer back to it whenever questions arise.
+
+Thank you for choosing Company Inc. We look forward to growing together and building the future through innovation, teamwork, and shared success.
+
+Welcome aboard.
+
+**Alex Morgan**
+Chief Executive Officer
+Company Inc.
+
+---
+
+# 2. Company History and Mission
+
+## Our Story
+
+Company Inc. was established in **2014** by a small team of engineers who believed enterprise software should be simpler, faster, and more accessible for organizations of all sizes. What began as a startup operating from a shared coworking space has evolved into a mid-sized technology company employing approximately **500 professionals** across engineering, product development, sales, marketing, customer success, finance, legal, and corporate operations.
+
+During our early years, the company focused primarily on developing cloud-native business automation tools for small businesses. By **2018**, our customer base had expanded internationally, prompting investments in scalable cloud infrastructure, cybersecurity, and customer support operations.
+
+The launch of our second-generation platform in **2021** represented a significant milestone, introducing artificial intelligence capabilities, workflow automation, and enterprise-grade security features. These innovations enabled Company Inc. to serve organizations ranging from emerging startups to Fortune 1000 companies.
+
+Today, our solutions support customers across more than **35 countries**, processing millions of secure business transactions every month while maintaining industry-leading reliability standards.
+
+Although our products continue to evolve, our mission remains centered on solving meaningful business problems through thoughtful engineering and exceptional customer experiences.
+
+---
+
+## Our Mission
+
+Our mission is:
+
+> **To empower organizations through secure, intelligent, and innovative technology that simplifies work and enables people to accomplish more.**
+
+Every strategic decision, product roadmap initiative, customer engagement, and operational investment should support this mission.
+
+Employees are encouraged to consider how their individual responsibilities contribute to our broader organizational objectives.
+
+---
+
+## Our Vision
+
+Our vision is to become one of the world's most trusted providers of intelligent business software by delivering solutions that combine technical excellence with outstanding customer experience.
+
+Over the next decade, Company Inc. aims to:
+
+* Expand operations into additional international markets.
+* Invest heavily in artificial intelligence and automation.
+* Maintain customer satisfaction ratings above **95%**.
+* Achieve annual employee engagement scores exceeding **90%**.
+* Operate with industry-leading standards for security, compliance, and sustainability.
+
+---
+
+## Our Core Values
+
+### Customer First
+
+Every decision should begin with understanding customer needs. Whether writing software, responding to support requests, designing user experiences, or processing invoices, employees should consider the impact on customers.
+
+---
+
+### Ownership
+
+Employees are expected to take responsibility for their work, proactively identify problems, communicate risks early, and follow through on commitments.
+
+Ownership includes:
+
+* Meeting deadlines.
+* Maintaining quality standards.
+* Escalating issues appropriately.
+* Supporting teammates during critical business periods.
+
+---
+
+### Innovation
+
+Innovation is not limited to engineering teams.
+
+Employees across every department are encouraged to:
+
+* Improve existing processes.
+* Challenge assumptions respectfully.
+* Suggest operational efficiencies.
+* Experiment responsibly.
+* Learn from unsuccessful initiatives.
+
+---
+
+### Integrity
+
+Trust is earned through honesty, transparency, ethical decision-making, and accountability.
+
+Employees must comply with:
+
+* Company Code of Conduct
+* Information Security Policies
+* Confidentiality Agreements
+* Applicable employment laws
+* Data privacy regulations
+
+Additional information regarding workplace conduct is referenced throughout this handbook.
+
+---
+
+### Collaboration
+
+Modern technology organizations succeed through cross-functional teamwork.
+
+Employees are encouraged to:
+
+* Share knowledge openly.
+* Seek diverse perspectives.
+* Communicate respectfully.
+* Resolve disagreements professionally.
+* Celebrate team achievements.
+
+---
+
+### Continuous Learning
+
+Technology evolves rapidly.
+
+Company Inc. invests significantly in professional development because employee growth directly supports business success.
+
+Learning opportunities include:
+
+* Internal technical workshops
+* Leadership development
+* Certification reimbursement
+* Conference attendance
+* Online learning platforms
+* Mentorship programs
+
+Additional details are provided in **Section 9 – Learning and Development**.
+
+---
+
+## Business Objectives
+
+Each fiscal year, Company Inc. establishes measurable corporate objectives approved by the Executive Leadership Team and Board of Directors.
+
+Typical objectives include:
+
+* Revenue growth of **15–20% annually**
+* Customer retention above **92%**
+* Product availability of **99.9% uptime**
+* Employee voluntary turnover below **10%**
+* Net Promoter Score (NPS) above **60**
+* Reduction of operational security incidents year over year
+
+Departments establish quarterly Objectives and Key Results (OKRs) aligned with these strategic priorities.
+
+---
+
+## Ethical Business Practices
+
+Company Inc. is committed to conducting business ethically and responsibly.
+
+Employees are expected to:
+
+* Avoid conflicts of interest.
+* Protect confidential information.
+* Report suspected misconduct.
+* Follow procurement guidelines.
+* Comply with anti-bribery regulations.
+* Maintain accurate business records.
+
+Violations may result in disciplinary action, including termination of employment.
+
+---
+
+# 3. Employment Classifications
+
+To ensure consistent administration of compensation, benefits, scheduling, and employment policies, Company Inc. classifies employees according to applicable employment laws and business requirements.
+
+Employment classification does not guarantee continued employment and does not alter the at-will employment relationship where permitted by applicable law.
+
+---
+
+## Full-Time Employees
+
+Full-time employees are regularly scheduled to work **40 hours per week**.
+
+Eligibility includes:
+
+* Medical insurance
+* Dental insurance
+* Vision insurance
+* 401(k) retirement plan
+* Paid Time Off
+* Paid holidays
+* Life insurance
+* Employee Assistance Program
+* Tuition reimbursement
+* Wellness initiatives
+
+Benefits generally become effective on the **first day of the month following 30 days of employment**, unless otherwise specified by applicable benefit plans.
+
+---
+
+## Part-Time Employees
+
+Part-time employees generally work fewer than **30 hours per week**.
+
+Depending on average scheduled hours and applicable laws, part-time employees may qualify for selected benefits including:
+
+* Paid sick leave
+* Retirement savings participation
+* Employee discounts
+* Limited wellness programs
+
+Eligibility requirements are determined by benefit plan documents.
+
+---
+
+## Temporary Employees
+
+Temporary employees are hired for limited-duration assignments, seasonal projects, or business needs expected to last fewer than **12 months**.
+
+Temporary employment does not guarantee permanent employment.
+
+Temporary employees may not be eligible for Company-sponsored benefit programs unless required by law.
+
+---
+
+## Interns
+
+Company Inc. partners with universities and educational institutions to provide internship opportunities throughout the year.
+
+Internship programs generally last:
+
+* 10 weeks (Summer)
+* 12 weeks (Fall)
+* 12 weeks (Spring)
+
+Interns receive:
+
+* Structured learning plans
+* Assigned mentors
+* Project ownership
+* Midpoint evaluations
+* Final performance reviews
+
+High-performing interns may receive offers for full-time employment following graduation.
+
+---
+
+## Independent Contractors
+
+Independent contractors provide specialized services under written contractual agreements.
+
+Contractors:
+
+* Are not employees.
+* Do not participate in employee benefit programs.
+* Are responsible for their own taxes.
+* Must comply with confidentiality obligations.
+* Must follow applicable security requirements when accessing Company systems.
+
+Managers should not engage contractors outside approved procurement processes.
+
+---
+
+## Exempt Employees
+
+Exempt employees are paid on a salary basis and are exempt from overtime requirements under applicable wage and hour laws.
+
+Examples include:
+
+* Software Engineers
+* Product Managers
+* Finance Managers
+* Directors
+* Human Resources Business Partners
+
+Exempt employees are expected to fulfill responsibilities necessary to complete assigned work, regardless of weekly hours worked.
+
+---
+
+## Non-Exempt Employees
+
+Non-exempt employees are eligible for overtime compensation in accordance with applicable laws.
+
+Hours worked must be accurately recorded using the Company's approved timekeeping system.
+
+Employees may not work unauthorized overtime.
+
+Managers are responsible for approving overtime before additional hours are worked whenever practical.
+
+---
+
+## Employment Status Changes
+
+Employment classifications may change because of:
+
+* Promotion
+* Demotion
+* Internal transfer
+* Reduction in scheduled hours
+* Organizational restructuring
+* Business requirements
+
+Human Resources will notify employees of classification changes in writing.
+
+Benefit eligibility may also change following a status modification.
+
+---
+
+## Introductory Employment Period
+
+New employees participate in a **90-day introductory employment period**.
+
+During this period employees receive:
+
+* Regular manager check-ins
+* Training milestones
+* Performance coaching
+* Goal setting
+* Feedback sessions
+
+Successful completion of the introductory period does not alter the at-will employment relationship or guarantee continued employment.
+
+---
+
+## Equal Employment Opportunity
+
+Company Inc. provides equal employment opportunities to all qualified applicants and employees.
+
+Employment decisions are based upon:
+
+* Qualifications
+* Skills
+* Experience
+* Performance
+* Business needs
+
+Discrimination or harassment based on legally protected characteristics will not be tolerated.
+
+Additional information is provided in **Section 12 – Diversity, Equity, and Inclusion**.
+
+---
+
+# 4. Onboarding Process
+
+Company Inc. believes that thoughtful onboarding significantly improves employee engagement, productivity, and long-term success.
+
+Our onboarding experience extends beyond the first day and continues throughout the employee's first **90 days**.
+
+---
+
+## Before Your First Day
+
+Prior to your start date, Human Resources will coordinate pre-employment activities including:
+
+* Employment documentation
+* Identity verification
+* Background screening
+* Equipment ordering
+* System account creation
+* Security credentials
+* Payroll enrollment
+* Benefits enrollment instructions
+
+Employees should complete all required documentation no later than **five business days** before their official start date whenever possible.
+
+Managers are responsible for ensuring workstations, software licenses, and access permissions are ready before the employee arrives.
+
+---
+
+## First Day Experience
+
+The first day focuses on helping employees become comfortable with the organization.
+
+Typical activities include:
+
+* Welcome breakfast with the hiring team
+* HR orientation session
+* IT equipment setup
+* Security awareness training
+* Introduction to company communication platforms
+* Facility tour (for office-based employees)
+* Team introductions
+* Initial manager meeting
+* Assignment of onboarding schedule
+
+Employees generally receive:
+
+* Company laptop
+* Monitor(s)
+* Keyboard
+* Mouse
+* Headset
+* Security key
+* Employee identification badge
+
+The estimated value of onboarding equipment ranges from **$2,000 to $3,500** depending on role.
+
+---
+
+## First Week
+
+During the first week, employees begin role-specific training while becoming familiar with internal systems and organizational processes.
+
+Activities may include:
+
+* Department orientation
+* Product demonstrations
+* Compliance training
+* Cybersecurity awareness
+* Data privacy education
+* Introduction to internal documentation
+* Initial project assignments
+* Meetings with cross-functional partners
+
+Managers should conduct daily check-ins during the first week to answer questions and provide guidance.
+
+---
+
+## Buddy Program
+
+Every new employee is assigned an onboarding buddy for approximately **60 days**.
+
+The buddy serves as an informal resource for questions regarding:
+
+* Company culture
+* Internal tools
+* Meeting etiquette
+* Communication norms
+* Team traditions
+* Office logistics
+* Professional networking
+
+The buddy relationship complements—not replaces—the manager's coaching responsibilities.
+
+---
+
+## First 30 Days
+
+During the first month employees are expected to:
+
+* Complete mandatory training.
+* Meet key stakeholders.
+* Understand departmental objectives.
+* Become familiar with internal systems.
+* Begin contributing to assigned projects.
+* Establish performance goals.
+
+Managers conduct a structured **30-day review** to discuss progress, challenges, and development priorities.
+
+---
+
+## First 60 Days
+
+By Day 60, employees should demonstrate increasing independence in their assigned responsibilities.
+
+Focus areas include:
+
+* Deeper product knowledge
+* Customer understanding
+* Cross-functional collaboration
+* Process ownership
+* Technical proficiency
+* Feedback implementation
+
+Employees are encouraged to provide onboarding feedback to Human Resources to improve future onboarding experiences.
+
+---
+
+## First 90 Days
+
+The first 90 days conclude with a formal introductory review.
+
+Managers evaluate:
+
+* Performance
+* Collaboration
+* Technical competency
+* Communication
+* Goal achievement
+* Cultural integration
+
+Development plans are established for the following six months.
+
+Employees who require additional coaching may receive extended onboarding support based on business needs.
+
+---
+
+# 5. Compensation and Payroll
+
+## Compensation Philosophy
+
+Company Inc. is committed to providing competitive, equitable, and performance-driven compensation that attracts, motivates, and retains talented employees. Our compensation strategy is designed to align employee rewards with individual performance, market benchmarks, internal equity, and the company's financial performance.
+
+Salary structures are reviewed annually using compensation surveys from nationally recognized providers. Benchmark analyses consider geographic labor markets, industry trends, job complexity, and specialized skills. The Human Resources and Finance departments collaborate to recommend salary adjustments, which are approved during the annual compensation planning cycle.
+
+Employees may receive compensation in one or more of the following forms:
+
+* Base salary (exempt employees)
+* Hourly wages (non-exempt employees)
+* Annual performance bonuses
+* Sales commissions (where applicable)
+* Spot bonuses (see Section 11)
+* Equity awards (for eligible positions)
+* Referral bonuses
+* Overtime compensation for eligible employees
+
+Compensation decisions are made without regard to race, color, religion, sex, national origin, age, disability, veteran status, or any other legally protected characteristic.
+
+---
+
+
+## 5. Compensation and Payroll (Continued)
+
+### Pay Schedule
+
+Company Inc. operates on a **biweekly payroll schedule**, resulting in **26 pay periods** during a calendar year. Employees are paid every other **Friday**. If a scheduled payday falls on a recognized banking holiday, payroll will generally be processed on the preceding business day.
+
+A payroll calendar is published annually by the Human Resources and Finance departments and is available on the Company's intranet. Employees are encouraged to review the payroll calendar to understand pay period start and end dates, payroll submission deadlines, and expected payment dates.
+
+All compensation is paid in the local currency applicable to the employee's primary work location unless otherwise required by law or specified in an employment agreement.
+
+Employees are responsible for reviewing each paycheck promptly to verify the accuracy of:
+
+* Regular earnings
+* Overtime earnings (where applicable)
+* Bonuses or commissions
+* Paid leave balances
+* Tax withholdings
+* Benefit deductions
+* Retirement contributions
+* Other authorized payroll deductions
+
+Any discrepancies should be reported to Payroll within **five (5) business days** after receiving payment to facilitate timely investigation and correction.
+
+---
+
+### Direct Deposit
+
+Company Inc. requires employees to enroll in **electronic direct deposit** whenever legally permissible.
+
+Employees may designate up to **three (3) separate financial accounts** for payroll distribution. For example:
+
+* 70% to primary checking
+* 20% to savings
+* 10% to investment account
+
+Employees wishing to modify banking information should submit updated details through the Human Resources Information System (HRIS) at least **seven (7) calendar days** before the next payroll processing date.
+
+To protect employees from payroll fraud, changes to banking information require:
+
+* Multi-factor authentication
+* Identity verification
+* Confirmation email
+* Payroll validation before processing
+
+Payroll staff will never request banking credentials through email.
+
+---
+
+### Pay Statements
+
+Electronic pay statements are available through the Company's secure employee self-service portal beginning at **12:00 AM local time on each payday**.
+
+Each pay statement includes:
+
+* Gross earnings
+* Federal, state, and local tax withholdings
+* Retirement contributions
+* Insurance deductions
+* Paid Time Off balances
+* Year-to-date earnings
+* Employer retirement contributions
+* Bonus payments
+* Overtime earnings
+* Reimbursements
+* Net pay
+
+Employees should retain pay statements for tax reporting and personal financial records.
+
+Historical pay statements remain available for at least **seven (7) years**.
+
+---
+
+### Overtime Policy
+
+Only employees classified as **non-exempt** under applicable wage and hour laws are eligible for overtime compensation.
+
+Unless local laws provide greater protection, overtime is generally compensated at:
+
+* **1.5 times** the regular hourly rate for hours worked over **40 hours** in a workweek.
+
+Certain jurisdictions may require:
+
+* Daily overtime
+* Double-time compensation
+* Holiday premium pay
+
+Employees should consult Human Resources regarding location-specific requirements.
+
+Managers must approve overtime before it is worked whenever operationally feasible. However, all authorized or unauthorized hours actually worked must be accurately recorded and compensated in accordance with applicable law.
+
+Repeated unauthorized overtime may result in coaching or disciplinary action but will not result in withholding legally required compensation.
+
+---
+
+### Timekeeping
+
+Non-exempt employees must accurately record all hours worked using the Company's approved electronic timekeeping system.
+
+Time records should include:
+
+* Start time
+* Meal periods
+* End time
+* Overtime hours
+* Approved leave
+* Business travel hours where applicable
+
+Employees may not:
+
+* Record time for another employee
+* Request another employee to record time on their behalf
+* Alter time records
+* Misrepresent hours worked
+
+Timekeeping falsification is considered serious misconduct.
+
+---
+
+### Salary Reviews
+
+Company Inc. conducts an annual compensation review during the **first quarter of each fiscal year**.
+
+Compensation decisions may consider:
+
+* Individual performance ratings
+* Internal salary equity
+* Market benchmarking
+* Company financial performance
+* Promotion eligibility
+* Expanded responsibilities
+* Geographic pay differentials
+
+Salary adjustments are not automatic and may vary depending on business conditions.
+
+---
+
+### Performance Bonuses
+
+Eligible employees may participate in the Company's annual performance bonus program.
+
+Target bonus opportunities generally include:
+
+| Employee Level                | Target Bonus                 |
+| ----------------------------- | ---------------------------- |
+| Individual Contributor        | 5%–10% of annual base salary |
+| Senior Individual Contributor | 10%–15%                      |
+| Manager                       | 15%–20%                      |
+| Director                      | 20%–30%                      |
+| Vice President                | 30%–40%                      |
+
+Actual payouts depend upon:
+
+* Company financial performance
+* Department objectives
+* Individual performance
+* Executive approval
+
+Bonus payments are generally issued during **March** following completion of the prior fiscal year.
+
+---
+
+### Sales Incentive Compensation
+
+Employees in eligible revenue-generating roles may participate in commission or incentive compensation programs.
+
+Sales compensation plans specify:
+
+* Commission percentages
+* Sales quotas
+* Accelerator thresholds
+* Payment timing
+* Clawback provisions
+* Territory assignments
+
+Commission plans are reviewed annually and may be modified based on business requirements.
+
+---
+
+### Expense Reimbursement
+
+Employees may request reimbursement for approved business expenses.
+
+Examples include:
+
+* Client meals
+* Business travel
+* Mileage
+* Parking
+* Conference registration
+* Office supplies
+* Internet reimbursement for remote employees
+* Professional memberships (where approved)
+
+Standard reimbursement limits include:
+
+| Expense              | Standard Limit                               |
+| -------------------- | -------------------------------------------- |
+| Daily Meal Allowance | Up to $75/day                                |
+| Hotel                | Up to $250/night (domestic)                  |
+| Mileage              | IRS standard rate (or applicable local rate) |
+| Airport Parking      | Up to $30/day                                |
+
+Receipts are required for expenses exceeding **$25**.
+
+Expense reports should be submitted within **30 calendar days** after the expense occurs.
+
+Approved reimbursements are typically processed within **10 business days**.
+
+---
+
+### Payroll Deductions
+
+Required deductions may include:
+
+* Federal income tax
+* State income tax
+* Local taxes
+* Social Security
+* Medicare
+* Court-ordered garnishments
+
+Voluntary deductions may include:
+
+* Medical insurance
+* Dental insurance
+* Vision insurance
+* Health Savings Account (HSA)
+* Flexible Spending Account (FSA)
+* 401(k) contributions
+* Charitable donations
+* Supplemental life insurance
+
+Employees may modify eligible voluntary deductions during annual open enrollment or following a qualifying life event.
+
+---
+
+### Payroll Confidentiality
+
+Payroll information is confidential.
+
+Access is limited to:
+
+* Payroll personnel
+* Human Resources
+* Finance leadership
+* Authorized auditors
+* Legal representatives where required
+
+Employees should not disclose another employee's confidential payroll records without authorization.
+
+Nothing in this policy is intended to restrict employees' rights under applicable laws regarding discussions of wages or working conditions.
+
+---
+
+### Final Pay
+
+Upon separation from employment, employees will receive final wages in accordance with applicable laws.
+
+Final compensation may include:
+
+* Outstanding regular wages
+* Earned overtime
+* Approved expense reimbursements
+* Eligible bonus payments
+* Accrued unused Paid Time Off where required by law
+
+Additional information regarding separation procedures is available in **Section 14 – Offboarding and Exit Process**.
+
+---
+
+# 6. Benefits Overview
+
+Company Inc. recognizes that a comprehensive benefits program supports employee well-being, financial security, and work-life balance. Accordingly, the Company provides a competitive benefits package designed to meet the diverse needs of employees and their eligible dependents.
+
+Benefit eligibility depends upon employment classification and applicable plan documents. Human Resources administers benefit enrollment, while individual insurance providers administer coverage under the terms of each respective plan.
+
+Unless otherwise specified, benefits generally become effective on the **first day of the month following 30 days of continuous employment**.
+
+Employees receive an annual Benefits Guide during **Open Enrollment**, typically conducted each **October**, with elections becoming effective on **January 1** of the following year.
+
+---
+
+## Medical Insurance
+
+Company Inc. offers multiple medical plan options to accommodate varying healthcare needs.
+
+Employees may generally choose from:
+
+* High Deductible Health Plan (HDHP)
+* Preferred Provider Organization (PPO)
+* Health Maintenance Organization (HMO) where available
+
+Coverage options include:
+
+* Employee only
+* Employee + spouse
+* Employee + child(ren)
+* Family coverage
+
+The Company contributes approximately **80%** of the employee-only premium and approximately **65%** of dependent coverage premiums.
+
+Covered services typically include:
+
+* Preventive care
+* Primary care
+* Specialist visits
+* Emergency services
+* Hospitalization
+* Prescription medications
+* Mental health treatment
+* Maternity care
+* Pediatric care
+
+Employees enrolled in the HDHP may also participate in a Health Savings Account (HSA).
+
+---
+
+## Health Savings Account (HSA)
+
+Employees enrolled in the High Deductible Health Plan may contribute pre-tax funds to an HSA.
+
+Company Inc. contributes annually:
+
+* **$750** for employee-only coverage
+* **$1,500** for family coverage
+
+Unused HSA balances roll over each year and remain the employee's property.
+
+---
+
+## Flexible Spending Accounts (FSA)
+
+Eligible employees may participate in:
+
+* Healthcare FSA
+* Dependent Care FSA
+* Limited Purpose FSA
+
+Annual IRS contribution limits apply.
+
+Employees should carefully estimate expected expenses, as unused balances may be forfeited according to plan rules, except where carryover provisions apply.
+
+---
+
+## Dental Insurance
+
+Dental coverage includes preventive, basic, and major restorative services.
+
+Typical coverage includes:
+
+* Preventive exams: **100%**
+* Cleanings: **100%**
+* X-rays: **100%**
+* Fillings: **80%**
+* Root canals: **80%**
+* Crowns: **50%**
+* Orthodontia (eligible dependents): Up to lifetime maximum of **$2,000**
+
+Employees are encouraged to schedule preventive examinations twice each calendar year.
+
+---
+
+## Vision Insurance
+
+Vision benefits include:
+
+* Annual eye examinations
+* Prescription eyeglasses
+* Contact lenses
+* Lens enhancements
+* Discounts on LASIK procedures through participating providers
+
+Typical allowances include:
+
+* Eye exam: once every 12 months
+* Frames: up to **$200**
+* Contact lenses: up to **$175**
+
+---
+
+## Prescription Drug Coverage
+
+Prescription medications are administered through the Company's pharmacy benefit manager.
+
+Employees generally pay:
+
+* Generic medications: **$10 copay**
+* Preferred brand medications: **$35 copay**
+* Non-preferred brand medications: **$60 copay**
+* Specialty medications: Variable based on plan
+
+Mail-order pharmacy services are available for maintenance medications and may reduce long-term prescription costs.
+
+---
+
+## Retirement Savings Plan (401(k))
+
+Company Inc. encourages long-term financial planning through its **401(k) Retirement Savings Plan**.
+
+Eligible employees may contribute pre-tax and Roth after-tax contributions, subject to IRS annual limits.
+
+The Company provides a matching contribution equal to:
+
+* **100% of the first 4%** of eligible compensation contributed by the employee
+* **50% of the next 2%** contributed
+
+Employees contributing **6%** of eligible salary therefore receive a maximum Company match equal to **5%** of eligible compensation.
+
+Company matching contributions vest according to the following schedule:
+
+| Years of Service | Vested Percentage |
+| ---------------- | ----------------- |
+| Less than 1 year | 0%                |
+| 1 year           | 25%               |
+| 2 years          | 50%               |
+| 3 years          | 75%               |
+| 4 years or more  | 100%              |
+
+Employees are encouraged to review retirement planning resources available through the plan administrator.
+
+---
+
+## Life Insurance
+
+Company Inc. provides employer-paid Basic Life Insurance equal to **2× annual base salary**, up to a maximum benefit of **$500,000**.
+
+Employees may purchase additional voluntary life insurance for themselves, spouses, and eligible dependents through payroll deductions.
+
+Coverage is subject to insurer underwriting requirements for higher benefit amounts.
+
+---
+
+## Accidental Death and Dismemberment (AD&D)
+
+Eligible employees receive employer-paid AD&D coverage equal to the Basic Life Insurance benefit.
+
+Additional voluntary AD&D coverage is also available during Open Enrollment.
+
+---
+
+## Disability Insurance
+
+Company Inc. provides:
+
+### Short-Term Disability (STD)
+
+* Up to **60% of weekly earnings**
+* Maximum benefit period: **26 weeks**
+
+### Long-Term Disability (LTD)
+
+* Up to **60% of monthly earnings**
+* Maximum monthly benefit: **$10,000**
+* Benefits begin after the applicable elimination period.
+
+Coverage details are governed by the insurance carrier's policy documents.
+
+---
+
+## Employee Assistance Program (EAP)
+
+The Employee Assistance Program offers confidential support services at no cost to employees and eligible household members.
+
+Services include:
+
+* Mental health counseling
+* Stress management
+* Financial counseling
+* Legal consultations
+* Family support resources
+* Substance abuse referrals
+* Childcare and eldercare resources
+* Crisis intervention
+
+Employees receive up to **eight (8) confidential counseling sessions per issue per year**.
+
+Use of the EAP is voluntary and confidential.
+
+## 6. Benefits Overview (Continued)
+
+### Commuter Benefits
+
+Company Inc. supports employees who commute to Company offices by offering a Commuter Benefits Program administered through pre-tax payroll deductions where permitted by applicable law.
+
+Eligible expenses may include:
+
+- Public transportation passes
+- Subway and rail fares
+- Bus fares
+- Qualified vanpool expenses
+- Parking expenses at approved facilities
+
+Employees may contribute up to the annual IRS maximum (or applicable local regulatory limit) through pre-tax payroll deductions. Enrollment changes may generally be made on a monthly basis.
+
+Where public transportation is limited, certain office locations may also provide:
+
+- Discounted parking arrangements
+- Bicycle storage
+- Electric vehicle charging stations
+- Preferred parking for carpool participants
+
+---
+
+### Wellness Program
+
+Company Inc. believes employee wellness contributes directly to long-term health, productivity, and job satisfaction.
+
+Eligible employees have access to a comprehensive wellness program that includes:
+
+- Annual health screenings
+- Influenza vaccination clinics
+- Fitness reimbursement
+- Mental wellness seminars
+- Nutrition coaching
+- Financial wellness workshops
+- Sleep health education
+- Mindfulness sessions
+
+Employees who complete the annual wellness assessment and participate in at least three qualifying wellness activities during the calendar year may receive a wellness incentive of **up to $300**.
+
+Reimbursement for qualified fitness expenses is available up to **$40 per month**, with an annual maximum reimbursement of **$480**.
+
+---
+
+### Pet Insurance
+
+Recognizing that pets are an important part of many employees' families, Company Inc. offers voluntary pet insurance through a third-party provider.
+
+Coverage options may include:
+
+- Dogs
+- Cats
+- Accident coverage
+- Illness coverage
+- Preventive care riders
+- Prescription medications
+- Emergency treatment
+
+Premiums are paid through payroll deductions where permitted by law.
+
+Participation in the pet insurance program is voluntary and does not affect eligibility for any other Company benefit.
+
+---
+
+### Employee Assistance Program (EAP)
+
+As described previously, the Employee Assistance Program provides confidential support for employees and eligible household members.
+
+Additional services available through the EAP include:
+
+- Career coaching
+- Grief counseling
+- Identity theft recovery assistance
+- Work-life resource referrals
+- Crisis support available 24 hours a day, 7 days a week
+
+The Company receives only aggregate utilization statistics and never receives confidential information regarding individual counseling sessions.
+
+---
+
+### Tuition Assistance Benefit
+
+Company Inc. supports continuing education through its Tuition Assistance Program.
+
+Eligible full-time employees with at least **six (6) months** of continuous service may receive reimbursement of up to **$5,250 per calendar year** for approved educational expenses.
+
+Eligible programs generally include:
+
+- Undergraduate coursework
+- Graduate degree programs
+- Technical certifications
+- Professional licensing courses
+- Approved online learning programs
+
+Courses must generally relate to:
+
+- Current job responsibilities
+- Future career opportunities within the Company
+- Business operations
+- Leadership development
+
+Employees must receive manager approval before enrolling to qualify for reimbursement.
+
+Additional information is available in **Section 9 – Learning and Development**.
+
+---
+
+### Adoption and Family Assistance
+
+Company Inc. supports employees growing their families through adoption.
+
+Eligible employees may receive reimbursement of up to **$7,500 per adoption** for qualified expenses including:
+
+- Agency fees
+- Legal expenses
+- Court costs
+- Required travel
+
+Documentation of eligible expenses is required.
+
+The Company also provides access to family planning resources through participating medical plans.
+
+---
+
+### Employee Discount Programs
+
+Employees receive access to a voluntary employee discount platform offering savings on:
+
+- Consumer electronics
+- Travel
+- Hotels
+- Rental cars
+- Entertainment
+- Theme parks
+- Home services
+- Mobile phone plans
+- Computer equipment
+- Fitness memberships
+
+Discount availability varies by vendor and geographic location.
+
+---
+
+### Open Enrollment
+
+Benefit elections generally remain in effect for the entire plan year unless an employee experiences a qualifying life event.
+
+Qualifying events may include:
+
+- Marriage
+- Divorce
+- Birth of a child
+- Adoption
+- Death of a dependent
+- Loss of other insurance coverage
+- Change in employment status
+
+Employees must generally submit benefit changes within **30 calendar days** following the qualifying event.
+
+Failure to submit timely documentation may delay benefit changes until the next annual Open Enrollment period.
+
+---
+
+### Continuation of Benefits
+
+Employees separating from employment may be eligible to continue certain healthcare benefits in accordance with applicable law.
+
+Continuation coverage information, including premium costs and enrollment deadlines, will be provided during the offboarding process.
+
+Additional details are available in **Section 14 – Offboarding and Exit Process**.
+
+---
+
+## 7. Time Off Policies
+
+Company Inc. recognizes that rest, recovery, family responsibilities, and personal well-being are essential components of sustained employee performance.
+
+The Company provides a variety of paid and unpaid leave programs to support employees throughout different stages of their personal and professional lives.
+
+Employees are expected to schedule planned absences responsibly and work collaboratively with managers to minimize operational disruption.
+
+---
+
+### Paid Time Off (PTO)
+
+Eligible full-time employees accrue Paid Time Off (PTO) each pay period.
+
+PTO may be used for:
+
+- Vacation
+- Personal appointments
+- Family obligations
+- Mental wellness
+- Personal business
+- Short-term illnesses not covered under sick leave policies
+
+The annual PTO accrual schedule is based upon continuous years of service.
+
+| Years of Service | Annual PTO | Approximate Hours |
+|-----------------|-----------|------------------|
+| Less than 2 years | 15 days | 120 hours |
+| 2–4 years | 20 days | 160 hours |
+| 5–9 years | 25 days | 200 hours |
+| 10+ years | 30 days | 240 hours |
+
+PTO begins accruing on the employee's first day of employment.
+
+Employees may begin using accrued PTO after completing **30 days** of continuous employment unless local laws require otherwise.
+
+---
+
+### PTO Approval
+
+Employees should submit planned PTO requests through the Human Resources Information System (HRIS).
+
+Recommended advance notice:
+
+| Length of Leave | Advance Notice |
+|----------------|---------------|
+| One day | 3 business days |
+| Two to five days | 2 weeks |
+| More than one week | 30 calendar days |
+
+Managers will review requests based upon:
+
+- Business requirements
+- Project deadlines
+- Team coverage
+- Previously approved leave
+
+The Company encourages employees to utilize PTO regularly to support work-life balance.
+
+---
+
+### PTO Carryover
+
+Employees may carry over up to **40 hours** of unused PTO into the following calendar year unless prohibited by local law.
+
+Any PTO exceeding the carryover limit that is not used by **December 31** may be forfeited unless otherwise required by applicable legislation.
+
+Certain jurisdictions require payout or unlimited carryover. Local legal requirements take precedence over this policy.
+
+---
+
+### Company Holidays
+
+Company Inc. observes the following paid holidays for eligible employees:
+
+- New Year's Day
+- Martin Luther King Jr. Day
+- Memorial Day
+- Independence Day
+- Labor Day
+- Thanksgiving Day
+- Day after Thanksgiving
+- Christmas Eve
+- Christmas Day
+
+Additionally, the Company provides:
+
+- One Floating Holiday annually
+- One Volunteer Service Day annually
+
+Holiday schedules for international employees may vary according to local customs and legal requirements.
+
+---
+
+### Sick Leave
+
+Eligible employees receive **10 paid sick days (80 hours)** annually.
+
+Sick leave may be used for:
+
+- Personal illness
+- Medical appointments
+- Preventive healthcare
+- Caring for eligible family members
+- Mental health treatment
+
+Employees should notify their manager as soon as reasonably possible before the beginning of the scheduled workday.
+
+Medical documentation may be requested for absences exceeding **three consecutive workdays**, where permitted by law.
+
+Unused sick leave is generally not paid upon separation unless required by applicable law.
+
+---
+
+### Family and Medical Leave
+
+Eligible employees may qualify for protected leave under applicable family and medical leave laws.
+
+Qualifying reasons may include:
+
+- Birth of a child
+- Adoption
+- Foster care placement
+- Serious health condition
+- Caring for an immediate family member
+- Military caregiver leave
+- Qualifying military exigencies
+
+Employees should contact Human Resources as early as possible to determine eligibility and required documentation.
+
+The Company complies with all applicable federal, state, and local leave laws.
+
+---
+
+### Parental Leave
+
+Company Inc. provides paid parental leave for eligible employees following:
+
+- Birth
+- Adoption
+- Foster placement
+
+Eligible employees receive:
+
+- **16 weeks** of paid parental leave for primary caregivers
+- **8 weeks** of paid parental leave for secondary caregivers
+
+Parental leave generally must be taken within **12 months** following the qualifying event.
+
+Employees are encouraged to coordinate leave plans with Human Resources before the anticipated leave date.
+
+---
+
+### Bereavement Leave
+
+Eligible employees may receive paid bereavement leave following the death of an immediate family member.
+
+Standard bereavement leave includes:
+
+- Up to **5 paid workdays** for immediate family members
+- Up to **2 paid workdays** for extended family members
+
+Additional unpaid leave may be approved depending upon travel requirements and individual circumstances.
+
+Managers should exercise compassion and flexibility during these situations.
+
+---
+
+### Jury Duty
+
+Employees summoned for jury service are encouraged to fulfill their civic responsibilities.
+
+Eligible employees may receive up to **10 paid workdays** of jury duty leave.
+
+Employees should:
+
+- Notify their manager promptly
+- Provide a copy of the summons
+- Return to work if dismissed early, where practical
+
+Jury duty compensation received from the court may be retained by the employee unless prohibited by local policy.
+
+---
+
+### Voting Leave
+
+Company Inc. encourages employees to participate in the democratic process.
+
+Where employees do not have sufficient non-working time to vote, the Company provides up to **two (2) hours of paid voting leave**, consistent with applicable law.
+
+Employees should request voting leave in advance whenever possible.
+
+---
+
+### Military Leave
+
+Military leave is provided in accordance with applicable federal and state laws.
+
+Eligible employees returning from military service will generally be reinstated to positions consistent with legal requirements.
+
+Benefits continuation and reemployment rights are administered by Human Resources.
+
+---
+
+### Volunteer Time Off
+
+The Company encourages community involvement.
+
+Each eligible employee receives **8 hours of paid Volunteer Time Off (VTO)** annually.
+
+Volunteer activities should generally support:
+
+- Educational organizations
+- Environmental initiatives
+- Community development
+- Non-profit organizations
+- Disaster relief
+- Charitable causes
+
+Volunteer activities must be approved in advance by the employee's manager.
+
+---
+
+### Sabbatical Program
+
+Employees who complete **five (5) consecutive years** of full-time service become eligible to apply for the Company's paid sabbatical program.
+
+Approved employees may receive:
+
+- Up to **six (6) consecutive weeks** of paid sabbatical leave.
+
+Sabbaticals are intended to support:
+
+- Professional development
+- Academic research
+- Volunteer service
+- Personal renewal
+- Creative pursuits
+
+Employees must submit applications at least **90 days** before the proposed leave date.
+
+Approval depends upon:
+
+- Business needs
+- Department staffing
+- Employee performance
+- Manager recommendation
+
+Participation is generally limited to one sabbatical every **five years** of continuous service.
+
+---
+
+### Leave Without Pay
+
+Employees who have exhausted available paid leave may request an unpaid leave of absence.
+
+Approval is not guaranteed and depends upon:
+
+- Business requirements
+- Operational impact
+- Applicable laws
+- Department resources
+
+Employees should consult Human Resources before beginning any unpaid leave, as benefit eligibility may be affected.
+
+---
+
+### Return to Work
+
+Employees returning from extended leave may be required to:
+
+- Meet with Human Resources
+- Provide fitness-for-duty documentation where legally permitted
+- Complete required training updates
+- Review organizational changes occurring during the leave period
+
+Managers will work with returning employees to facilitate a successful transition back to regular job responsibilities.
+
+Cross-reference: Employees requiring workplace accommodations upon return should consult **Section 10 – Workplace Safety and Ergonomics** and Human Resources regarding the interactive accommodation process.
+
+---
+## 8. Remote Work Guidelines
+
+### Purpose
+
+Company Inc. recognizes that flexible work arrangements can improve employee satisfaction, productivity, business continuity, and talent acquisition. The Company supports remote and hybrid work where such arrangements align with business needs, team collaboration, customer requirements, information security standards, and applicable laws.
+
+Remote work is considered a business arrangement rather than an employee entitlement. Approval to work remotely may be granted, modified, or discontinued at the Company's discretion based on operational requirements, performance expectations, organizational changes, or legal obligations.
+
+This policy should be read together with:
+
+- Section 5 – Compensation and Payroll
+- Section 7 – Time Off Policies
+- Section 10 – Workplace Safety and Ergonomics
+- Company Information Security Policy
+- Acceptable Use Policy
+- Data Classification Standard
+
+---
+
+### Eligibility
+
+Not every position is suitable for remote work. Eligibility depends upon:
+
+- Job responsibilities
+- Customer interaction requirements
+- Equipment requirements
+- Security considerations
+- Team collaboration needs
+- Individual performance
+- Manager recommendation
+- Executive approval where required
+
+Positions commonly eligible for remote or hybrid work include:
+
+- Software Engineering
+- Product Management
+- Quality Assurance
+- Data Science
+- Technical Writing
+- Human Resources
+- Finance
+- Marketing
+- Customer Success
+- IT Support (subject to rotation schedules)
+
+Positions requiring regular on-site presence may include:
+
+- Facilities
+- Office Operations
+- Hardware Engineering
+- Laboratory Personnel
+- Physical Security
+- Mail Services
+
+Employees must successfully complete their introductory employment period before becoming eligible for regular remote work unless otherwise approved by Human Resources and executive leadership.
+
+---
+
+### Hybrid Work Schedule
+
+Company Inc.'s standard hybrid schedule requires eligible employees assigned to hybrid teams to work from a Company office at least **three (3) days per week**.
+
+Departments may designate:
+
+- Core collaboration days
+- Team planning days
+- Quarterly planning sessions
+- Customer visit requirements
+- Training events
+
+Managers should communicate hybrid schedules at least **30 calendar days** before implementation whenever practical.
+
+Occasional changes may occur because of:
+
+- Business travel
+- Customer meetings
+- Product launches
+- Company events
+- Emergency situations
+
+Employees are expected to remain flexible while maintaining work-life balance.
+
+---
+
+### Fully Remote Employees
+
+Employees hired into fully remote positions may reside only in jurisdictions where Company Inc. is legally authorized to employ workers.
+
+Employees wishing to relocate must obtain written approval from Human Resources before moving.
+
+Approval considerations include:
+
+- Payroll tax implications
+- Employment law compliance
+- Benefits administration
+- Data privacy regulations
+- Export control requirements
+- Time zone coverage
+- Customer support obligations
+
+Unauthorized relocation may result in modification or termination of remote work eligibility.
+
+---
+
+### Work Hours and Availability
+
+Remote employees are expected to maintain regular working hours consistent with their assigned schedules.
+
+Unless otherwise approved:
+
+- Standard business hours are **9:00 AM to 5:30 PM** local time.
+- Employees should be available during established core collaboration hours between **10:00 AM and 3:00 PM**.
+- Calendars should accurately reflect availability.
+- Working hours must comply with applicable wage and hour laws.
+
+Employees should promptly notify their manager if unexpected circumstances affect availability during scheduled working hours.
+
+---
+
+### Communication Expectations
+
+Successful remote work depends upon consistent, professional communication.
+
+Employees are expected to:
+
+- Respond to internal messages during normal business hours.
+- Participate in required meetings.
+- Keep calendars current.
+- Maintain accurate online status indicators.
+- Notify teammates of planned absences.
+- Communicate project risks early.
+
+Video participation is encouraged during team meetings unless technical limitations or accessibility accommodations apply.
+
+Managers should conduct:
+
+- Weekly one-on-one meetings
+- Team meetings
+- Quarterly performance discussions
+- Regular career development conversations
+
+---
+
+### Home Office Requirements
+
+Employees approved for remote work must maintain a professional work environment suitable for productive business operations.
+
+The home workspace should include:
+
+- Reliable high-speed internet service with minimum download speeds of **100 Mbps**
+- Secure Wi-Fi protected with strong encryption
+- Ergonomic chair
+- Stable work surface
+- Adequate lighting
+- Minimal background noise
+- Smoke detector
+- Surge protector
+- Lockable workspace where practical
+
+Employees are responsible for maintaining utilities necessary to perform their work.
+
+---
+
+### Company Equipment
+
+Company Inc. provides eligible remote employees with Company-owned equipment necessary to perform assigned duties.
+
+Standard equipment may include:
+
+- Laptop computer
+- Two external monitors
+- Docking station
+- Keyboard
+- Mouse
+- Webcam
+- Noise-canceling headset
+- Security key
+- Laptop carrying case
+
+Depending upon business requirements, additional equipment may be approved.
+
+All Company equipment remains Company property.
+
+Employees are responsible for:
+
+- Reasonable care
+- Physical security
+- Timely software updates
+- Prompt reporting of theft or damage
+- Returning equipment upon separation
+
+---
+
+### Home Office Stipend
+
+Eligible remote employees may receive:
+
+- **One-time home office setup allowance:** **$750**
+- **Monthly internet reimbursement:** up to **$60**
+- **Monthly phone reimbursement:** up to **$40**, when approved
+
+Receipts may be required for reimbursement.
+
+Home office furniture purchased using Company funds remains subject to applicable asset management policies.
+
+---
+
+### Information Security
+
+Remote employees play an important role in protecting Company information.
+
+Employees must:
+
+- Use Company-issued devices whenever possible.
+- Enable multi-factor authentication.
+- Lock computers when unattended.
+- Store confidential documents securely.
+- Avoid public Wi-Fi unless using the Company VPN.
+- Immediately report suspected security incidents.
+- Complete annual cybersecurity awareness training.
+
+Employees may not:
+
+- Share passwords
+- Disable security software
+- Install unauthorized applications
+- Use personal cloud storage for Company files
+- Allow family members to use Company equipment
+
+Violations may result in disciplinary action.
+
+---
+
+### Confidential Information
+
+Employees working remotely must ensure confidential discussions cannot be overheard by unauthorized individuals.
+
+Sensitive information should never be:
+
+- Left unattended
+- Printed unnecessarily
+- Stored on personal devices
+- Shared through unauthorized messaging platforms
+
+Paper records containing confidential information should be securely destroyed using approved shredding methods.
+
+---
+
+### Performance Expectations
+
+Remote employees are evaluated using the same performance standards as office-based employees.
+
+Performance considerations include:
+
+- Work quality
+- Productivity
+- Communication
+- Collaboration
+- Customer satisfaction
+- Meeting deadlines
+- Professional conduct
+
+Remote work does not alter performance expectations or compensation eligibility.
+
+---
+
+### Business Travel
+
+Remote employees may occasionally be required to travel for:
+
+- Quarterly planning meetings
+- Customer engagements
+- Team-building events
+- Leadership meetings
+- Training programs
+- Company-wide meetings
+
+Reasonable travel expenses will be reimbursed in accordance with the Company's Business Travel and Expense Policy.
+
+---
+
+### Remote Work Review
+
+Managers should review remote work arrangements at least annually.
+
+Factors considered include:
+
+- Business needs
+- Employee performance
+- Team collaboration
+- Customer impact
+- Security compliance
+- Attendance
+- Productivity metrics
+
+Remote work arrangements may be modified if organizational priorities change.
+
+---
+
+## 9. Learning and Development
+
+### Commitment to Continuous Learning
+
+Company Inc. believes continuous learning is essential to maintaining innovation, improving customer outcomes, and supporting employee career growth.
+
+Technology evolves rapidly, and employees are encouraged to expand both technical expertise and leadership capabilities throughout their careers.
+
+The Company invests substantially in learning initiatives to ensure employees remain competitive in their professions while preparing for future organizational opportunities.
+
+Learning opportunities are available to employees regardless of department or job function, subject to program eligibility requirements.
+
+---
+
+### Learning Philosophy
+
+The Company's professional development strategy follows the **70-20-10 Learning Model**:
+
+- **70%** through practical work experience
+- **20%** through coaching and mentoring
+- **10%** through formal education and structured training
+
+Employees are encouraged to discuss annual development goals during performance reviews.
+
+Learning objectives should align with:
+
+- Business priorities
+- Career aspirations
+- Department needs
+- Future organizational capabilities
+
+---
+
+### New Employee Training
+
+All employees complete mandatory onboarding training during their first **30 days** of employment.
+
+Training topics include:
+
+- Information Security
+- Data Privacy
+- Workplace Harassment Prevention
+- Diversity, Equity, and Inclusion
+- Code of Conduct
+- Acceptable Use Policy
+- Workplace Safety
+- Product Fundamentals
+- Customer Experience Standards
+
+Completion of required training is tracked through the Company's Learning Management System (LMS).
+
+Employees who fail to complete mandatory courses by assigned deadlines may temporarily lose access to certain internal systems until requirements are satisfied.
+
+---
+
+### Individual Development Plans (IDPs)
+
+Each employee is encouraged to maintain an Individual Development Plan (IDP).
+
+An IDP should identify:
+
+- Career objectives
+- Skill gaps
+- Learning priorities
+- Stretch assignments
+- Mentorship opportunities
+- Certification goals
+- Target completion dates
+
+Managers should review IDPs during quarterly career conversations.
+
+---
+
+### Internal Training Programs
+
+Company Inc. delivers instructor-led and self-paced learning throughout the year.
+
+Examples include:
+
+- Leadership Essentials
+- Effective Communication
+- Agile Project Management
+- Advanced Software Engineering
+- Cloud Computing
+- Artificial Intelligence Fundamentals
+- Product Management
+- Cybersecurity Best Practices
+- Data Analytics
+- Financial Acumen for Managers
+
+Employees typically receive access to more than **500 hours** of digital learning content annually.
+
+---
+
+### Learning Management System (LMS)
+
+The Company's Learning Management System provides centralized access to:
+
+- Required compliance training
+- Technical courses
+- Leadership development
+- Soft skills training
+- Certification preparation
+- Recorded webinars
+- Learning transcripts
+
+Employees may access the LMS at any time using Company credentials.
+
+Managers can monitor learning progress through departmental dashboards.
+
+---
+
+### Tuition Reimbursement
+
+Eligible full-time employees who have completed at least **six months** of continuous employment may apply for tuition reimbursement.
+
+The annual reimbursement limit is **$5,250** per calendar year.
+
+Eligible expenses include:
+
+- Tuition
+- Required textbooks
+- Mandatory laboratory fees
+- Online course fees
+
+Courses must generally receive:
+
+- Manager approval
+- Human Resources approval before enrollment
+
+To receive reimbursement, employees must earn:
+
+- Grade "B" or higher for graduate-level coursework
+- Grade "C" or higher for undergraduate coursework
+- Passing status for pass/fail courses
+
+Employees who voluntarily leave the Company within **12 months** after reimbursement exceeding **$3,000** may be required to repay all or part of the reimbursement, where legally permissible.
+
+---
+
+### Professional Certifications
+
+Company Inc. encourages employees to pursue industry-recognized certifications.
+
+Examples include:
+
+- AWS Certified Solutions Architect
+- Microsoft Azure Certifications
+- Google Cloud Professional Certifications
+- Cisco Certifications
+- CompTIA Certifications
+- PMI Project Management Professional (PMP)
+- Certified ScrumMaster (CSM)
+- Certified Information Systems Security Professional (CISSP)
+
+The Company reimburses:
+
+- Initial examination fees
+- One approved retake examination if necessary
+- Annual maintenance fees where applicable
+
+Employees should obtain manager approval before registering.
+
+---
+
+### Conference and Professional Development Budget
+
+Eligible full-time employees receive an annual professional development budget of up to **$2,000**.
+
+Approved expenses may include:
+
+- Industry conferences
+- Technical workshops
+- Professional association memberships
+- Virtual conferences
+- Leadership seminars
+- Specialized training programs
+
+Employees attending conferences are encouraged to share key learnings with colleagues through presentations or written summaries.
+
+---
+
+### Mentorship Program
+
+Company Inc. offers a voluntary mentorship program that pairs employees with experienced leaders across the organization.
+
+Mentorship relationships typically last **six to twelve months**.
+
+Topics commonly discussed include:
+
+- Career planning
+- Leadership development
+- Technical growth
+- Networking
+- Communication skills
+- Organizational navigation
+
+Participation is voluntary but strongly encouraged.
+
+---
+
+### Leadership Development
+
+High-potential employees may be nominated for leadership development initiatives.
+
+Programs may include:
+
+- Executive coaching
+- Rotational assignments
+- Cross-functional projects
+- Strategic planning workshops
+- Financial management training
+- People management development
+
+Selection is based upon:
+
+- Performance
+- Leadership potential
+- Business needs
+- Manager recommendation
+
+---
+
+### Knowledge Sharing
+
+Employees are encouraged to contribute to the Company's culture of continuous learning by:
+
+- Delivering technical presentations
+- Publishing internal documentation
+- Leading lunch-and-learn sessions
+- Mentoring junior employees
+- Participating in Communities of Practice
+
+Knowledge sharing contributes positively to annual performance evaluations.
+
+---
+
+### Performance and Learning
+
+Professional development is incorporated into the annual performance review process.
+
+Managers evaluate:
+
+- Learning initiative
+- Application of new skills
+- Knowledge sharing
+- Career progression
+- Contribution to team capability
+
+Employees are encouraged to dedicate approximately **40 hours per calendar year** to structured learning activities during working hours, subject to manager approval.
+
+Cross-reference: Employees interested in tuition reimbursement or educational leave should also review **Section 6 – Benefits Overview** and **Section 7 – Time Off Policies**.
+## 10. Workplace Safety and Ergonomics
+
+### Purpose
+
+Company Inc. is committed to providing a safe, healthy, and secure workplace for all employees, contractors, interns, temporary workers, visitors, and business partners. Workplace safety is a shared responsibility, and every individual is expected to contribute to maintaining an environment that minimizes risks and supports employee well-being.
+
+The Company complies with all applicable occupational health and safety regulations and continually evaluates workplace practices to identify opportunities for improvement. Safety is considered an integral component of operational excellence and is incorporated into daily decision-making, facility planning, equipment procurement, and employee training.
+
+Employees are encouraged to immediately report unsafe conditions, workplace hazards, security concerns, or incidents without fear of retaliation. Prompt reporting enables timely corrective action and helps prevent future accidents.
+
+This policy should be read in conjunction with:
+
+- Section 8 – Remote Work Guidelines
+- Company Information Security Policy
+- Business Continuity Plan
+- Emergency Response Procedures
+- Facilities Management Standards
+
+---
+
+### Employee Responsibilities
+
+Every employee has an important role in maintaining workplace safety.
+
+Employees are expected to:
+
+- Follow all published safety procedures.
+- Complete mandatory safety training.
+- Report unsafe conditions immediately.
+- Use Company equipment responsibly.
+- Maintain clean and organized workspaces.
+- Wear required personal protective equipment (PPE), where applicable.
+- Cooperate during emergency drills.
+- Report workplace injuries promptly.
+- Follow security access procedures.
+
+Employees should never intentionally ignore safety procedures or create conditions that place themselves or others at unnecessary risk.
+
+---
+
+### Management Responsibilities
+
+Managers and supervisors are responsible for fostering a culture of safety within their teams.
+
+Responsibilities include:
+
+- Identifying workplace hazards.
+- Ensuring employees complete required training.
+- Responding promptly to reported concerns.
+- Conducting periodic workplace inspections.
+- Supporting ergonomic improvement requests.
+- Investigating workplace incidents.
+- Communicating emergency procedures.
+- Promoting safe work practices.
+
+Managers should address safety concerns as a priority and escalate issues requiring Facilities, Human Resources, or Executive Leadership involvement.
+
+---
+
+### General Office Safety
+
+Although Company Inc. operates primarily in an office and technology environment, workplace hazards may still arise.
+
+Employees should:
+
+- Keep walkways free from obstructions.
+- Store heavy objects on lower shelves.
+- Avoid overloading electrical outlets.
+- Report damaged furniture.
+- Clean spills immediately or notify Facilities.
+- Keep emergency exits unobstructed.
+- Use ladders rather than office furniture when accessing elevated storage.
+- Secure loose cables to prevent tripping hazards.
+
+Food and beverages should be handled carefully around electronic equipment to reduce equipment damage and electrical risks.
+
+---
+
+### Emergency Preparedness
+
+Each Company office maintains an Emergency Response Plan.
+
+Employees should familiarize themselves with:
+
+- Emergency exits
+- Evacuation routes
+- Assembly locations
+- Fire extinguisher locations
+- First aid stations
+- Automated External Defibrillator (AED) locations
+- Emergency contact procedures
+
+Emergency evacuation maps are posted throughout Company facilities.
+
+Emergency drills are generally conducted **twice each calendar year**.
+
+Participation is mandatory unless otherwise directed by emergency responders.
+
+---
+
+### Fire Safety
+
+Employees should immediately activate the nearest fire alarm upon discovering a fire or significant smoke condition.
+
+During an evacuation:
+
+- Remain calm.
+- Leave belongings behind if necessary.
+- Use stairways instead of elevators.
+- Assist visitors.
+- Proceed directly to the designated assembly area.
+- Await further instructions from emergency personnel.
+
+Employees may use portable fire extinguishers only if:
+
+- They have received appropriate training.
+- The fire is very small.
+- A safe exit path remains available.
+
+Personal safety always takes priority over property protection.
+
+---
+
+### Medical Emergencies
+
+In the event of a medical emergency:
+
+1. Contact emergency services immediately.
+2. Notify onsite security or Facilities personnel.
+3. Inform the employee's manager when appropriate.
+4. Do not move injured individuals unless necessary to prevent additional harm.
+5. Follow instructions provided by emergency responders.
+
+Each office maintains appropriately stocked first aid kits that are inspected regularly.
+
+Selected employees receive certified first aid and CPR training.
+
+---
+
+### Workplace Injuries
+
+Employees must report all workplace injuries, regardless of severity, as soon as reasonably possible.
+
+Reporting procedures include:
+
+- Informing the immediate manager.
+- Contacting Human Resources.
+- Completing an Incident Report within **24 hours** whenever practical.
+- Seeking appropriate medical evaluation.
+
+Prompt reporting supports:
+
+- Employee care
+- Workers' compensation administration
+- Hazard identification
+- Regulatory compliance
+- Prevention of future incidents
+
+Failure to report injuries promptly may delay benefits or investigations where permitted by law.
+
+---
+
+### Incident Investigation
+
+Following any workplace incident, the Company may conduct an investigation to determine:
+
+- Root cause
+- Contributing factors
+- Corrective actions
+- Preventive measures
+- Policy improvements
+- Training needs
+
+Investigations are intended to improve workplace safety rather than assign blame whenever possible.
+
+Employees are expected to cooperate fully during investigations.
+
+---
+
+### Workplace Ergonomics
+
+Company Inc. recognizes that proper ergonomics significantly reduces workplace discomfort, repetitive stress injuries, and long-term musculoskeletal disorders.
+
+Employees should maintain workstations that promote:
+
+- Neutral wrist posture
+- Proper back support
+- Comfortable viewing distance
+- Appropriate monitor height
+- Adequate leg clearance
+- Proper keyboard placement
+
+Employees experiencing discomfort are encouraged to request an ergonomic evaluation before symptoms worsen.
+
+---
+
+### Ergonomic Assessments
+
+Eligible employees may request a workstation assessment through Human Resources or Facilities.
+
+Assessments may evaluate:
+
+- Chair adjustments
+- Desk height
+- Monitor positioning
+- Keyboard placement
+- Mouse usage
+- Lighting conditions
+- Foot support
+- Overall workstation layout
+
+Following the assessment, recommendations may include equipment adjustments or replacement furniture.
+
+The Company generally completes ergonomic assessments within **15 business days** of receiving a request.
+
+---
+
+### Ergonomic Equipment
+
+Subject to business approval and demonstrated need, the Company may provide:
+
+- Adjustable office chairs
+- Sit-stand desks
+- Monitor arms
+- Footrests
+- Ergonomic keyboards
+- Vertical mice
+- Wrist supports
+- Laptop stands
+- Document holders
+- Anti-fatigue floor mats
+
+Employees should not independently purchase ergonomic equipment expecting reimbursement without prior approval.
+
+---
+
+### Remote Workspace Safety
+
+Employees working remotely are responsible for maintaining a safe home workspace.
+
+Remote work areas should include:
+
+- Stable work surfaces
+- Appropriate lighting
+- Functional smoke detectors
+- Safe electrical wiring
+- Surge protection
+- Comfortable seating
+- Adequate ventilation
+- Minimal trip hazards
+
+Employees should avoid working from locations that compromise productivity, confidentiality, or safety.
+
+The Company may request photographs or virtual workstation assessments to support ergonomic recommendations where permitted by applicable law.
+
+---
+
+### Electrical Safety
+
+Employees should:
+
+- Inspect power cords regularly.
+- Avoid damaged electrical equipment.
+- Use surge protectors where appropriate.
+- Never overload outlets.
+- Disconnect malfunctioning equipment immediately.
+- Report electrical hazards to Facilities.
+
+Only authorized personnel may perform repairs on Company-owned equipment.
+
+---
+
+### Computer and Display Safety
+
+Employees who spend extended periods using computers should:
+
+- Take short breaks every **60 minutes**.
+- Follow the **20-20-20 rule** (every 20 minutes, look at something approximately 20 feet away for at least 20 seconds).
+- Adjust monitor brightness appropriately.
+- Maintain proper posture.
+- Blink regularly to reduce eye strain.
+
+Managers are encouraged to support reasonable break schedules during intensive computer work.
+
+---
+
+### Manual Material Handling
+
+Although heavy lifting is uncommon in most Company roles, employees should follow safe lifting techniques whenever handling equipment or office supplies.
+
+Employees should:
+
+- Lift with their legs rather than their backs.
+- Request assistance for heavy objects.
+- Use carts when available.
+- Avoid twisting while lifting.
+- Keep loads close to the body.
+
+Employees should generally avoid lifting objects exceeding **35 pounds (16 kilograms)** without assistance.
+
+---
+
+### Indoor Air Quality
+
+Company Inc. maintains office environments designed to support employee health and comfort.
+
+Facilities Management monitors:
+
+- Ventilation systems
+- Air filtration
+- Temperature
+- Humidity
+- Water quality
+- Routine maintenance schedules
+
+Employees experiencing concerns regarding indoor environmental quality should notify Facilities promptly.
+
+---
+
+### Workplace Cleanliness
+
+Employees share responsibility for maintaining professional workspaces.
+
+Employees should:
+
+- Dispose of waste appropriately.
+- Store food properly.
+- Clean workstations regularly.
+- Report pest concerns.
+- Return shared equipment after use.
+- Maintain conference rooms following meetings.
+
+Facilities personnel perform routine cleaning; however, employees are expected to maintain reasonable cleanliness throughout the workday.
+
+---
+
+### Workplace Violence Prevention
+
+Company Inc. maintains zero tolerance for workplace violence, threats, intimidation, harassment, or disruptive behavior.
+
+Examples include:
+
+- Physical assault
+- Threatening language
+- Intimidation
+- Stalking
+- Destruction of Company property
+- Possession of prohibited weapons where not permitted by law
+
+Employees should immediately report threatening behavior to:
+
+- Their manager
+- Human Resources
+- Corporate Security
+- Emergency services when appropriate
+
+Reports will be investigated promptly and confidentially to the extent practical.
+
+---
+
+### Drug- and Alcohol-Free Workplace
+
+Employees are expected to report to work fit for duty and free from impairment.
+
+The unlawful manufacture, possession, distribution, or use of illegal drugs on Company property is prohibited.
+
+Employees may not:
+
+- Report to work under the influence of illegal substances.
+- Consume alcohol during working hours except at Company-approved events where responsible consumption is permitted.
+- Misuse prescription medications in a manner that impairs safe job performance.
+
+Employees requiring accommodations related to legally prescribed medications should consult Human Resources.
+
+---
+
+### Infectious Disease Prevention
+
+Company Inc. maintains procedures to reduce the spread of communicable illnesses.
+
+Preventive measures may include:
+
+- Enhanced cleaning protocols
+- Vaccination clinics
+- Flexible remote work arrangements
+- Health screenings where permitted by law
+- Personal protective equipment when appropriate
+- Public health guidance compliance
+
+Employees experiencing symptoms of contagious illness should remain home and notify their manager in accordance with **Section 7 – Time Off Policies**.
+
+---
+
+### Security and Building Access
+
+Company facilities utilize electronic access control systems.
+
+Employees are expected to:
+
+- Wear identification badges when required.
+- Prevent unauthorized tailgating into secured areas.
+- Secure confidential documents.
+- Lock computers before leaving workstations.
+- Report lost access badges immediately.
+
+Visitors must register through established visitor management procedures and be escorted in restricted areas unless otherwise authorized.
+
+---
+
+### Business Continuity and Emergency Operations
+
+Company Inc. maintains a Business Continuity Program designed to support critical operations during emergencies.
+
+Potential scenarios include:
+
+- Natural disasters
+- Severe weather
+- Extended power outages
+- Cybersecurity incidents
+- Public health emergencies
+- Utility failures
+- Civil disturbances
+
+Business Continuity Plans identify:
+
+- Critical personnel
+- Alternate work locations
+- Communication procedures
+- Technology recovery priorities
+- Customer communication protocols
+
+Employees may be required to participate in periodic business continuity exercises.
+
+---
+
+### Safety Training
+
+Mandatory safety training is assigned through the Company's Learning Management System.
+
+Training topics may include:
+
+- Emergency procedures
+- Fire safety
+- Ergonomics
+- Information security
+- Incident reporting
+- Workplace violence prevention
+- Business continuity
+- Remote workspace safety
+
+Required courses should generally be completed within **30 days** of assignment.
+
+Employees who fail to complete mandatory training may temporarily lose access to certain systems until training requirements are fulfilled.
+
+---
+
+### Safety Committee
+
+Company Inc. maintains a cross-functional Safety Committee composed of representatives from:
+
+- Human Resources
+- Facilities
+- Information Technology
+- Engineering
+- Operations
+- Legal
+- Employee representatives
+
+The committee generally meets **quarterly** to review:
+
+- Incident statistics
+- Near-miss reports
+- Safety audits
+- Ergonomic trends
+- Regulatory updates
+- Recommended workplace improvements
+
+Employees are encouraged to submit safety suggestions through the Company's confidential reporting portal.
+
+---
+
+### Reporting Safety Concerns
+
+Employees should report any safety concern immediately through one of the following channels:
+
+- Immediate manager
+- Human Resources
+- Facilities Management
+- Corporate Security
+- Confidential Ethics Hotline
+
+Reports may include:
+
+- Unsafe working conditions
+- Building hazards
+- Equipment malfunctions
+- Security concerns
+- Emergency preparedness issues
+- Ergonomic requests
+
+Retaliation against employees who report safety concerns in good faith is strictly prohibited and may result in disciplinary action up to and including termination.
+
+---
+
+### Policy Review
+
+The Workplace Safety and Ergonomics Policy is reviewed annually by Human Resources, Facilities Management, Legal, and the Safety Committee to ensure compliance with applicable regulations and alignment with industry best practices.
+
+Employees are encouraged to provide feedback regarding workplace safety initiatives and recommend improvements through their manager, Human Resources, or the Company's employee suggestion program.
+
+A safe workplace depends upon the active participation of every employee. By following established safety procedures, reporting hazards promptly, and supporting a culture of prevention, employees contribute to the health, security, and long-term success of Company Inc.
+
+Cross-reference: Employees seeking accommodations related to workplace safety, ergonomics, or medical conditions should consult Human Resources and review **Section 8 – Remote Work Guidelines**, **Section 7 – Time Off Policies**, and **Section 13 – Employee Grievance Procedure** where applicable.
+
+---
+# 11. Employee Recognition Programs
+
+## Purpose
+
+Company Inc. believes that recognizing employee contributions is essential to building an engaged, motivated, and high-performing workforce. Recognition reinforces behaviors that align with our core values, encourages collaboration, and celebrates both individual and team accomplishments.
+
+Our recognition philosophy is based on three principles:
+
+- Recognition should be timely.
+- Recognition should be meaningful.
+- Recognition should reinforce Company values.
+
+Managers are expected to recognize employee achievements regularly, while all employees are encouraged to celebrate the success of their peers.
+
+Recognition programs are designed to complement—not replace—the Company's compensation, bonus, and promotion programs described in **Section 5 – Compensation and Payroll**.
+
+---
+
+## Everyday Recognition
+
+Recognition should be incorporated into daily work rather than limited to annual events.
+
+Managers are encouraged to acknowledge:
+
+- Project milestones
+- Customer compliments
+- Process improvements
+- Innovation
+- Collaboration
+- Leadership behaviors
+- Mentorship
+- Exceptional customer service
+
+Recognition may occur through:
+
+- Team meetings
+- Company communication platforms
+- Personalized thank-you messages
+- Department newsletters
+- Executive announcements
+- Internal social recognition tools
+
+Employees are encouraged to celebrate colleagues who demonstrate Company values in their daily work.
+
+---
+
+## Peer Recognition Platform
+
+Company Inc. provides an online peer recognition platform that allows employees to recognize coworkers across departments and locations.
+
+Employees may send digital recognition messages for accomplishments including:
+
+- Outstanding teamwork
+- Customer support
+- Innovation
+- Knowledge sharing
+- Leadership
+- Problem-solving
+- Mentoring
+- Cross-functional collaboration
+
+Each employee receives **100 recognition points per quarter** that may be awarded to coworkers.
+
+Recognition points may be redeemed through the Company's rewards catalog for:
+
+- Gift cards
+- Charitable donations
+- Company merchandise
+- Professional development resources
+- Wellness products
+- Experience-based rewards
+
+Unused recognition points expire at the end of each calendar quarter.
+
+---
+
+## Spot Bonus Program
+
+Managers may recommend Spot Bonuses to recognize exceptional contributions outside the normal performance review cycle.
+
+Examples include:
+
+- Successful product launches
+- Critical customer recoveries
+- Process automation
+- Significant cost savings
+- Outstanding innovation
+- Emergency business support
+- Exceptional teamwork
+
+Typical Spot Bonus awards range from:
+
+| Achievement Level | Award Amount |
+|-------------------|-------------|
+| Team Contribution | $250 |
+| Exceptional Individual Contribution | $500 |
+| Major Business Impact | $1,000 |
+| Executive Recognition Award | Up to $2,500 |
+
+Spot Bonuses require approval based on delegated financial authority.
+
+Spot Bonuses are generally paid during the next regular payroll cycle and are subject to applicable tax withholding.
+
+---
+
+## Quarterly Excellence Awards
+
+Each quarter, Company Inc. recognizes outstanding employees through the Quarterly Excellence Awards program.
+
+Awards are presented in categories such as:
+
+- Innovation Award
+- Customer Excellence Award
+- Leadership Award
+- Collaboration Award
+- Operational Excellence Award
+- Rising Star Award
+
+Employees may be nominated by:
+
+- Managers
+- Peers
+- Executive leaders
+- Cross-functional partners
+
+Award recipients receive:
+
+- Executive recognition
+- Personalized award certificate
+- Company-wide announcement
+- Recognition trophy
+- Cash award of **$1,500**
+
+Selection committees evaluate nominations using standardized scoring criteria aligned with Company values.
+
+---
+
+## Annual Excellence Awards
+
+The Annual Excellence Awards recognize exceptional performance and leadership throughout the calendar year.
+
+Award categories may include:
+
+- Employee of the Year
+- Manager of the Year
+- Engineering Excellence
+- Customer Success Excellence
+- Sales Achievement
+- Innovation Champion
+- Culture Ambassador
+- Outstanding Team Award
+
+Recipients receive:
+
+- Executive recognition during the Annual Company Meeting
+- Engraved commemorative award
+- Additional paid day off
+- Cash award of **$5,000**
+
+Award decisions are made by the Executive Leadership Team.
+
+---
+
+## Innovation Recognition
+
+Innovation is one of Company Inc.'s core values.
+
+Employees who submit ideas resulting in measurable business improvements may receive additional recognition.
+
+Examples include:
+
+- Product innovations
+- Automation improvements
+- Operational efficiencies
+- Security enhancements
+- Customer experience improvements
+- Cost reduction initiatives
+
+Ideas generating documented annual savings exceeding **$50,000** may qualify for Executive Innovation Awards.
+
+---
+
+## Customer Appreciation Recognition
+
+Employees frequently receive positive feedback from customers.
+
+Customer compliments submitted through:
+
+- Customer Success
+- Support tickets
+- Surveys
+- Net Promoter Score comments
+- Account Managers
+
+may be shared with employees and managers.
+
+Outstanding customer recognition may contribute positively to annual performance evaluations.
+
+---
+
+## Service Anniversary Program
+
+Company Inc. values employee loyalty and long-term commitment.
+
+Employees are recognized at the following milestones:
+
+| Years of Service | Recognition |
+|-----------------|-------------|
+| 1 Year | Certificate and Company gift |
+| 3 Years | Personalized award |
+| 5 Years | Gift valued at approximately $500 |
+| 10 Years | Executive recognition and gift valued at approximately $1,000 |
+| 15 Years | Travel voucher valued at approximately $2,000 |
+| 20+ Years | Executive recognition and customized award |
+
+Service anniversaries are celebrated during quarterly Company meetings.
+
+---
+
+## Team Celebrations
+
+Departments are encouraged to celebrate major accomplishments such as:
+
+- Product releases
+- Customer milestones
+- Revenue achievements
+- Successful audits
+- Major project completions
+
+Reasonable celebration expenses may be reimbursed in accordance with Company expense policies.
+
+---
+
+## Referral Recognition
+
+Employees play an important role in attracting talented professionals.
+
+Employees who refer candidates successfully hired into eligible positions may receive referral bonuses.
+
+Typical referral bonuses include:
+
+| Position Level | Referral Bonus |
+|---------------|----------------|
+| Entry-Level | $1,000 |
+| Professional | $2,000 |
+| Senior Technical | $3,500 |
+| Hard-to-Fill Specialized Roles | Up to $5,000 |
+
+Referral bonuses are generally paid after the new employee successfully completes **90 days** of employment.
+
+Certain positions may be excluded from referral eligibility.
+
+---
+
+## Recognition Principles
+
+Recognition should always be:
+
+- Fair
+- Inclusive
+- Timely
+- Respectful
+- Performance-based
+- Consistent with Company values
+
+Recognition programs will be periodically reviewed to ensure equitable participation across departments and employee populations.
+
+---
+
+# 12. Diversity, Equity, and Inclusion
+
+## Commitment
+
+Company Inc. believes that diverse perspectives drive innovation, improve decision-making, and strengthen business performance.
+
+We are committed to creating an inclusive workplace where every employee is treated with dignity, fairness, and respect regardless of background, identity, or personal characteristics protected by applicable law.
+
+An inclusive workplace encourages employees to contribute their ideas, collaborate openly, and develop professionally without barriers created by discrimination or bias.
+
+Our commitment to Diversity, Equity, and Inclusion (DEI) extends to every stage of the employee lifecycle, including:
+
+- Recruitment
+- Hiring
+- Onboarding
+- Career development
+- Promotions
+- Compensation
+- Recognition
+- Leadership opportunities
+- Separation from employment
+
+---
+
+## Equal Employment Opportunity
+
+Company Inc. provides equal employment opportunities to qualified applicants and employees.
+
+Employment decisions are based upon legitimate business factors including:
+
+- Qualifications
+- Experience
+- Skills
+- Performance
+- Business needs
+
+The Company prohibits unlawful discrimination, harassment, or retaliation.
+
+Human Resources investigates all reports promptly and confidentially to the extent practical.
+
+---
+
+## Inclusive Hiring Practices
+
+The Company continually evaluates hiring practices to promote equitable employment opportunities.
+
+Recruitment initiatives may include:
+
+- Diverse candidate sourcing
+- Structured interview guides
+- Standardized evaluation criteria
+- Interviewer bias awareness training
+- Skills-based assessments
+- Diverse interview panels where practical
+
+Hiring managers should evaluate candidates using consistent job-related criteria.
+
+---
+
+## Employee Resource Groups (ERGs)
+
+Company Inc. supports voluntary Employee Resource Groups that foster networking, mentorship, professional development, and community engagement.
+
+Examples may include:
+
+- Women in Technology
+- Early Career Professionals
+- Veterans Network
+- Parents and Caregivers
+- Accessibility Alliance
+- Multicultural Network
+- LGBTQ+ Allies
+- Sustainability Network
+
+Participation in ERGs is voluntary.
+
+Employees may participate during approved working hours for designated Company-sponsored activities.
+
+Each ERG receives an annual operating budget of up to **$10,000**, subject to Finance approval.
+
+---
+
+## Diversity Council
+
+The Company maintains a cross-functional Diversity Council responsible for:
+
+- Reviewing DEI initiatives
+- Monitoring organizational metrics
+- Supporting Employee Resource Groups
+- Recommending policy improvements
+- Promoting inclusive leadership practices
+- Advising executive leadership
+
+The Council generally meets on a quarterly basis.
+
+---
+
+## DEI Education
+
+Employees complete mandatory DEI training during onboarding and at least once every **24 months** thereafter.
+
+Training topics may include:
+
+- Inclusive communication
+- Unconscious bias awareness
+- Respectful workplace behavior
+- Inclusive leadership
+- Cultural competency
+- Accessibility awareness
+- Bystander intervention
+
+Managers receive additional leadership-focused inclusion training.
+
+---
+
+## Accessibility and Reasonable Accommodations
+
+Company Inc. is committed to providing reasonable workplace accommodations consistent with applicable law.
+
+Employees requesting accommodations should contact Human Resources.
+
+The interactive process may involve:
+
+- Discussion of job responsibilities
+- Medical documentation where appropriate
+- Evaluation of reasonable accommodations
+- Implementation planning
+- Periodic review
+
+Examples may include:
+
+- Modified workstations
+- Assistive technology
+- Flexible scheduling
+- Remote work arrangements
+- Accessible meeting formats
+
+---
+
+## Inclusive Workplace Practices
+
+Employees are encouraged to contribute to an inclusive culture by:
+
+- Listening respectfully
+- Valuing different perspectives
+- Using inclusive language
+- Supporting colleagues
+- Addressing inappropriate behavior promptly
+- Participating in Company learning opportunities
+
+Professional disagreement is encouraged when conducted respectfully.
+
+Harassment, bullying, discrimination, or exclusionary conduct are inconsistent with Company values.
+
+---
+
+## Supplier Diversity
+
+Where practical, Company Inc. seeks to expand opportunities for qualified suppliers representing diverse businesses.
+
+Supplier evaluation may consider:
+
+- Quality
+- Cost
+- Service
+- Innovation
+- Sustainability
+- Supplier diversity participation
+
+Supplier diversity initiatives are balanced with operational, financial, and legal requirements.
+
+---
+
+## Measuring Progress
+
+The Company periodically reviews organizational metrics to evaluate DEI initiatives.
+
+Examples include:
+
+- Employee engagement
+- Promotion trends
+- Retention
+- Hiring outcomes
+- Leadership development participation
+- Training completion
+
+Data is reviewed in aggregate to support organizational improvement while respecting employee privacy.
+
+---
+
+## Reporting Concerns
+
+Employees who experience or observe discrimination, harassment, retaliation, or exclusionary behavior are encouraged to report concerns promptly through:
+
+- Immediate manager
+- Human Resources
+- Ethics Hotline
+- Legal Department where appropriate
+
+Reports will be investigated in accordance with **Section 13 – Employee Grievance Procedure**.
+
+Retaliation against employees who raise concerns in good faith is strictly prohibited.
+
+---
+
+## Continuous Improvement
+
+Building an inclusive workplace requires continuous effort.
+
+Company Inc. regularly reviews policies, practices, employee feedback, and business outcomes to identify opportunities for improvement.
+
+Employees are encouraged to participate actively by:
+
+- Providing constructive feedback
+- Joining Employee Resource Groups
+- Participating in training
+- Supporting inclusive leadership
+- Mentoring colleagues
+- Demonstrating respect in every interaction
+
+Creating an environment where every employee can contribute fully strengthens both our people and our business.
+
+Cross-reference: Employees seeking to report workplace concerns should review **Section 13 – Employee Grievance Procedure**. Employees interested in leadership development opportunities should also review **Section 9 – Learning and Development**.
+
+---
+# 13. Employee Grievance Procedure
+
+## Purpose
+
+Company Inc. is committed to maintaining a professional, respectful, and collaborative work environment where employees feel comfortable raising workplace concerns without fear of retaliation. Open communication allows concerns to be addressed promptly, supports employee engagement, and contributes to a positive workplace culture.
+
+Employees are encouraged to raise questions, suggestions, or concerns as early as possible. Many workplace issues can be resolved quickly through open discussion before they develop into larger problems.
+
+This procedure applies to concerns involving, but not limited to:
+
+- Workplace conduct
+- Interpersonal conflicts
+- Policy interpretation
+- Performance feedback disputes
+- Harassment
+- Discrimination
+- Retaliation
+- Workplace safety concerns
+- Ethical concerns
+- Violations of Company policy
+
+Certain matters, such as compensation appeals, benefits eligibility, or legal claims, may also be governed by separate Company policies or applicable laws.
+
+This policy should be read together with:
+
+- Section 10 – Workplace Safety and Ergonomics
+- Section 12 – Diversity, Equity, and Inclusion
+- Company Code of Conduct
+- Ethics Hotline Policy
+
+---
+
+## Guiding Principles
+
+Company Inc. administers workplace concerns according to the following principles:
+
+- Fairness
+- Respect
+- Confidentiality
+- Timeliness
+- Objectivity
+- Non-retaliation
+- Documentation
+- Consistency
+
+Every concern is evaluated based upon available information and applicable Company policies.
+
+The existence of a grievance does not automatically indicate policy misconduct; each matter will be reviewed independently.
+
+---
+
+## Informal Resolution
+
+Whenever appropriate, employees are encouraged to attempt informal resolution before initiating a formal grievance.
+
+Employees may:
+
+- Discuss concerns directly with the individual involved.
+- Request assistance from their manager.
+- Consult Human Resources.
+- Request facilitated mediation.
+- Seek guidance from another appropriate leader.
+
+Informal discussions often resolve issues involving:
+
+- Miscommunication
+- Project responsibilities
+- Scheduling concerns
+- Collaboration challenges
+- Work allocation
+- Team expectations
+
+Employees are never required to confront another individual directly if they believe doing so would be inappropriate or unsafe.
+
+---
+
+## Manager Responsibilities
+
+Managers are expected to respond promptly and professionally when employees raise concerns.
+
+Managers should:
+
+- Listen objectively.
+- Ask clarifying questions.
+- Document relevant information.
+- Protect confidentiality.
+- Avoid retaliation.
+- Consult Human Resources when appropriate.
+- Escalate serious allegations immediately.
+
+Managers should avoid making promises regarding investigation outcomes before a review has been completed.
+
+---
+
+## Formal Complaint Process
+
+If informal resolution is unsuccessful or inappropriate, employees may submit a formal complaint.
+
+Formal complaints should generally include:
+
+- Description of the concern
+- Relevant dates
+- Individuals involved
+- Witnesses (if any)
+- Supporting documentation
+- Desired resolution (if known)
+
+Complaints may be submitted through:
+
+- Human Resources
+- Ethics Hotline
+- Department leadership
+- Legal Department (where applicable)
+
+Anonymous reports may be accepted through the Company's confidential reporting system where permitted by law.
+
+---
+
+## Complaint Acknowledgment
+
+Human Resources generally acknowledges receipt of a formal complaint within **three (3) business days**.
+
+Acknowledgment typically includes:
+
+- Confirmation of receipt
+- Case reference number
+- Assigned investigator
+- Initial explanation of next steps
+- Estimated investigation timeline
+
+Some matters may require immediate interim actions before a full investigation begins.
+
+---
+
+## Investigation Process
+
+The investigation process seeks to establish relevant facts through objective review.
+
+Investigations may include:
+
+- Employee interviews
+- Witness interviews
+- Document review
+- Email review
+- System log analysis
+- Policy review
+- Security footage review where available
+- Consultation with subject matter experts
+
+The Company strives to conduct investigations professionally while respecting the privacy of all participants.
+
+Employees are expected to cooperate honestly throughout the investigation process.
+
+---
+
+## Investigation Timeline
+
+Although timelines vary depending upon complexity, Company Inc. generally aims to complete investigations within:
+
+| Investigation Type | Target Completion |
+|-------------------|------------------|
+| Routine Workplace Concern | 10–15 business days |
+| Harassment Investigation | 15–20 business days |
+| Complex Multi-Party Investigation | 30 business days |
+| Regulatory or Legal Investigation | As required |
+
+If additional time is necessary, Human Resources will generally provide periodic status updates to the reporting employee where appropriate.
+
+---
+
+## Confidentiality
+
+The Company makes reasonable efforts to maintain confidentiality throughout the grievance process.
+
+Information is shared only with individuals who have a legitimate business need to know.
+
+Absolute confidentiality cannot always be guaranteed because:
+
+- Witnesses may need to be interviewed.
+- Legal obligations may require disclosure.
+- Corrective action may require management involvement.
+
+Employees participating in investigations are expected to respect confidentiality to preserve the integrity of the process.
+
+---
+
+## Interim Protective Measures
+
+When appropriate, the Company may implement temporary measures during an investigation.
+
+Examples include:
+
+- Temporary reporting changes
+- Modified work schedules
+- Temporary remote work arrangements
+- Administrative leave
+- Workspace relocation
+- Restricted system access
+
+Interim measures are not disciplinary actions and should not be interpreted as findings regarding the allegations.
+
+---
+
+## Investigation Outcomes
+
+Following completion of the investigation, Human Resources, in consultation with Legal and management where appropriate, will determine whether Company policies were violated.
+
+Possible outcomes include:
+
+- No policy violation identified
+- Coaching
+- Additional training
+- Written warning
+- Performance Improvement Plan (PIP)
+- Suspension
+- Reassignment
+- Demotion
+- Termination of employment
+- Other corrective actions
+
+Due to privacy obligations, the Company may not disclose specific disciplinary actions taken regarding another employee.
+
+---
+
+## Appeals Process
+
+Employees who believe their concern was not properly addressed may submit a written appeal within **10 business days** after receiving notification that the investigation has concluded.
+
+Appeals should include:
+
+- Case reference number
+- Reason for appeal
+- New information, if available
+- Specific concerns regarding the investigation
+
+Appeals are generally reviewed by:
+
+- Senior Human Resources leadership
+- Legal Department (where appropriate)
+- Executive leadership for significant matters
+
+Appeal decisions are generally communicated within **15 business days**.
+
+---
+
+## Protection Against Retaliation
+
+Company Inc. strictly prohibits retaliation against employees who:
+
+- Report concerns in good faith
+- Participate in investigations
+- Serve as witnesses
+- Request workplace accommodations
+- Cooperate with regulatory inquiries
+
+Retaliation may include:
+
+- Demotion
+- Reduction in responsibilities
+- Unjustified negative evaluations
+- Threats
+- Intimidation
+- Exclusion
+- Termination motivated by protected activity
+
+Employees who believe retaliation has occurred should immediately notify Human Resources or use the Ethics Hotline.
+
+---
+
+## Record Retention
+
+Investigation records are maintained securely in accordance with Company record retention requirements and applicable legal obligations.
+
+Access is limited to authorized personnel.
+
+Investigation documentation is generally retained for a minimum of **seven (7) years**, unless longer retention is required by law or pending litigation.
+
+---
+
+## Continuous Improvement
+
+Human Resources periodically reviews grievance trends to identify opportunities for organizational improvement.
+
+Review areas may include:
+
+- Workplace culture
+- Policy effectiveness
+- Manager training
+- Employee engagement
+- Process improvements
+
+The objective is not only to resolve individual concerns but also to strengthen the workplace for all employees.
+
+---
+
+# 14. Offboarding and Exit Process
+
+## Purpose
+
+The employment relationship eventually concludes for a variety of reasons, including resignation, retirement, organizational restructuring, completion of temporary assignments, or other business circumstances.
+
+Company Inc. strives to make the separation process professional, respectful, and well organized while protecting Company assets, customer information, and intellectual property.
+
+The offboarding process also provides valuable opportunities to gather employee feedback and ensure a smooth transition of responsibilities.
+
+---
+
+## Voluntary Resignation
+
+Employees choosing to resign are encouraged to provide written notice to their manager.
+
+The standard notice period is:
+
+| Employee Level | Recommended Notice |
+|---------------|-------------------|
+| Individual Contributor | 2 weeks |
+| Manager | 3 weeks |
+| Director | 4 weeks |
+| Vice President and Above | 30 days or employment agreement |
+
+Longer notice periods may be requested for specialized or customer-facing roles.
+
+Providing appropriate notice helps support effective transition planning.
+
+---
+
+## Retirement
+
+Employees planning retirement are encouraged to notify Human Resources at least **90 days** before their intended retirement date whenever practical.
+
+Human Resources will provide information regarding:
+
+- Retirement benefit options
+- Final payroll
+- Benefit continuation
+- Retirement plan distribution
+- Recognition programs
+- Return of Company property
+
+Employees reaching significant service milestones may be recognized during Company meetings.
+
+---
+
+## Involuntary Separation
+
+Employment may be terminated for business or performance-related reasons including:
+
+- Organizational restructuring
+- Position elimination
+- Performance deficiencies
+- Policy violations
+- Misconduct
+- Business closure
+
+Whenever appropriate, Human Resources will coordinate separation meetings with the employee's manager.
+
+Separation decisions are made in accordance with applicable employment laws and Company policies.
+
+---
+
+## Reduction in Force
+
+When business conditions require workforce reductions, Company Inc. considers multiple factors including:
+
+- Business priorities
+- Organizational structure
+- Required capabilities
+- Financial conditions
+- Legal obligations
+
+Where applicable, affected employees may receive:
+
+- Severance pay
+- Career transition assistance
+- Extended benefits
+- Outplacement services
+
+Eligibility depends upon Company policy and applicable law.
+
+---
+
+## Knowledge Transfer
+
+Managers are responsible for coordinating an effective transition of work responsibilities.
+
+Departing employees should assist with:
+
+- Project documentation
+- Status reports
+- Process documentation
+- Customer introductions
+- Credential transfers
+- Training replacement employees where practical
+
+Knowledge transfer activities should begin as early as possible following notice of separation.
+
+---
+
+## Return of Company Property
+
+Employees must return all Company property on or before their final working day unless otherwise instructed.
+
+Examples include:
+
+- Laptop computers
+- Mobile phones
+- Security badges
+- Access cards
+- Hardware tokens
+- Monitors
+- Docking stations
+- Company credit cards
+- Keys
+- Documents
+- Storage devices
+
+Remote employees will receive prepaid shipping instructions for returning Company equipment.
+
+Employees should not retain confidential Company information following separation.
+
+---
+
+## System Access
+
+Information Technology will coordinate the secure removal of system access.
+
+Access may include:
+
+- Email accounts
+- Collaboration platforms
+- VPN
+- Source code repositories
+- Customer systems
+- Internal applications
+- Building access credentials
+
+System access is generally disabled immediately following the employee's final working day unless business requirements require alternative timing.
+
+---
+
+## Final Compensation
+
+Employees receive final wages in accordance with applicable employment laws.
+
+Final compensation may include:
+
+- Regular wages
+- Approved overtime
+- Approved expense reimbursements
+- Commission payments where applicable
+- Accrued unused PTO where legally required
+
+Payroll timing varies according to local legal requirements.
+
+Questions regarding final compensation should be directed to Payroll or Human Resources.
+
+---
+
+## Exit Interview
+
+Whenever practical, Human Resources invites departing employees to participate in a confidential exit interview.
+
+Topics may include:
+
+- Overall employment experience
+- Manager feedback
+- Career development
+- Compensation and benefits
+- Workplace culture
+- Improvement suggestions
+- Reason for departure
+
+Exit interview feedback is reviewed in aggregate to identify organizational improvement opportunities.
+
+Participation is voluntary.
+
+---
+
+## Benefits Continuation (COBRA)
+
+Employees losing employer-sponsored health coverage may be eligible to continue certain healthcare benefits under applicable continuation coverage laws, including **COBRA** where applicable.
+
+Continuation materials generally include:
+
+- Coverage options
+- Enrollment deadlines
+- Premium costs
+- Payment instructions
+- Coverage duration
+
+Employees are responsible for reviewing continuation documentation promptly to avoid coverage interruptions.
+
+---
+
+## Confidentiality Obligations
+
+Confidentiality obligations continue after employment ends.
+
+Former employees remain responsible for protecting:
+
+- Trade secrets
+- Customer information
+- Proprietary software
+- Business strategies
+- Financial information
+- Intellectual property
+
+These obligations are governed by employment agreements and applicable law.
+
+---
+
+## Non-Disparagement and Professional Conduct
+
+Where included in employment agreements or separation agreements, employees may be subject to non-disparagement provisions consistent with applicable law.
+
+Regardless of contractual obligations, Company Inc. encourages all departing employees to maintain professionalism and respect toward:
+
+- Former colleagues
+- Customers
+- Business partners
+- Company reputation
+
+Likewise, Company representatives are expected to treat departing employees with dignity and respect throughout the separation process.
+
+---
+
+## Alumni Network
+
+Former employees remain valued members of the broader Company community.
+
+Eligible former employees may participate in the Company's alumni network, which may provide:
+
+- Professional networking opportunities
+- Company news
+- Rehire opportunities
+- Industry events
+- Referral opportunities
+
+Employees interested in future employment with Company Inc. are encouraged to monitor available positions through the Company's Careers Portal.
+
+---
+
+## Rehire Eligibility
+
+Former employees who separated in good standing may be eligible for future employment.
+
+Rehire decisions consider:
+
+- Previous performance
+- Reason for separation
+- Business needs
+- Position availability
+- Skills and experience
+
+Previous employment does not guarantee future employment.
+
+Cross-reference: Questions regarding final benefits should also be reviewed in **Section 6 – Benefits Overview**, while final payroll matters are governed by **Section 5 – Compensation and Payroll**.
+
+---
+# 15. Policy Acknowledgments and Amendments
+
+## Purpose
+
+This Employee Handbook is intended to provide employees with an overview of Company Inc.'s employment policies, workplace expectations, benefits, and organizational practices. It serves as a reference guide to support consistent decision-making and promote a positive, productive, and compliant work environment.
+
+Employees are expected to familiarize themselves with the contents of this handbook and seek clarification from Human Resources whenever questions arise regarding Company policies or procedures.
+
+This handbook does not create a contract of employment or guarantee employment for any specific duration unless expressly stated in a written employment agreement signed by authorized Company representatives.
+
+---
+
+## Employee Responsibility
+
+Every employee shares responsibility for understanding and complying with Company policies.
+
+Employees are expected to:
+
+- Read this handbook in its entirety.
+- Complete all required policy acknowledgments.
+- Comply with Company standards of conduct.
+- Participate in required training programs.
+- Maintain current contact information.
+- Report suspected policy violations.
+- Cooperate during workplace investigations.
+- Protect Company assets and confidential information.
+
+Failure to comply with Company policies may result in corrective action, up to and including termination of employment, subject to applicable law.
+
+---
+
+## Policy Interpretation
+
+Human Resources is responsible for administering and interpreting the policies contained in this handbook.
+
+Questions regarding:
+
+- Employment practices
+- Benefits
+- Leave policies
+- Workplace conduct
+- Performance expectations
+- Safety requirements
+- Payroll administration
+- Employee relations
+
+should be directed to Human Resources.
+
+Where conflicts exist between this handbook and applicable laws, regulations, collective bargaining agreements, or written employment contracts, the applicable legal or contractual requirements shall govern.
+
+---
+
+## Policy Updates and Amendments
+
+As Company Inc. grows and business requirements evolve, policies may be revised periodically.
+
+Reasons for policy updates may include:
+
+- Changes in employment law
+- Regulatory requirements
+- Business expansion
+- Organizational restructuring
+- Technology changes
+- Security enhancements
+- Industry best practices
+- Employee feedback
+
+The Company reserves the right to revise, suspend, replace, or discontinue policies at any time, subject to applicable legal requirements.
+
+Whenever practical, employees will receive advance notice before significant policy changes become effective.
+
+---
+
+## Policy Change Notification Process
+
+Policy revisions are communicated using one or more of the following methods:
+
+- Company-wide email announcements
+- Human Resources Information System (HRIS) notifications
+- Manager communications
+- Intranet announcements
+- Department meetings
+- Required training sessions
+
+Employees are responsible for reviewing updated policies promptly upon notification.
+
+Where required, employees may be asked to complete an updated electronic acknowledgment confirming receipt of revised policies.
+
+---
+
+## Electronic Handbook Distribution
+
+The official version of the Employee Handbook is maintained electronically through the Company's Human Resources Information System (HRIS).
+
+Employees may access the handbook at any time using their Company credentials.
+
+Printed copies may be provided upon request; however, the electronically published version shall be considered the official and most current version.
+
+Employees are encouraged to verify they are referencing the latest version before relying on any policy.
+
+---
+
+## Questions Regarding Policies
+
+Employees who have questions regarding handbook provisions should first consult:
+
+1. Their immediate manager.
+2. Human Resources Business Partner.
+3. Human Resources Service Center.
+4. Legal Department (where appropriate).
+
+Seeking clarification before taking action is encouraged whenever policy interpretation is uncertain.
+
+---
+
+## Compliance with Applicable Laws
+
+Company Inc. is committed to complying with all applicable federal, state, provincial, and local employment laws in the jurisdictions in which it operates.
+
+Where local legal requirements provide greater employee protections than those described in this handbook, applicable law shall take precedence.
+
+Nothing in this handbook is intended to limit any employee rights protected under applicable employment legislation.
+
+---
+
+## At-Will Employment Statement
+
+Unless otherwise provided by applicable law or a written employment agreement signed by an authorized Company executive, employment with Company Inc. is considered **at-will**.
+
+This means that either the employee or the Company may terminate the employment relationship at any time, with or without notice, and with or without cause, subject to applicable legal requirements.
+
+No manager or supervisor has authority to alter the at-will employment relationship except through a written agreement approved by authorized executive leadership.
+
+---
+
+## Severability
+
+If any provision of this handbook is determined to be invalid or unenforceable under applicable law, the remaining provisions shall continue in full force and effect.
+
+The invalid provision shall be interpreted, modified, or replaced to the extent necessary to comply with applicable legal requirements while preserving the original intent whenever possible.
+
+---
+
+## Employee Handbook Acknowledgment
+
+Each employee is required to acknowledge receipt of the Employee Handbook within **10 business days** of:
+
+- Initial employment,
+- Receiving a revised handbook, or
+- Being notified of significant policy updates.
+
+Acknowledgment confirms that the employee has:
+
+- Received access to the handbook.
+- Reviewed its contents.
+- Understood their responsibility to comply with Company policies.
+- Been informed that questions may be directed to Human Resources.
+- Understood that the handbook may be revised from time to time.
+
+Acknowledgment does **not** indicate agreement with every policy, nor does it create a contract of employment.
+
+---
+
+## Electronic Signature
+
+Company Inc. utilizes secure electronic signature technology for handbook acknowledgments.
+
+Electronic acknowledgments are considered legally equivalent to handwritten signatures where permitted by applicable law.
+
+Employees are responsible for ensuring acknowledgments are completed by the stated deadline.
+
+Failure to complete required acknowledgments may result in follow-up reminders or temporary restrictions on access to certain internal systems until compliance requirements are satisfied.
+
+---
+
+## Employee Acknowledgment Form
+
+**Employee Name:** _______________________________________
+
+**Employee ID:** __________________________________________
+
+**Department:** ___________________________________________
+
+**Manager:** ______________________________________________
+
+I acknowledge that I have received access to the Company Inc. Employee Handbook, Version **3.2**, effective **January 1, 2026**.
+
+I understand that it is my responsibility to read, understand, and comply with the policies and procedures described in this handbook.
+
+I understand that this handbook is intended as a general guide and does not create a contract of employment.
+
+I understand that Company Inc. may revise or amend policies described in this handbook as business needs, legal requirements, or organizational priorities change.
+
+I understand that questions regarding handbook policies should be directed to Human Resources.
+
+**Employee Signature:** _______________________________
+
+**Date:** _____________________________________________
+
+---
+
+# Document Control
+
+## Document Information
+
+| Field | Information |
+|--------|-------------|
+| Document Title | Company Inc. Employee Handbook |
+| Document Number | HR-HBK-2026-001 |
+| Version | 3.2 |
+| Effective Date | January 1, 2026 |
+| Review Frequency | Annual |
+| Document Classification | Internal Use Only |
+| Language | English |
+| Format | Electronic PDF / HRIS |
+| Total Applicable Audience | Approximately 500 Employees |
+
+---
+
+## Document Ownership
+
+**Document Owner:** Human Resources Department
+
+**Business Owner:** Chief Human Resources Officer (CHRO)
+
+**Policy Administrator:** Human Resources Operations
+
+**Legal Reviewer:** Corporate Legal Department
+
+**Executive Sponsor:** Chief Executive Officer (CEO)
+
+---
+
+## Approval Authority
+
+This handbook has been reviewed and approved by:
+
+| Role | Responsibility |
+|------|----------------|
+| Chief Executive Officer | Executive Approval |
+| Chief Human Resources Officer | Policy Approval |
+| General Counsel | Legal Review |
+| Chief Financial Officer | Compensation and Benefits Review |
+| Chief Information Security Officer | Security Policy Review |
+
+---
+
+## Revision History
+
+| Version | Effective Date | Description |
+|---------|----------------|-------------|
+| 1.0 | January 1, 2020 | Initial Employee Handbook Release |
+| 2.0 | January 1, 2022 | Benefits and Hybrid Work Updates |
+| 3.0 | January 1, 2024 | Comprehensive Policy Review |
+| 3.1 | July 1, 2025 | Regulatory Compliance Updates |
+| 3.2 | January 1, 2026 | Current Edition |
+
+---
+
+## Annual Review Schedule
+
+The Human Resources Department will conduct a comprehensive review of this handbook at least **once every twelve (12) months**.
+
+Additional reviews may occur following:
+
+- Legislative changes
+- Organizational restructuring
+- Mergers or acquisitions
+- Significant operational changes
+- Introduction of new employee benefit programs
+- Security or compliance requirements
+
+---
+
+## Distribution
+
+The Employee Handbook is distributed through:
+
+- Human Resources Information System (HRIS)
+- New Employee Onboarding Portal
+- Company Intranet
+- Human Resources Service Center
+
+Employees are responsible for ensuring they have access to the most current version.
+
+---
+
+## Document Retention
+
+Superseded handbook versions shall be retained in accordance with the Company's Records Management Policy.
+
+Current and historical versions may be maintained for a minimum of **seven (7) years**, or longer where required by applicable law.
+
+---
+
+## Confidentiality
+
+This handbook contains internal Company policies and procedures intended for employees of Company Inc.
+
+Employees should not reproduce, distribute, or publish this document outside the Company without prior authorization, except where disclosure is required by law.
+
+---
+
+## Contact Information
+
+Questions regarding this handbook should be directed to:
+
+**Human Resources Department**  
+Company Inc.
+
+General HR Support: hr@companyinc.example
+
+Payroll Inquiries: payroll@companyinc.example
+
+Benefits Administration: benefits@companyinc.example
+
+Employee Relations: employeerelations@companyinc.example
+
+---
+
+**End of Document**
+
+**Company Inc. Employee Handbook**  
+**Version 3.2**  
+**Effective Date:** January 1, 2026
+
+© 2026 Company Inc. All rights reserved.

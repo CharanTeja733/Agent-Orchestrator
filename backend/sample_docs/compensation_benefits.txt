@@ -1,0 +1,104 @@
+## Compensation and Benefits Policy
+
+### 1. Purpose
+This policy outlines the compensation structure, benefits programs, and reward systems at Company Inc. Our philosophy is to offer competitive, equitable, and performance-aligned compensation that attracts and retains top talent.
+
+### 2. Compensation Philosophy
+Company Inc benchmarks compensation against the 65th percentile of the technology industry in our geographic markets. We believe in:
+- Pay equity across gender, race, and other protected characteristics
+- Rewarding high performance through differentiated compensation
+- Transparency in compensation structure while maintaining individual privacy
+- Regular market reviews to ensure ongoing competitiveness
+
+### 3. Salary Structure
+
+#### 3.1 Job Levels and Salary Bands
+Each position is assigned to one of the following levels:
+- L1 Associate / Junior Engineer: $50,000 - $75,000
+- L2 Specialist / Engineer: $70,000 - $100,000
+- L3 Senior Specialist / Senior Engineer: $95,000 - $140,000
+- L4 Lead / Principal Engineer: $130,000 - $180,000
+- L5 Manager / Senior Principal: $160,000 - $220,000
+- L6 Director / Distinguished Engineer: $200,000 - $280,000
+- L7 VP / Fellow: $260,000 - $350,000
+- L8 C-Suite / Senior Fellow: $330,000 - $500,000
+
+#### 3.2 Pay Schedule
+- Salaries are paid bi-weekly (26 pay periods per year)
+- Pay day is every other Friday
+- Direct deposit is mandatory; physical checks incur a $10 processing fee
+- Pay stubs are available electronically through the ADP portal
+
+#### 3.3 Salary Reviews
+- Annual merit review cycle occurs in January
+- Adjustments are based on performance rating, market data, and internal equity
+- Promotion-related increases are effective from the promotion date
+- Off-cycle adjustments require VP and HR approval and are limited to retention and market adjustment cases
+
+### 4. Variable Compensation
+
+#### 4.1 Annual Performance Bonus
+- L1-L3: Target bonus of 10% of base salary
+- L4-L5: Target bonus of 15% of base salary
+- L6-L7: Target bonus of 25% of base salary
+- L8: Target bonus of 40% of base salary
+- Actual payout ranges from 0% to 200% of target based on company performance and individual rating
+- Bonuses are paid in February following the performance year
+
+#### 4.2 Sales Commission
+- Sales roles have a separate commission structure defined in individual comp plans
+- Commission is paid quarterly based on closed revenue
+- Accelerators apply above 100% quota attainment
+- Commission disputes must be raised within 30 days of payment
+
+#### 4.3 Equity Compensation
+- Stock options (ISO for US employees, NSO for international) are granted at hire and annually
+- Initial grant vests over 4 years: 25% after 1 year (cliff), then monthly thereafter
+- Refresh grants are based on performance and retention considerations
+- Exercise window for departing employees: 90 days from termination date
+
+### 5. Benefits Programs
+
+#### 5.1 Health Insurance
+- Medical: Company covers 85% of premium for employees and 60% for dependents
+- Dental: Company covers 100% of employee premium, 50% for dependents
+- Vision: Company covers 100% of employee premium, 50% for dependents
+- Enrollment is within 30 days of hire or during annual open enrollment (November)
+- Coverage begins on the first day of the month following enrollment
+
+#### 5.2 Retirement Plans
+- 401(k) plan with company match: 100% of first 4% of employee contributions, 50% of next 2%
+- Immediate vesting on employee contributions; 3-year graded vesting on employer match
+- Roth 401(k) option available
+- Annual contribution limits follow IRS guidelines
+
+#### 5.3 Life and Disability Insurance
+- Basic life insurance: 2x annual salary (company-paid)
+- Supplemental life insurance: available at employee cost up to 5x salary
+- Short-term disability: 60% of salary for up to 12 weeks
+- Long-term disability: 60% of salary after 12 weeks, up to age 65
+
+### 6. Additional Benefits
+
+#### 6.1 Professional Development
+- Annual learning stipend: $3,000 per employee
+- Conference attendance: up to $2,500 per year with manager approval
+- Certification exam fees reimbursed upon passing
+- Internal training programs and mentorship opportunities
+
+#### 6.2 Wellness Programs
+- Gym membership reimbursement: up to $75 per month
+- Mental health support: 12 free counseling sessions per year through EAP
+- Annual wellness screening with $200 HSA contribution incentive
+
+#### 6.3 Expense Reimbursement
+- Business travel expenses reimbursed within 14 days of submission
+- Home office stipend for remote employees: $1,000 one-time setup, $100 monthly
+- Mobile phone allowance: $80 per month for eligible roles
+
+### 7. Document Control
+- Version: 4.3
+- Effective Date: January 1, 2026
+- Last Updated: November 20, 2025
+- Owner: Total Rewards, Human Resources
+- Review Cycle: Semi-annual

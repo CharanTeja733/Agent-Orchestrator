@@ -1,6 +1,17 @@
 from app.schemas.common import HealthResponse, UserRole
 from app.schemas.auth import RefreshResponse, TokenResponse, UserLogin, UserRegister
-from app.schemas.document import DocumentChunk
+from app.schemas.document import (
+    BulkUploadResponse,
+    BulkUploadResult,
+    ChunkDetail,
+    DocumentChunk,
+    DocumentDeleteResponse,
+    DocumentDetailResponse,
+    DocumentListResponse,
+    DocumentStatsResponse,
+    DocumentSummary,
+    DocumentUploadResponse,
+)
 from app.schemas.feedback import FeedbackCreate, FeedbackResponse
 from app.schemas.message import MessageCreate, MessageResponse
 from app.schemas.session import SessionResponse
@@ -28,4 +39,13 @@ __all__ = [
     "FeedbackResponse",
     # document
     "DocumentChunk",
+    "DocumentUploadResponse",
+    "BulkUploadResult",
+    "BulkUploadResponse",
+    "DocumentSummary",
+    "DocumentListResponse",
+    "ChunkDetail",
+    "DocumentDetailResponse",
+    "DocumentDeleteResponse",
+    "DocumentStatsResponse",
 ]

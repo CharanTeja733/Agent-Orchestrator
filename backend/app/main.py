@@ -8,6 +8,7 @@ from jose import JWTError
 
 from app.api.v1 import v1_router
 from app.config import settings
+from app.core.exceptions import AppException
 from app.database import ASYNCPG_URL, init_db
 from app.utils.seed import seed_users
 
@@ -53,6 +54,15 @@ async def jwt_error_handler(request: Request, exc: JWTError) -> JSONResponse:
         status_code=401,
         content={"detail": "Could not validate credentials"},
         headers={"WWW-Authenticate": "Bearer"},
+    )
+
+
+@app.exception_handler(AppException)
+async def app_exception_handler(request: Request, exc: AppException) -> JSONResponse:
+    """Convert all AppException subclasses (including IngestionError) to JSON."""
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.message},
     )
 
 

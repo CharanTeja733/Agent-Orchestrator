@@ -1,0 +1,161 @@
+## IT and Data Security Policy
+
+### 1. Purpose
+This policy establishes the rules and responsibilities for protecting Company Inc's information assets, technology infrastructure, and data. All employees, contractors, and third-party vendors with access to company systems must comply with this policy.
+
+### 2. Scope
+This policy covers all company-owned devices, networks, software, cloud services, and data regardless of where they are accessed. It applies to office-based, remote, and traveling employees.
+
+### 3. Acceptable Use Policy
+
+#### 3.1 Authorized Use
+Company IT resources are provided for business purposes. Limited personal use is permitted provided it:
+- Does not interfere with job performance or responsibilities
+- Does not consume significant network bandwidth or storage
+- Does not involve illegal activities, gambling, or adult content
+- Does not compromise the security or reputation of Company Inc
+- Complies with all other company policies
+
+#### 3.2 Prohibited Activities
+The following activities are strictly prohibited:
+- Accessing, storing, or distributing illegal or offensive content
+- Engaging in harassment, discrimination, or bullying via company systems
+- Downloading or distributing copyrighted material without authorization
+- Using company resources for personal commercial gain or competing business
+- Circumventing security controls, firewalls, or content filters
+- Installing unapproved software or hardware on company devices
+- Sharing login credentials or allowing others to use your accounts
+- Sending spam, chain letters, or phishing emails
+
+### 4. Password and Authentication Requirements
+
+#### 4.1 Password Policy
+- Minimum password length: 14 characters
+- Must include: uppercase letter, lowercase letter, number, and special character
+- Password must not contain: username, real name, company name, or common words
+- Passwords expire every 90 days
+- Previous 12 passwords cannot be reused
+- Password managers are provided and strongly recommended
+
+#### 4.2 Multi-Factor Authentication (MFA)
+- MFA is mandatory for all accounts with access to company systems
+- Supported methods: authenticator app (preferred), hardware security key, or SMS (least preferred)
+- MFA must be enabled within 24 hours of account creation
+- MFA bypass requests require Director-level approval and are limited to 48 hours
+
+#### 4.3 Session Management
+- Workstations must be locked when unattended (Windows Key + L or equivalent)
+- Screen lock timeout: 5 minutes of inactivity on laptops, 10 minutes on desktops
+- Remote sessions automatically terminate after 30 minutes of inactivity
+
+### 5. Data Classification and Handling
+
+#### 5.1 Classification Levels
+- Public: Approved for external release (press releases, product brochures, job postings)
+- Internal: For employees and authorized contractors (policies, process documents, team wikis, meeting notes)
+- Confidential: Business-sensitive information (financials, strategy docs, customer lists, employee records, product roadmaps)
+- Restricted: Highly sensitive, legal/regulatory (PII, PHI, trade secrets, M&A documents, security credentials, encryption keys)
+
+#### 5.2 Handling Requirements
+Confidential data must be encrypted at rest and in transit. Access requires documented business justification. Sharing requires approval from the data owner. Printing is logged and requires supervisor approval.
+
+Restricted data must be encrypted with AES-256 at rest and TLS 1.3 in transit. Access requires VP-level approval and is audited quarterly. Must not be stored on local devices or removable media. All access is logged and reviewed monthly by the Security team. Must not be sent via unencrypted email.
+
+### 6. Device and Endpoint Security
+
+#### 6.1 Company-Issued Devices
+- All devices must be enrolled in the Mobile Device Management (MDM) system
+- Full-disk encryption is enforced on all laptops and mobile devices
+- Antivirus and endpoint detection software must remain installed and active
+- Operating system updates must be applied within 7 days of release
+- Lost or stolen devices must be reported to IT within 2 hours
+
+#### 6.2 Bring Your Own Device (BYOD)
+- BYOD is permitted only for email and calendar access via approved apps
+- Company data must not be stored locally on personal devices
+- IT may remotely wipe company data from personal devices at any time
+- BYOD devices found to be jailbroken or rooted will have access revoked
+
+#### 6.3 Removable Media
+- USB drives and external hard drives require IT approval and encryption
+- Use of personal cloud storage (Dropbox, personal Google Drive) for company data is prohibited
+- Approved cloud services: Google Workspace (corporate), Box (corporate), and AWS (departmental)
+
+### 7. Network and Remote Access
+
+#### 7.1 Network Security
+- All company networks use WPA3-Enterprise encryption
+- Guest Wi-Fi is isolated from the corporate network
+- Network access control (NAC) blocks unauthorized devices
+- VPN is mandatory when connecting from untrusted networks (public Wi-Fi, hotels, airports)
+
+#### 7.2 VPN Requirements
+- Company VPN client must be installed on all laptops
+- Split tunneling is disabled by default; all traffic routes through the VPN
+- VPN connection is required for accessing Confidential and Restricted data remotely
+- Idle VPN connections are disconnected after 2 hours
+
+### 8. Email Security
+- Company email is for business use; limited personal use is permitted
+- Do not open attachments or click links from unknown senders
+- Suspicious emails must be reported via the "Report Phishing" button in Gmail
+- External emails are flagged with a banner warning
+- Attachments over 25 MB must use the company Box account, not email
+
+### 9. Software Installation and Management
+- Only software from the Approved Software Catalog may be installed
+- Software approval requests are submitted via the IT Service Desk and reviewed within 3 business days
+- Open-source software requires legal review of licensing terms
+- Unauthorized software discovered during scans will be removed and may trigger a security review
+- Software must be kept updated; patches classified as "Critical" must be applied within 48 hours
+
+### 10. Incident Reporting and Response
+
+#### 10.1 What to Report
+Immediately report:
+- Lost or stolen devices
+- Suspected malware, ransomware, or virus infections
+- Unauthorized access to accounts or systems
+- Accidental exposure of Confidential or Restricted data
+- Phishing attempts (whether clicked or not)
+- Physical security breaches (tailgating, unlocked server rooms)
+
+#### 10.2 How to Report
+- During business hours: IT Service Desk (ext. 4357) or itservicedesk@company.com
+- After hours: Security Operations Center hotline (1-800-555-SECURITY)
+- Anonymous reporting: Ethics Hotline or security@company.com
+- Critical incidents: Call the SOC hotline immediately; do not use email
+
+#### 10.3 Response Timeline
+- Critical incidents (data breach, active attack): Response within 1 hour
+- High severity (malware infection, account compromise): Response within 4 hours
+- Medium severity (policy violation, suspicious activity): Response within 24 hours
+- Low severity (routine inquiries, software requests): Response within 3 business days
+
+### 11. Compliance and Consequences
+
+#### 11.1 Policy Violations
+Violations of this policy are taken seriously and may result in:
+- First offense: Written warning and mandatory security awareness retraining
+- Second offense: Final written warning and loss of certain system privileges
+- Third offense or serious violation: Termination of employment
+- Intentional violations involving data theft, sabotage, or criminal activity: Immediate termination and potential legal action
+
+#### 11.2 Monitoring and Auditing
+- Company reserves the right to monitor network traffic, system logs, and device activity
+- Periodic security audits are conducted by the Security team
+- Employees have no expectation of privacy when using company systems
+- Monitoring is conducted in compliance with applicable privacy laws
+
+### 12. Training Requirements
+- All employees must complete annual Security Awareness Training
+- New hires complete training within their first week
+- Phishing simulation exercises are conducted quarterly
+- Role-specific training is required for employees handling Restricted data
+
+### 13. Document Control
+- Version: 6.2
+- Effective Date: April 1, 2026
+- Last Updated: March 10, 2026
+- Owner: Chief Information Security Officer (CISO)
+- Review Cycle: Semi-annual

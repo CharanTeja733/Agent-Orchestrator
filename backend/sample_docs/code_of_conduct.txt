@@ -1,0 +1,104 @@
+## Code of Conduct
+
+### 1. Introduction
+Company Inc is committed to maintaining a professional, respectful, and inclusive workplace. This Code of Conduct outlines the standards of behavior expected from all employees, contractors, and representatives of the organization. Violations may result in disciplinary action up to and including termination.
+
+### 2. Core Values
+All employees are expected to uphold these core values in their daily work:
+- **Integrity**: Act honestly and ethically in all business dealings
+- **Respect**: Treat colleagues, clients, and partners with dignity and courtesy
+- **Accountability**: Take responsibility for your actions and their outcomes
+- **Innovation**: Embrace creative thinking and continuous improvement
+- **Collaboration**: Work together across teams to achieve shared goals
+
+### 3. Professional Behavior
+
+#### 3.1 Workplace Conduct
+- Maintain a professional demeanor at all times during work hours and at company events
+- Use appropriate language; profanity, offensive jokes, and derogatory remarks are prohibited
+- Respect personal boundaries and physical space of colleagues
+- Cooperate with colleagues and supervisors in good faith
+- Address conflicts constructively through proper channels (manager or HR)
+
+#### 3.2 Dress Code
+- Office attire is business casual unless client meetings require formal dress
+- Clothing with offensive graphics, political slogans, or inappropriate messaging is prohibited
+- Remote employees appearing on video calls must wear work-appropriate attire
+- Safety equipment must be worn in designated areas (labs, server rooms, loading docks)
+
+### 4. Harassment and Discrimination
+
+#### 4.1 Zero Tolerance Policy
+Company Inc maintains a zero-tolerance policy toward:
+- Sexual harassment of any kind
+- Discrimination based on race, color, religion, gender, sexual orientation, gender identity, age, national origin, disability, or veteran status
+- Bullying, intimidation, or hostile behavior
+- Retaliation against individuals who report violations in good faith
+
+#### 4.2 Reporting Procedure
+- Report incidents to your immediate manager, any member of HR, or via the anonymous Ethics Hotline (1-800-555-ETHICS)
+- All reports are investigated promptly and confidentially
+- Investigations are completed within 15 business days
+- Both the reporter and the accused receive written findings and outcomes
+
+#### 4.3 Consequences
+- Founded violations result in disciplinary action proportionate to severity
+- Sexual harassment typically results in immediate termination
+- False reports made with malicious intent are also subject to discipline
+
+### 5. Conflicts of Interest
+
+#### 5.1 Definition
+A conflict of interest exists when personal interests interfere with or appear to interfere with the interests of Company Inc. Examples include:
+- Holding a significant financial interest in a competitor, supplier, or client
+- Hiring or supervising a family member or romantic partner
+- Accepting gifts valued over $100 from vendors or business partners
+- Using company resources or proprietary information for personal gain
+- Outside employment that competes with or impacts job performance at Company Inc
+
+#### 5.2 Disclosure
+- All actual or potential conflicts must be disclosed in writing to HR within 10 days
+- HR will work with the employee and management to resolve the conflict
+- Failure to disclose is treated as a violation of this Code of Conduct
+
+### 6. Confidentiality and Data Protection
+
+#### 6.1 Confidential Information
+Employees must protect:
+- Client and partner data, including contact information and business details
+- Trade secrets, proprietary algorithms, and product roadmaps
+- Financial information, including revenue, pricing, and forecasts
+- Employee personal information, including salaries and performance data
+- Internal communications marked as confidential
+
+#### 6.2 Obligations
+- Confidential information must not be discussed in public spaces, on social media, or with unauthorized individuals
+- Documents must be stored securely and shredded when no longer needed
+- Access credentials must never be shared with anyone, including colleagues
+- Confidentiality obligations survive termination of employment
+
+### 7. Social Media and Public Communications
+- Only authorized representatives may speak on behalf of Company Inc
+- Employees may identify themselves as Company Inc employees on social media but must state that views are their own
+- Do not disclose proprietary or confidential information online
+- Do not post content that could harm the company's reputation
+- Media inquiries must be directed to the Public Relations department
+
+### 8. Disciplinary Process
+1. Verbal warning for first minor offense (documented by manager)
+2. Written warning for repeated or moderate violations
+3. Performance Improvement Plan with specific behavioral objectives
+4. Final written warning with notice of termination risk
+5. Termination of employment for serious or unresolved violations
+
+Serious violations (harassment, theft, fraud, violence) may skip directly to termination.
+
+### 9. Acknowledgment
+All employees must sign the Code of Conduct acknowledgment form within 5 business days of hire and annually thereafter.
+
+### 10. Document Control
+- Version: 5.1
+- Effective Date: March 1, 2026
+- Last Updated: February 10, 2026
+- Owner: Human Resources and Legal Department
+- Review Cycle: Annual

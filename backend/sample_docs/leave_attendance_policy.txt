@@ -1,0 +1,88 @@
+## Leave and Attendance Policy
+
+### 1. Purpose
+This policy establishes guidelines for employee leave, attendance, and time-off management at Company Inc. It ensures fair and consistent treatment across all departments while maintaining operational efficiency.
+
+### 2. Scope
+This policy applies to all full-time and part-time employees of Company Inc. Contractors and interns are covered under separate agreements.
+
+### 3. Types of Leave
+
+#### 3.1 Annual Leave
+- Full-time employees accrue 20 days of paid annual leave per calendar year
+- Part-time employees accrue leave on a pro-rata basis based on hours worked
+- Leave accrues at 1.67 days per month of service
+- Up to 5 unused days may be carried forward to the next calendar year with manager approval
+- Annual leave requests must be submitted at least 2 weeks in advance via the HR portal
+
+#### 3.2 Sick Leave
+- Employees receive 10 days of paid sick leave per calendar year
+- Sick leave can be used for personal illness, injury, or medical appointments
+- A medical certificate is required for absences exceeding 3 consecutive working days
+- Unused sick leave does not carry forward to the next year
+- Employees must notify their manager by 9:00 AM on the day of absence
+
+#### 3.3 Public Holidays
+Company Inc observes the following public holidays:
+- New Year's Day (January 1)
+- Memorial Day (Last Monday in May)
+- Independence Day (July 4)
+- Labor Day (First Monday in September)
+- Thanksgiving Day and the following Friday
+- Christmas Day (December 25)
+- Two floating holidays per year, subject to manager approval
+
+#### 3.4 Parental Leave
+- Primary caregivers: 16 weeks of fully paid leave
+- Secondary caregivers: 4 weeks of fully paid leave
+- Leave can be taken any time within the first 12 months after birth or adoption
+- Employees must have completed at least 6 months of service to qualify
+
+#### 3.5 Bereavement Leave
+- Immediate family (spouse, child, parent, sibling): 5 days paid leave
+- Extended family (grandparent, in-law, aunt, uncle): 3 days paid leave
+- Additional unpaid leave may be requested for travel requirements
+
+#### 3.6 Unpaid Leave
+- Employees with at least 1 year of service may request up to 30 days of unpaid leave
+- Approval is at the discretion of the department head and HR
+- Benefits coverage during unpaid leave is the employee's responsibility after 14 days
+
+### 4. Attendance and Punctuality
+
+#### 4.1 Working Hours
+- Standard working hours: 9:00 AM to 6:00 PM, Monday through Friday
+- Core hours: 10:00 AM to 4:00 PM (all employees must be available during this window)
+- Lunch break: minimum 30 minutes, recommended 1 hour
+- Flexible start times (8:00 AM - 10:00 AM) are available with manager approval
+
+#### 4.2 Late Arrivals
+- Employees arriving after 10:00 AM without prior notification are considered late
+- Three late arrivals in a month trigger a formal discussion with the manager
+- Persistent lateness (more than 6 occurrences in a quarter) may result in disciplinary action
+- Late arrivals exceeding 2 hours require deduction from annual leave balance or unpaid leave
+
+#### 4.3 Absence Without Notice
+- Unexplained absence for 2 consecutive working days is treated as job abandonment
+- HR will attempt emergency contact before initiating termination procedures
+- No-call no-show incidents are documented in the employee's permanent record
+
+### 5. Leave Request Process
+1. Submit leave request through the HR portal (Workday) at least 14 days in advance
+2. Manager reviews and approves or denies within 3 business days
+3. For sick leave, notify manager via email or Slack by 9:00 AM
+4. Submit medical documentation within 48 hours of return for extended sick leave
+5. HR tracks all leave balances and provides monthly statements
+
+### 6. Compliance and Violations
+- Falsifying leave records or time sheets is grounds for immediate termination
+- Pattern of Monday or Friday sick leave will trigger an HR review
+- Employees on leave who engage in unauthorized employment will forfeit leave benefits
+- All leave records are subject to audit by HR and external compliance teams
+
+### 7. Document Control
+- Version: 3.2
+- Effective Date: January 1, 2026
+- Last Updated: June 15, 2026
+- Owner: Human Resources Department
+- Review Cycle: Annual
