@@ -33,7 +33,17 @@ from app.schemas.search import (
     SearchResponse,
     SearchResult,
 )
-from app.schemas.session import SessionResponse
+from app.schemas.session import (
+    MessageListResponse,
+    SessionClearResponse,
+    SessionCreate,
+    SessionDeleteResponse,
+    SessionListItem,
+    SessionListResponse,
+    SessionResponse,
+    SessionUpdate,
+    SessionUpdateResponse,
+)
 from app.schemas.user import UserCreate, UserResponse
 
 __all__ = [
@@ -54,6 +64,14 @@ __all__ = [
     "RefreshResponse",
     # session
     "SessionResponse",
+    "SessionCreate",
+    "SessionUpdate",
+    "SessionListItem",
+    "SessionListResponse",
+    "SessionUpdateResponse",
+    "SessionDeleteResponse",
+    "SessionClearResponse",
+    "MessageListResponse",
     # message
     "MessageCreate",
     "MessageResponse",

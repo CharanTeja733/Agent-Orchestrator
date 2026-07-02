@@ -63,11 +63,15 @@ class Session(Base):
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
     is_active = Column(Boolean, nullable=False, default=True)
     device_info = Column(JSONB)
+    title = Column(String(255), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     last_active = Column(DateTime(timezone=True), server_default=func.now())
     expires_at = Column(
         DateTime(timezone=True),
         server_default=func.now() + func.text("INTERVAL '24 hours'"),
+    )
+    updated_at = Column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
     # Relationships

@@ -8,8 +8,9 @@ from jose import JWTError
 
 from app.api.v1 import v1_router
 from app.config import settings
+from app.core.cleanup import SessionCleanup
 from app.core.exceptions import AppException
-from app.database import ASYNCPG_URL, init_db
+from app.database import ASYNCPG_URL, AsyncSessionLocal, init_db
 from app.utils.seed import seed_users
 
 
@@ -18,7 +19,16 @@ async def lifespan(app: FastAPI):
     print("HR Q&A Agent API — starting up...")
     await init_db()
     await seed_users()
+
+    # Start background session cleanup (Feature 9)
+    cleanup = SessionCleanup(AsyncSessionLocal)
+    await cleanup.start_background_task()
+    app.state.session_cleanup = cleanup
+
     yield
+
+    # Graceful shutdown
+    await cleanup.stop_background_task()
     print("Shutting down...")
 
 

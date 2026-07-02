@@ -37,6 +37,13 @@ class Settings(BaseSettings):
     MAX_COMPLETION_TOKENS: int = 1024
     RESPONSE_TEMPERATURE: float = 0.3
 
+    # Session Management (Feature 9)
+    SESSION_EXPIRY_HOURS: int = 24
+    SESSION_CLEANUP_AFTER_DAYS: int = 7
+    SESSION_CLEANUP_INTERVAL_HOURS: int = 6
+    MAX_CONVERSATION_HISTORY_CHARS: int = 2000
+    AUTO_TITLE_MAX_LENGTH: int = 50
+
     @field_validator("SECRET_KEY")
     @classmethod
     def validate_secret_key(cls, v: str) -> str:

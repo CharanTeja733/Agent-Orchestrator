@@ -18,7 +18,11 @@ from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
-from app.core.exceptions import ForbiddenException
+from app.core.exceptions import (
+    ForbiddenException,
+    SessionDeactivatedException,
+    SessionExpiredException,
+)
 from app.models.models import User
 from app.prompts.rag import (
     BOT_QUESTION_RESPONSE,
@@ -38,6 +42,7 @@ from app.repositories.session import SessionRepository
 from app.services.classifier import ClassifierService
 from app.services.gemini import GeminiService
 from app.services.search import SearchService
+from app.services.session import SessionService
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +64,7 @@ class RAGService:
         self.search_service = SearchService(db, gemini_api_key)
         self.session_repo = SessionRepository(db)
         self.message_repo = MessageRepository(db)
+        self.session_service = SessionService(db)
 
     # ------------------------------------------------------------------
     # Public — streaming endpoint
@@ -117,7 +123,7 @@ class RAGService:
                 sources: list[dict] = []
                 yield self._sse_event("sources", {"sources": sources})
 
-                await self._store_messages(
+                store_result = await self._store_messages(
                     user_id=user.id,
                     session_id=session.id,
                     query=query,
@@ -128,11 +134,16 @@ class RAGService:
                     tokens_used=self._estimate_tokens(full_response),
                 )
 
+                # Attempt auto-title generation on first substantive message
+                await self.session_service.maybe_update_title(
+                    session.id, query
+                )
+
                 elapsed = (time.time() - overall_start) * 1000
                 yield self._sse_event(
                     "done",
                     {
-                        "message_id": str(session.id),  # placeholder
+                        "message_id": store_result["message_id"],
                         "session_id": str(session.id),
                         "confidence": "high",
                         "tokens_used": self._estimate_tokens(full_response),
@@ -167,7 +178,7 @@ class RAGService:
                 sources = self._build_sources_from_chunks(chunks_for_sources)
                 yield self._sse_event("sources", {"sources": sources})
 
-                await self._store_messages(
+                store_result = await self._store_messages(
                     user_id=user.id,
                     session_id=session.id,
                     query=query,
@@ -178,11 +189,15 @@ class RAGService:
                     tokens_used=self._estimate_tokens(full_response),
                 )
 
+                await self.session_service.maybe_update_title(
+                    session.id, query
+                )
+
                 elapsed = (time.time() - overall_start) * 1000
                 yield self._sse_event(
                     "done",
                     {
-                        "message_id": str(session.id),
+                        "message_id": store_result["message_id"],
                         "session_id": str(session.id),
                         "confidence": confidence_level,
                         "tokens_used": self._estimate_tokens(full_response),
@@ -218,7 +233,7 @@ class RAGService:
             yield self._sse_event("sources", {"sources": sources})
 
             # Step 6: Store
-            await self._store_messages(
+            store_result = await self._store_messages(
                 user_id=user.id,
                 session_id=session.id,
                 query=query,
@@ -229,11 +244,15 @@ class RAGService:
                 tokens_used=self._estimate_tokens(full_response),
             )
 
+            await self.session_service.maybe_update_title(
+                session.id, query
+            )
+
             elapsed = (time.time() - overall_start) * 1000
             yield self._sse_event(
                 "done",
                 {
-                    "message_id": str(session.id),
+                    "message_id": store_result["message_id"],
                     "session_id": str(session.id),
                     "confidence": confidence_level,
                     "tokens_used": self._estimate_tokens(full_response),
@@ -490,28 +509,19 @@ class RAGService:
     ) -> tuple:
         """Load or create a session and return ``(session, history_messages)``.
 
+        Delegates session management to :class:`SessionService` (Feature 9).
+
         Raises:
             ForbiddenException: If *session_id* belongs to a different user.
+            NotFoundException: If *session_id* does not exist.
+            SessionDeactivatedException: If session was manually deactivated.
         """
-        from app.models.models import Session
-
-        if session_id is not None:
-            session = await self.session_repo.get(session_id)
-            if session is None:
-                from app.core.exceptions import NotFoundException
-
-                raise NotFoundException("Session", str(session_id))
-            if session.user_id != user.id:
-                raise ForbiddenException(
-                    "Session does not belong to authenticated user"
-                )
-            history = await self.message_repo.get_conversation_history(
-                session_id, limit=self.config.MAX_CONVERSATION_HISTORY
-            )
-        else:
-            session = await self.session_repo.create_session(user_id=user.id)
-            history = []
-
+        session = await self.session_service.get_or_create_session(
+            user_id=user.id, session_id=session_id
+        )
+        history = await self.message_repo.get_conversation_history(
+            session.id, limit=self.config.MAX_CONVERSATION_HISTORY
+        )
         return session, history
 
     # ------------------------------------------------------------------
@@ -725,8 +735,8 @@ class RAGService:
                 tokens_used=tokens_used,
             )
 
-            # Touch session timestamp
-            await self.session_repo.update_last_active(session_id)
+            # Touch session timestamp and extend expiry (Feature 9)
+            await self.session_service.update_activity(session_id)
 
             return {"message_id": str(msg.id), "session_id": str(session_id)}
 
@@ -792,5 +802,7 @@ class RAGService:
             "GeminiAPIError": "generation_failed",
             "ForbiddenException": "forbidden",
             "NotFoundException": "not_found",
+            "SessionExpiredException": "session_expired",
+            "SessionDeactivatedException": "session_deactivated",
         }
         return mapping.get(name, "internal_error")

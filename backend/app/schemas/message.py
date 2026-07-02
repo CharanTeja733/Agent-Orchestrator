@@ -23,6 +23,7 @@ class MessageResponse(BaseModel):
     content: str
     sources: Optional[Any] = None
     confidence: Optional[str] = None
+    tokens_used: Optional[int] = None
     classification: Optional[str] = None
     created_at: datetime
 

@@ -218,6 +218,7 @@ async def init_db() -> None:
 
     1. Enables the ``vector`` extension.
     2. Creates all tables and indexes (if they do not exist).
+    3. Runs additive schema migrations (new columns, FK cascades).
     """
     conn = await get_db_connection()
     try:
@@ -225,9 +226,66 @@ async def init_db() -> None:
         print("pgvector extension ready")
 
         await create_tables(conn)
+        await _run_migrations(conn)
         print("Database initialized successfully")
     except Exception as exc:
         print(f"Database initialization failed: {exc}")
         raise
     finally:
         await conn.close()
+
+
+async def _run_migrations(conn: asyncpg.Connection) -> None:
+    """Additive schema migrations — safe to call on every startup.
+
+    Each statement uses ``IF NOT EXISTS`` or a DO-block guard so it is
+    idempotent across restarts.
+    """
+
+    # -- Session schema additions (Feature 9) ---------------------------------
+    await conn.execute(
+        "ALTER TABLE sessions ADD COLUMN IF NOT EXISTS title VARCHAR(255)"
+    )
+    await conn.execute(
+        "ALTER TABLE sessions "
+        "ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW()"
+    )
+
+    # -- FK cascade: messages.session_id -> sessions.id -----------------------
+    await conn.execute("""
+        DO $$
+        BEGIN
+            IF EXISTS (
+                SELECT 1 FROM information_schema.table_constraints
+                WHERE constraint_name = 'messages_session_id_fkey'
+                  AND table_name = 'messages'
+            ) THEN
+                ALTER TABLE messages DROP CONSTRAINT messages_session_id_fkey;
+            END IF;
+        END $$;
+    """)
+    await conn.execute("""
+        ALTER TABLE messages
+        ADD CONSTRAINT messages_session_id_fkey
+        FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE
+    """)
+
+    # -- FK cascade: feedback.message_id -> messages.id -----------------------
+    await conn.execute("""
+        DO $$
+        BEGIN
+            IF EXISTS (
+                SELECT 1 FROM information_schema.table_constraints
+                WHERE constraint_name = 'feedback_message_id_fkey'
+                  AND table_name = 'feedback'
+            ) THEN
+                ALTER TABLE feedback DROP CONSTRAINT feedback_message_id_fkey;
+            END IF;
+        END $$;
+    """)
+    await conn.execute("""
+        ALTER TABLE feedback
+        ADD CONSTRAINT feedback_message_id_fkey
+        FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE
+    """)
+    print("Database migrations applied successfully")

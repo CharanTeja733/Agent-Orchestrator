@@ -123,3 +123,24 @@ class ClassificationError(Exception):
         self.message = message
         self.original_error = original_error
         super().__init__(self.message)
+
+
+# ---------------------------------------------------------------------------
+# Session-specific exceptions (Feature 9)
+# ---------------------------------------------------------------------------
+
+
+class SessionExpiredException(AppException):
+    """Session has expired — user should create a new session."""
+
+    def __init__(
+        self, detail: str = "Session has expired. Create a new session."
+    ):
+        super().__init__(detail, status_code=400)
+
+
+class SessionDeactivatedException(AppException):
+    """Session has been manually deactivated."""
+
+    def __init__(self, detail: str = "Session is no longer active."):
+        super().__init__(detail, status_code=400)
