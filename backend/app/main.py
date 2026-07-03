@@ -8,15 +8,18 @@ from jose import JWTError
 
 from app.api.v1 import v1_router
 from app.config import settings
-from app.core.cleanup import SessionCleanup
+from app.core.cleanup import LogCleanup, SessionCleanup
 from app.core.exceptions import AppException
+from app.core.logger import setup_logging
 from app.database import ASYNCPG_URL, AsyncSessionLocal, init_db
+from app.middleware.logging import RequestLoggingMiddleware
 from app.utils.seed import seed_users
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("HR Q&A Agent API — starting up...")
+    setup_logging(AsyncSessionLocal)
     await init_db()
     await seed_users()
 
@@ -25,10 +28,16 @@ async def lifespan(app: FastAPI):
     await cleanup.start_background_task()
     app.state.session_cleanup = cleanup
 
+    # Start background log cleanup (Feature 11)
+    log_cleanup = LogCleanup(AsyncSessionLocal)
+    await log_cleanup.start_background_task()
+    app.state.log_cleanup = log_cleanup
+
     yield
 
     # Graceful shutdown
     await cleanup.stop_background_task()
+    await log_cleanup.stop_background_task()
     print("Shutting down...")
 
 
@@ -49,6 +58,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.add_middleware(RequestLoggingMiddleware)
 
 # ---------------------------------------------------------------------------
 # Auth router

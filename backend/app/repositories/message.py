@@ -51,6 +51,7 @@ class MessageRepository(BaseRepository[Message]):
         confidence: str | None = None,
         tokens_used: int | None = None,
         classification: str | None = None,
+        processing_time_ms: float | None = None,
     ) -> Message:
         """Create and persist a new message.
 
@@ -66,6 +67,7 @@ class MessageRepository(BaseRepository[Message]):
             confidence=confidence,
             tokens_used=tokens_used,
             classification=classification,
+            processing_time_ms=processing_time_ms,
         )
 
     # ------------------------------------------------------------------

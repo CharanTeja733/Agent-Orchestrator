@@ -9,6 +9,7 @@
 
   var currentController = null;
   var pendingSources = [];
+  var safetyTimer = null;
 
   /**
    * Start a streaming query.
@@ -21,6 +22,9 @@
     if (currentController) {
       stopStream(currentController);
     }
+
+    // Clear any existing safety timer
+    _clearSafetyTimer();
 
     // Set streaming state
     if (window.HrApp) {
@@ -49,20 +53,47 @@
         pendingSources = sources || [];
       },
       onDone: function (data) {
+        _clearSafetyTimer();
         _handleDone(data);
       },
       onError: function (errorData) {
+        _clearSafetyTimer();
         _handleError(errorData);
       }
     });
 
+    // Safety timeout: force-reset after 60s no matter what
+    safetyTimer = setTimeout(function () {
+      console.warn('[stream] Safety timeout — forcing stream reset');
+      if (currentController) {
+        try { currentController.abort(); } catch (e) {}
+      }
+      currentController = null;
+      pendingSources = [];
+      if (window.HrApp) {
+        window.HrApp.setState('chat.isStreaming', false);
+      }
+      if (window.HrChat) {
+        window.HrChat.showStreamError('Response timed out. Please try again.');
+        window.HrChat.enableInput();
+      }
+    }, 60000);
+
     return currentController;
+  }
+
+  function _clearSafetyTimer() {
+    if (safetyTimer) {
+      clearTimeout(safetyTimer);
+      safetyTimer = null;
+    }
   }
 
   /**
    * Stop an active stream.
    */
   function stopStream(controller) {
+    _clearSafetyTimer();
     if (controller) {
       try {
         controller.abort();

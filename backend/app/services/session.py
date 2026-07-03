@@ -54,6 +54,9 @@ class SessionService:
         self.db = db
         self.session_repo = SessionRepository(db)
         self.message_repo = MessageRepository(db)
+        # Feature 11 — feedback lookup
+        from app.repositories.feedback import FeedbackRepository
+        self.feedback_repo = FeedbackRepository(db)
 
     # ------------------------------------------------------------------
     # Session CRUD
@@ -260,6 +263,28 @@ class SessionService:
             after=after,
         )
 
+        # Feature 11: Load feedback for assistant messages
+        feedback_dict: dict[str, dict] = {}
+        for m in messages:
+            if m.role == "assistant":
+                fb = await self.feedback_repo.get_by_message_and_user(
+                    m.id, user_id
+                )
+                if fb:
+                    feedback_dict[str(m.id)] = {
+                        "id": str(fb.id),
+                        "message_id": str(fb.message_id),
+                        "user_id": str(fb.user_id),
+                        "rating": fb.rating,
+                        "reason": fb.reason,
+                        "comment": fb.comment,
+                        "created_at": (
+                            fb.created_at.isoformat()
+                            if fb.created_at
+                            else None
+                        ),
+                    }
+
         return {
             "session_id": session_id,
             "messages": [
@@ -272,6 +297,7 @@ class SessionService:
                     "classification": m.classification,
                     "tokens_used": m.tokens_used,
                     "created_at": m.created_at,
+                    "feedback": feedback_dict.get(str(m.id)),
                 }
                 for m in messages
             ],

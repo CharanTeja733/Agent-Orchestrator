@@ -8,6 +8,8 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
+from app.schemas.feedback import FeedbackResponse
+
 
 class MessageCreate(BaseModel):
     session_id: UUID
@@ -25,6 +27,7 @@ class MessageResponse(BaseModel):
     confidence: Optional[str] = None
     tokens_used: Optional[int] = None
     classification: Optional[str] = None
+    feedback: Optional[FeedbackResponse] = None
     created_at: datetime
 
     class Config:

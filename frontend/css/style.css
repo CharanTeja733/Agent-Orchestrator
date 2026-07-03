@@ -1028,6 +1028,100 @@ input, select, textarea {
   color: var(--error);
 }
 
+/* Feedback reason panel (Feature 11) */
+.feedback-reason-panel {
+  margin-top: 8px;
+  padding: 12px;
+  background: #F8FAFC;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 320px;
+}
+
+.feedback-reason-header {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.feedback-reason-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.feedback-reason-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.feedback-reason-option input[type="radio"] {
+  accent-color: var(--primary);
+}
+
+.feedback-comment {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+.feedback-comment:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.feedback-reason-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.feedback-submit-btn {
+  padding: 6px 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.feedback-submit-btn:hover {
+  background: var(--primary-dark);
+}
+
+.feedback-cancel-btn {
+  padding: 6px 14px;
+  background: none;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.feedback-cancel-btn:hover {
+  background: #F1F5F9;
+  color: var(--text-primary);
+}
+
 /* ==========================================================================
    CHAT INPUT BAR
    ========================================================================== */

@@ -11,6 +11,7 @@ from sqlalchemy import (
     Boolean,
     Column,
     DateTime,
+    Float,
     ForeignKey,
     Integer,
     String,
@@ -97,6 +98,7 @@ class Message(Base):
     confidence = Column(String(20))
     tokens_used = Column(Integer)
     classification = Column(String(30))
+    processing_time_ms = Column(Float)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationships
@@ -143,3 +145,22 @@ class HRDocument(Base):
     chunk_index = Column(Integer, nullable=False)
     access_level = Column(String(50), nullable=False, default="all")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+# ---------------------------------------------------------------------------
+# SystemLog (Feature 11)
+# ---------------------------------------------------------------------------
+
+class SystemLog(Base):
+    __tablename__ = "system_logs"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    timestamp = Column(DateTime(timezone=True), server_default=func.now())
+    level = Column(String(20), nullable=False)
+    component = Column(String(50), nullable=False)
+    event = Column(String(100), nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    session_id = Column(UUID(as_uuid=True), ForeignKey("sessions.id"), nullable=True)
+    message_id = Column(UUID(as_uuid=True), ForeignKey("messages.id"), nullable=True)
+    details = Column(JSONB)
+    error_trace = Column(Text)

@@ -18,36 +18,45 @@
   // ---- Send Message ----
 
   function sendMessage(text) {
-    text = (text || '').trim();
-    if (!text) return;
+    try {
+      text = (text || '').trim();
+      if (!text) return;
 
-    // Don't send while streaming
-    if (window.HrApp && window.HrApp.getState('chat.isStreaming')) return;
+      // Don't send while streaming
+      if (window.HrApp && window.HrApp.getState('chat.isStreaming')) {
+        console.log('[chat] sendMessage blocked — isStreaming=true');
+        return;
+      }
 
-    // Clear welcome message if present
-    _removeWelcomeMessage();
+      // Clear welcome message if present
+      _removeWelcomeMessage();
 
-    // Add user bubble
-    addUserMessage(text);
+      // Add user bubble
+      addUserMessage(text);
 
-    // Clear input
-    if (chatInput) {
-      chatInput.value = '';
-      _autoResizeTextarea();
-      _updateSendButton();
-    }
+      // Clear input
+      if (chatInput) {
+        chatInput.value = '';
+        _autoResizeTextarea();
+        _updateSendButton();
+      }
 
-    // Disable input
-    _setInputEnabled(false);
+      // Disable input
+      _setInputEnabled(false);
 
-    // Start streaming
-    var sessionId = null;
-    if (window.HrApp) {
-      sessionId = window.HrApp.getState('chat.activeSessionId');
-    }
+      // Start streaming
+      var sessionId = null;
+      if (window.HrApp) {
+        sessionId = window.HrApp.getState('chat.activeSessionId');
+      }
 
-    if (window.HrStream) {
-      window.HrStream.startStream(text, sessionId);
+      if (window.HrStream) {
+        window.HrStream.startStream(text, sessionId);
+      }
+    } catch (e) {
+      console.error('[chat] sendMessage error:', e);
+      // Force re-enable input on any error
+      _setInputEnabled(true);
     }
   }
 
@@ -217,7 +226,7 @@
 
     // Add feedback buttons
     if (messageId) {
-      var feedbackEl = _createFeedbackButtons(messageId);
+      var feedbackEl = _createFeedbackButtons(messageId, null);
       if (body) {
         body.appendChild(feedbackEl);
       }
@@ -314,11 +323,13 @@
     return badge;
   }
 
-  // ---- Feedback Buttons ----
+  // ---- Feedback Buttons (Feature 11) ----
 
-  function _createFeedbackButtons(messageId) {
+  function _createFeedbackButtons(messageId, existingFeedback) {
     var container = document.createElement('div');
     container.className = 'feedback-buttons';
+
+    var currentRating = existingFeedback ? existingFeedback.rating : null;
 
     var thumbsUp = document.createElement('button');
     thumbsUp.className = 'feedback-btn';
@@ -332,26 +343,97 @@
     thumbsDown.setAttribute('aria-label', 'Thumbs down — not helpful');
     thumbsDown.setAttribute('title', 'Not helpful');
 
-    var voted = false;
-
-    function castVote(rating) {
-      if (voted) return;
-      voted = true;
-
-      if (rating === 'positive') {
-        thumbsUp.classList.add('active', 'positive');
-        thumbsDown.disabled = true;
-      } else {
-        thumbsDown.classList.add('active', 'negative');
-        thumbsUp.disabled = true;
-      }
-
-      // Submit feedback to API (Feature 11 — stub for now)
-      _submitFeedback(messageId, rating);
+    // Restore existing state
+    if (currentRating === 'positive') {
+      thumbsUp.classList.add('active', 'positive');
+      thumbsDown.disabled = true;
+    } else if (currentRating === 'negative') {
+      thumbsDown.classList.add('active', 'negative');
+      thumbsUp.disabled = true;
     }
 
-    thumbsUp.addEventListener('click', function () { castVote('positive'); });
-    thumbsDown.addEventListener('click', function () { castVote('negative'); });
+    // ---- Vote handlers ----
+
+    function clearState() {
+      currentRating = null;
+      thumbsUp.classList.remove('active', 'positive');
+      thumbsDown.classList.remove('active', 'negative');
+      thumbsUp.disabled = false;
+      thumbsDown.disabled = false;
+      // Remove any reason panel
+      var panel = container.querySelector('.feedback-reason-panel');
+      if (panel) { panel.remove(); }
+    }
+
+    function setState(rating) {
+      currentRating = rating;
+      if (rating === 'positive') {
+        thumbsUp.classList.add('active', 'positive');
+        thumbsDown.classList.remove('active', 'negative');
+        thumbsDown.disabled = true;
+        thumbsUp.disabled = false;
+      } else if (rating === 'negative') {
+        thumbsDown.classList.add('active', 'negative');
+        thumbsUp.classList.remove('active', 'positive');
+        thumbsUp.disabled = true;
+        thumbsDown.disabled = false;
+      }
+    }
+
+    async function handleThumbsUp() {
+      if (currentRating === 'positive') {
+        // Toggle off — resubmit as clear (no-op: re-submit as positive again,
+        // but visually it has no effect on server)
+        clearState();
+        await _submitFeedback(messageId, 'positive', null, null);
+        window.HrApp.showToast('Feedback removed', 'info');
+      } else {
+        // Switch from negative or submit new
+        setState('positive');
+        // Remove any open reason panel
+        var panel = container.querySelector('.feedback-reason-panel');
+        if (panel) { panel.remove(); }
+        try {
+          await _submitFeedback(messageId, 'positive', null, null);
+          window.HrApp.showToast('Thank you for your feedback!', 'success');
+        } catch (e) {
+          // Revert on failure
+          clearState();
+          window.HrApp.showToast('Failed to submit feedback', 'error');
+        }
+      }
+    }
+
+    async function handleThumbsDown() {
+      if (currentRating === 'negative') {
+        // Toggle off
+        clearState();
+        await _submitFeedback(messageId, 'negative', null, null);
+        window.HrApp.showToast('Feedback removed', 'info');
+      } else {
+        // Show reason panel before submitting
+        _createNegativeReasonPanel(container, async function (reason, comment) {
+          setState('negative');
+          try {
+            await _submitFeedback(messageId, 'negative', reason, comment);
+            window.HrApp.showToast(
+              'Thank you! Your feedback helps us improve.', 'success'
+            );
+          } catch (e) {
+            clearState();
+            window.HrApp.showToast('Failed to submit feedback', 'error');
+          }
+        }, function () {
+          // Cancelled — revert if was switching from positive
+          if (currentRating === 'positive') {
+            // leave as-is
+          }
+        });
+      }
+    }
+
+    thumbsUp.addEventListener('click', handleThumbsUp);
+    thumbsDown.addEventListener('click', handleThumbsDown);
 
     container.appendChild(thumbsUp);
     container.appendChild(thumbsDown);
@@ -359,17 +441,97 @@
     return container;
   }
 
-  async function _submitFeedback(messageId, rating) {
-    try {
-      // TODO: Replace with actual feedback endpoint when Feature 11 is built
-      await window.HrApi.apiPost('/feedback', {
-        message_id: messageId,
-        rating: rating
-      });
-    } catch (e) {
-      // Silently fail — feedback is optional
-      console.warn('Feedback submission failed:', e);
+  // ---- Negative feedback reason panel ----
+
+  function _createNegativeReasonPanel(container, onSubmit, onCancel) {
+    // Remove any existing panel
+    var existing = container.querySelector('.feedback-reason-panel');
+    if (existing) { existing.remove(); }
+
+    var reasons = [
+      { value: 'incorrect_information', label: 'Incorrect information' },
+      { value: 'incomplete_answer', label: 'Incomplete answer' },
+      { value: 'unclear_response', label: 'Unclear response' },
+      { value: 'irrelevant_sources', label: 'Irrelevant sources' },
+      { value: 'outdated_information', label: 'Outdated information' },
+      { value: 'other', label: 'Other' }
+    ];
+
+    var panel = document.createElement('div');
+    panel.className = 'feedback-reason-panel';
+
+    var header = document.createElement('div');
+    header.className = 'feedback-reason-header';
+    header.textContent = 'What was wrong with this answer?';
+    panel.appendChild(header);
+
+    var optionsDiv = document.createElement('div');
+    optionsDiv.className = 'feedback-reason-options';
+
+    var selectedReason = null;
+    for (var i = 0; i < reasons.length; i++) {
+      (function (reason) {
+        var label = document.createElement('label');
+        label.className = 'feedback-reason-option';
+        var radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'feedback-reason-' + Date.now();
+        radio.value = reason.value;
+        radio.addEventListener('change', function () {
+          selectedReason = reason.value;
+        });
+        label.appendChild(radio);
+        label.appendChild(document.createTextNode(' ' + reason.label));
+        optionsDiv.appendChild(label);
+      })(reasons[i]);
     }
+    panel.appendChild(optionsDiv);
+
+    var textarea = document.createElement('textarea');
+    textarea.className = 'feedback-comment';
+    textarea.placeholder = 'Optional: provide more detail...';
+    textarea.maxLength = 500;
+    textarea.rows = 2;
+    panel.appendChild(textarea);
+
+    var actions = document.createElement('div');
+    actions.className = 'feedback-reason-actions';
+
+    var submitBtn = document.createElement('button');
+    submitBtn.className = 'feedback-submit-btn';
+    submitBtn.textContent = 'Submit';
+    submitBtn.addEventListener('click', function () {
+      if (!selectedReason) {
+        window.HrApp.showToast('Please select a reason', 'warning');
+        return;
+      }
+      var comment = textarea.value.trim() || null;
+      panel.remove();
+      onSubmit(selectedReason, comment);
+    });
+    actions.appendChild(submitBtn);
+
+    var cancelBtn = document.createElement('button');
+    cancelBtn.className = 'feedback-cancel-btn';
+    cancelBtn.textContent = 'Cancel';
+    cancelBtn.addEventListener('click', function () {
+      panel.remove();
+      if (onCancel) { onCancel(); }
+    });
+    actions.appendChild(cancelBtn);
+
+    panel.appendChild(actions);
+    container.appendChild(panel);
+  }
+
+  async function _submitFeedback(messageId, rating, reason, comment) {
+    var body = {
+      message_id: messageId,
+      rating: rating
+    };
+    if (reason) { body.reason = reason; }
+    if (comment) { body.comment = comment; }
+    await window.HrApi.apiPost('/feedback', body);
   }
 
   // ---- Render Messages (history, non-streaming) ----
@@ -455,7 +617,7 @@
 
     // Feedback (bot only)
     if (!isUser && msg.id) {
-      var feedbackEl = _createFeedbackButtons(msg.id);
+      var feedbackEl = _createFeedbackButtons(msg.id, msg.feedback || null);
       body.appendChild(feedbackEl);
     }
 

@@ -97,3 +97,83 @@ class SessionCleanup:
             pass
         self._task = None
         logger.info("Session cleanup task stopped")
+
+
+# ---------------------------------------------------------------------------
+# Log Cleanup (Feature 11)
+# ---------------------------------------------------------------------------
+
+
+class LogCleanup:
+    """Background task that periodically purges old system log entries.
+
+    Usage in ``main.py`` lifespan::
+
+        log_cleanup = LogCleanup(AsyncSessionLocal)
+        await log_cleanup.start_background_task()
+        # ... app runs ...
+        await log_cleanup.stop_background_task()
+    """
+
+    def __init__(self, session_factory) -> None:
+        self.session_factory = session_factory
+        self._task: asyncio.Task | None = None
+        self._stop_event = asyncio.Event()
+
+    async def run_cleanup(self) -> int:
+        """Delete logs older than ``LOG_RETENTION_DAYS`` days.
+
+        Returns the count of deleted log entries.
+        """
+        from app.repositories.logs import LogRepository
+
+        async with self.session_factory() as db:
+            repo = LogRepository(db)
+            deleted = await repo.cleanup_old_logs(settings.LOG_RETENTION_DAYS)
+            if deleted > 0:
+                logger.info(
+                    "Log cleanup: deleted %d entries older than %d days",
+                    deleted,
+                    settings.LOG_RETENTION_DAYS,
+                )
+            return deleted
+
+    async def start_background_task(self) -> None:
+        """Start the periodic log-cleanup loop (runs every 24 hours)."""
+        interval_seconds = 24 * 3600  # 24 hours
+        logger.info(
+            "Log cleanup task starting (interval=24h, retention=%dd)",
+            settings.LOG_RETENTION_DAYS,
+        )
+
+        async def _loop() -> None:
+            while not self._stop_event.is_set():
+                try:
+                    await self.run_cleanup()
+                except Exception:
+                    logger.exception(
+                        "Log cleanup iteration failed — will retry"
+                    )
+                try:
+                    await asyncio.wait_for(
+                        self._stop_event.wait(), timeout=interval_seconds
+                    )
+                    break
+                except asyncio.TimeoutError:
+                    continue
+
+        self._task = asyncio.create_task(_loop())
+
+    async def stop_background_task(self) -> None:
+        """Gracefully stop the cleanup loop."""
+        if self._task is None:
+            return
+        logger.info("Stopping log cleanup task...")
+        self._stop_event.set()
+        self._task.cancel()
+        try:
+            await self._task
+        except asyncio.CancelledError:
+            pass
+        self._task = None
+        logger.info("Log cleanup task stopped")

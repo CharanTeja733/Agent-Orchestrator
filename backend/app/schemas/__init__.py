@@ -4,6 +4,19 @@ from app.schemas.classify import (
     ConversationMessage,
 )
 from app.schemas.common import HealthResponse, UserRole
+from app.schemas.admin import (
+    DailyStats,
+    FeedbackDetail,
+    FeedbackListResponse,
+    FeedbackStats,
+    LogEntry,
+    LogListResponse,
+    NegativeFeedbackItem,
+    NegativeFeedbackResponse,
+    OverviewStats,
+    PerformanceStats,
+    QueryStats,
+)
 from app.schemas.auth import RefreshResponse, TokenResponse, UserLogin, UserRegister
 from app.schemas.document import (
     BulkUploadResponse,
@@ -17,7 +30,7 @@ from app.schemas.document import (
     DocumentSummary,
     DocumentUploadResponse,
 )
-from app.schemas.feedback import FeedbackCreate, FeedbackResponse
+from app.schemas.feedback import FeedbackCreate, FeedbackResponse, MessageFeedbackResponse
 from app.schemas.message import MessageCreate, MessageResponse
 from app.schemas.query import (
     PipelineSteps,
@@ -78,6 +91,19 @@ __all__ = [
     # feedback
     "FeedbackCreate",
     "FeedbackResponse",
+    "MessageFeedbackResponse",
+    # admin (Feature 11)
+    "OverviewStats",
+    "FeedbackStats",
+    "QueryStats",
+    "PerformanceStats",
+    "DailyStats",
+    "FeedbackDetail",
+    "FeedbackListResponse",
+    "NegativeFeedbackItem",
+    "NegativeFeedbackResponse",
+    "LogEntry",
+    "LogListResponse",
     # document
     "DocumentChunk",
     "DocumentUploadResponse",

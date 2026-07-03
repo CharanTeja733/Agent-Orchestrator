@@ -44,6 +44,23 @@ class Settings(BaseSettings):
     MAX_CONVERSATION_HISTORY_CHARS: int = 2000
     AUTO_TITLE_MAX_LENGTH: int = 50
 
+    # Logging (Feature 11)
+    LOG_LEVEL: str = "INFO"
+    LOG_RETENTION_DAYS: int = 30
+
+    # Analytics (Feature 11)
+    DEFAULT_STATS_PERIOD: str = "30d"
+
+    # Feedback (Feature 11)
+    FEEDBACK_REASONS: list[str] = [
+        "incorrect_information",
+        "incomplete_answer",
+        "unclear_response",
+        "irrelevant_sources",
+        "outdated_information",
+        "other",
+    ]
+
     @field_validator("SECRET_KEY")
     @classmethod
     def validate_secret_key(cls, v: str) -> str:

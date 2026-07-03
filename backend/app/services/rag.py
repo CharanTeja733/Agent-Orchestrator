@@ -113,6 +113,21 @@ class RAGService:
             classification_ms = (time.time() - t0) * 1000
             classification = classification_result["classification"]
 
+            logger.info(
+                "Classification complete",
+                extra={
+                    "component": "rag",
+                    "event": "classification",
+                    "details": {
+                        "query": query[:100],
+                        "classification": classification,
+                        "classification_confidence": classification_result.get("confidence"),
+                        "requires_retrieval": classification_result.get("requires_retrieval"),
+                        "classification_ms": round(classification_ms, 2),
+                    },
+                },
+            )
+
             # --- Route: direct (non-retrieval) ---------------------------
             if not classification_result["requires_retrieval"]:
                 direct_response = self._get_direct_response(
@@ -135,6 +150,9 @@ class RAGService:
                     confidence="high",
                     classification=classification,
                     tokens_used=self._estimate_tokens(full_response),
+                    processing_time_ms=round(
+                        (time.time() - overall_start) * 1000, 2
+                    ),
                 )
 
                 # Attempt auto-title generation on first substantive message
@@ -151,6 +169,14 @@ class RAGService:
                         "confidence": "high",
                         "tokens_used": self._estimate_tokens(full_response),
                         "processing_time_ms": round(elapsed, 2),
+                        "classification_ms": (
+                            round(classification_ms, 2)
+                            if classification_ms
+                            else None
+                        ),
+                        "retrieval_ms": None,
+                        "generation_ms": None,
+                        "rewriting_ms": None,
                     },
                 )
                 return
@@ -166,6 +192,22 @@ class RAGService:
             search_result = await self._retrieve_context(search_query, user.role)
             retrieval_ms = (time.time() - t0) * 1000
             chunks = search_result["results"]
+
+            logger.info(
+                "Retrieval complete",
+                extra={
+                    "component": "rag",
+                    "event": "retrieval",
+                    "details": {
+                        "search_query": search_query[:100],
+                        "chunks_found": len(chunks),
+                        "top_score": (
+                            chunks[0]["score"] if chunks else 0
+                        ),
+                        "retrieval_ms": round(retrieval_ms, 2),
+                    },
+                },
+            )
 
             # --- Step 3: Confidence gate ---------------------------------
             confidence_level, gate_action = self._apply_confidence_gate(chunks)
@@ -190,6 +232,9 @@ class RAGService:
                     confidence=confidence_level,
                     classification=classification,
                     tokens_used=self._estimate_tokens(full_response),
+                    processing_time_ms=round(
+                        (time.time() - overall_start) * 1000, 2
+                    ),
                 )
 
                 await self.session_service.maybe_update_title(
@@ -205,6 +250,22 @@ class RAGService:
                         "confidence": confidence_level,
                         "tokens_used": self._estimate_tokens(full_response),
                         "processing_time_ms": round(elapsed, 2),
+                        "classification_ms": (
+                            round(classification_ms, 2)
+                            if classification_ms
+                            else None
+                        ),
+                        "retrieval_ms": (
+                            round(retrieval_ms, 2)
+                            if retrieval_ms
+                            else None
+                        ),
+                        "generation_ms": None,
+                        "rewriting_ms": (
+                            round(rewriting_ms, 2)
+                            if rewriting_ms
+                            else None
+                        ),
                     },
                 )
                 return
@@ -230,12 +291,26 @@ class RAGService:
                 yield self._sse_event("token", {"token": token})
             generation_ms = (time.time() - t0) * 1000
 
+            logger.info(
+                "Generation complete",
+                extra={
+                    "component": "rag",
+                    "event": "generation",
+                    "details": {
+                        "confidence": confidence_level,
+                        "tokens_used": self._estimate_tokens(full_response),
+                        "generation_ms": round(generation_ms, 2),
+                    },
+                },
+            )
+
             # Build sources from retrieved chunks
             chunks_for_sources = chunks
             sources = self._build_sources_from_chunks(chunks_for_sources)
             yield self._sse_event("sources", {"sources": sources})
 
             # Step 6: Store
+            elapsed = (time.time() - overall_start) * 1000
             store_result = await self._store_messages(
                 user_id=user.id,
                 session_id=session.id,
@@ -245,13 +320,49 @@ class RAGService:
                 confidence=confidence_level,
                 classification=classification,
                 tokens_used=self._estimate_tokens(full_response),
+                processing_time_ms=round(elapsed, 2),
             )
 
             await self.session_service.maybe_update_title(
                 session.id, query
             )
 
-            elapsed = (time.time() - overall_start) * 1000
+            logger.info(
+                "Query processed",
+                extra={
+                    "component": "rag",
+                    "event": "query_processed",
+                    "details": {
+                        "message_id": store_result["message_id"],
+                        "session_id": str(session.id),
+                        "classification": classification,
+                        "classification_ms": (
+                            round(classification_ms, 2)
+                            if classification_ms
+                            else None
+                        ),
+                        "retrieval_ms": (
+                            round(retrieval_ms, 2)
+                            if retrieval_ms
+                            else None
+                        ),
+                        "generation_ms": (
+                            round(generation_ms, 2)
+                            if generation_ms
+                            else None
+                        ),
+                        "rewriting_ms": (
+                            round(rewriting_ms, 2)
+                            if rewriting_ms
+                            else None
+                        ),
+                        "confidence": confidence_level,
+                        "tokens_used": self._estimate_tokens(full_response),
+                        "total_time_ms": round(elapsed, 2),
+                    },
+                },
+            )
+
             yield self._sse_event(
                 "done",
                 {
@@ -260,6 +371,26 @@ class RAGService:
                     "confidence": confidence_level,
                     "tokens_used": self._estimate_tokens(full_response),
                     "processing_time_ms": round(elapsed, 2),
+                    "classification_ms": (
+                        round(classification_ms, 2)
+                        if classification_ms
+                        else None
+                    ),
+                    "retrieval_ms": (
+                        round(retrieval_ms, 2)
+                        if retrieval_ms
+                        else None
+                    ),
+                    "generation_ms": (
+                        round(generation_ms, 2)
+                        if generation_ms
+                        else None
+                    ),
+                    "rewriting_ms": (
+                        round(rewriting_ms, 2)
+                        if rewriting_ms
+                        else None
+                    ),
                 },
             )
 
@@ -748,6 +879,7 @@ class RAGService:
         confidence: str,
         classification: str,
         tokens_used: int,
+        processing_time_ms: float | None = None,
     ) -> dict:
         """Persist the user message and assistant response.
 
@@ -773,6 +905,7 @@ class RAGService:
                 sources=sources,
                 confidence=confidence,
                 tokens_used=tokens_used,
+                processing_time_ms=processing_time_ms,
             )
 
             # Touch session timestamp and extend expiry (Feature 9)

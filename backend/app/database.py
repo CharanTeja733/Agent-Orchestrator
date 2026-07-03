@@ -174,6 +174,31 @@ async def create_tables(conn: asyncpg.Connection) -> None:
         "CREATE INDEX IF NOT EXISTS idx_feedback_rating ON feedback(rating)"
     )
 
+    # -- system_logs (Feature 11) -----------------------------------------------
+    await conn.execute("""
+        CREATE TABLE IF NOT EXISTS system_logs (
+            id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            timestamp    TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+            level        VARCHAR(20)  NOT NULL,
+            component    VARCHAR(50)  NOT NULL,
+            event        VARCHAR(100) NOT NULL,
+            user_id      UUID REFERENCES users(id),
+            session_id   UUID REFERENCES sessions(id),
+            message_id   UUID REFERENCES messages(id),
+            details      JSONB,
+            error_trace  TEXT
+        )
+    """)
+    await conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_logs_timestamp ON system_logs(timestamp)"
+    )
+    await conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_logs_level ON system_logs(level)"
+    )
+    await conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_logs_component ON system_logs(component)"
+    )
+
     # -- hr_documents -----------------------------------------------------------
     await conn.execute("""
         CREATE TABLE IF NOT EXISTS hr_documents (
@@ -288,4 +313,10 @@ async def _run_migrations(conn: asyncpg.Connection) -> None:
         ADD CONSTRAINT feedback_message_id_fkey
         FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE
     """)
+
+    # -- Feature 11: processing_time_ms column on messages ---------------------
+    await conn.execute(
+        "ALTER TABLE messages ADD COLUMN IF NOT EXISTS processing_time_ms DOUBLE PRECISION"
+    )
+
     print("Database migrations applied successfully")
