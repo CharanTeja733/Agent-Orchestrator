@@ -1,9 +1,10 @@
-"""Prompt templates for the RAG pipeline (Feature 8).
+"""HR agent prompt templates.
 
-All prompts and response templates live in this module so that the service
-layer never contains hard-coded natural-language strings.
+Renamed from ``app/prompts/rag.py`` as part of the BaseAgent refactor
+(Feature 12).  All constant names are preserved for import by
+``app.agents.hr_agent``.
 
-Reference: ``.claude/specs/08-rag-pipeline.md`` Sections 6-9.
+Reference: ``.claude/specs/12-refactor-hr-agent-into-base-agent.md``
 """
 
 # ---------------------------------------------------------------------------

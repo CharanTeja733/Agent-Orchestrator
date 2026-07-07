@@ -24,7 +24,7 @@ from app.schemas.query import (
     RetrievedChunkDetail,
     SourceDetail,
 )
-from app.services.rag import RAGService
+from app.agents.hr_agent import HRAgent
 
 logger = logging.getLogger(__name__)
 
@@ -51,8 +51,8 @@ async def query_stream(
 
     async def event_generator():
         try:
-            service = RAGService(db=db, gemini_api_key=settings.GEMINI_API_KEY)
-            async for sse_event in service.process_query(
+            agent = HRAgent.create(db=db, gemini_api_key=settings.GEMINI_API_KEY)
+            async for sse_event in agent.process_query(
                 query=request.query,
                 user=current_user,
                 session_id=request.session_id,
@@ -91,8 +91,8 @@ async def query_test(
     but uses non-streaming generation and captures per-step timing.
     """
     try:
-        service = RAGService(db=db, gemini_api_key=settings.GEMINI_API_KEY)
-        result = await service.process_query_test(
+        agent = HRAgent.create(db=db, gemini_api_key=settings.GEMINI_API_KEY)
+        result = await agent.process_query_test(
             query=request.query,
             user=current_user,
             session_id=request.session_id,
@@ -118,5 +118,5 @@ async def query_health(
     db: AsyncSession = Depends(get_db),
 ):
     """Return the operational status of every RAG pipeline component."""
-    service = RAGService(db=db, gemini_api_key=settings.GEMINI_API_KEY)
-    return await service.health_check()
+    agent = HRAgent.create(db=db, gemini_api_key=settings.GEMINI_API_KEY)
+    return await agent.health_check()
