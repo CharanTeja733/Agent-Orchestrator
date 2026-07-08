@@ -180,7 +180,9 @@ class BaseAgent(ABC):
         """
         gemini = GeminiService(gemini_api_key)
         classifier = ClassifierService(gemini)
-        search = SearchService(db, gemini_api_key)
+        search = SearchService(
+            db, gemini_api_key, collection_name=cls.collection_name
+        )
         return cls(db, gemini, classifier, search)
 
     # ------------------------------------------------------------------

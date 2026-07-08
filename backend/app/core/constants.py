@@ -7,6 +7,7 @@ VALID_CLASSIFICATIONS = {
     "out_of_domain",
     "follow_up",
     "hr_question",
+    "it_question",
 }
 
 # Classification → Action mapping
@@ -16,6 +17,7 @@ CLASSIFICATION_ACTIONS = {
     "out_of_domain": "respond_directly",
     "follow_up": "rewrite_then_retrieve",
     "hr_question": "retrieve",
+    "it_question": "retrieve",
 }
 
 # Direct response templates
@@ -46,3 +48,8 @@ FOLLOW_UP_INDICATORS = [
     "above", "previous", "second point", "first point",
     "how do i apply", "how does that work",
 ]
+
+# -- IT Support contact info (Feature 13) ----------------------------------
+IT_SUPPORT_EMAIL = "it-support@company.com"
+IT_PORTAL_URL = "https://portal.company.com/it"
+IT_HELPDESK_PHONE = "ext. 4357"

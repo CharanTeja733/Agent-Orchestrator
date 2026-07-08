@@ -148,6 +148,25 @@ class HRDocument(Base):
 
 
 # ---------------------------------------------------------------------------
+# ITDocument (Feature 13)
+# ---------------------------------------------------------------------------
+
+
+class ITDocument(Base):
+    __tablename__ = "it_documents"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    content = Column(Text, nullable=False)
+    embedding = Column(Vector(768), nullable=False)
+    source = Column(String(500), nullable=False)
+    page = Column(Integer)
+    section = Column(String(500))
+    chunk_index = Column(Integer, nullable=False)
+    access_level = Column(String(50), nullable=False, default="all")
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+# ---------------------------------------------------------------------------
 # SystemLog (Feature 11)
 # ---------------------------------------------------------------------------
 

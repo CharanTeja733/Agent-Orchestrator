@@ -103,7 +103,7 @@ class ClassifierService:
                 classification,
                 confidence,
             )
-            requires_retrieval = classification in ("follow_up", "hr_question")
+            requires_retrieval = classification in ("follow_up", "hr_question", "it_question")
             requires_rewriting = classification == "follow_up"
             action = CLASSIFICATION_ACTIONS.get(classification, "retrieve")
             direct_response = DIRECT_RESPONSES.get(classification)
@@ -130,7 +130,7 @@ class ClassifierService:
         classification, confidence = self._parse_response(raw_response)
 
         # Determine actions
-        requires_retrieval = classification in ("follow_up", "hr_question")
+        requires_retrieval = classification in ("follow_up", "hr_question", "it_question")
         requires_rewriting = classification == "follow_up"
         action = CLASSIFICATION_ACTIONS.get(classification, "retrieve")
         direct_response = DIRECT_RESPONSES.get(classification)

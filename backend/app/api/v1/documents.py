@@ -49,10 +49,21 @@ def get_ingestion_service(
 async def upload_document(
     file: UploadFile = File(...),
     access_level: str = Form("all"),
+    agent_type: str = Form("hr"),
     _admin: User = Depends(get_current_admin_user),
-    service: IngestionService = Depends(get_ingestion_service),
+    db: AsyncSession = Depends(get_db),
 ):
-    """Upload and ingest a single HR document (PDF/DOCX/TXT)."""
+    """Upload and ingest a single document (PDF/DOCX/TXT).
+
+    Set *agent_type* to ``"it"`` to store in the IT knowledge base
+    (default ``"hr"`` for the HR knowledge base).
+    """
+    collection_name = f"{agent_type}_documents"
+    service = IngestionService(
+        db=db,
+        gemini_api_key=settings.GEMINI_API_KEY,
+        collection_name=collection_name,
+    )
     contents = await file.read()
 
     if len(contents) > settings.MAX_FILE_SIZE_MB * 1024 * 1024:
@@ -69,10 +80,20 @@ async def upload_document(
 async def upload_documents_bulk(
     files: list[UploadFile] = File(...),
     access_level: str = Form("all"),
+    agent_type: str = Form("hr"),
     _admin: User = Depends(get_current_admin_user),
-    service: IngestionService = Depends(get_ingestion_service),
+    db: AsyncSession = Depends(get_db),
 ):
-    """Upload and ingest up to 5 HR documents at once."""
+    """Upload and ingest up to 5 documents at once.
+
+    Set *agent_type* to ``"it"`` for IT knowledge base (default ``"hr"``).
+    """
+    collection_name = f"{agent_type}_documents"
+    service = IngestionService(
+        db=db,
+        gemini_api_key=settings.GEMINI_API_KEY,
+        collection_name=collection_name,
+    )
     if len(files) > MAX_BULK_FILES:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

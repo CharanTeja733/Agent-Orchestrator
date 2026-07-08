@@ -5,5 +5,6 @@ Reference: ``.claude/specs/12-refactor-hr-agent-into-base-agent.md``
 
 from app.agents.base import BaseAgent
 from app.agents.hr_agent import HRAgent
+from app.agents.it_agent import ITAgent
 
-__all__ = ["BaseAgent", "HRAgent"]
+__all__ = ["BaseAgent", "HRAgent", "ITAgent"]

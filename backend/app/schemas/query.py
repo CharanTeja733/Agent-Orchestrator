@@ -122,3 +122,6 @@ class QueryHealthResponse(BaseModel):
     active_sessions: int = Field(
         default=0, description="Sessions active in the last hour"
     )
+    agent: str | None = Field(
+        default=None, description="Agent name (e.g. 'hr', 'it')"
+    )

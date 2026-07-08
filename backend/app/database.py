@@ -234,6 +234,41 @@ async def create_tables(conn: asyncpg.Connection) -> None:
         print(f"WARNING — could not create vector index: {exc}")
 
 
+    # -- it_documents -----------------------------------------------------------
+    await conn.execute("""
+        CREATE TABLE IF NOT EXISTS it_documents (
+            id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            content      TEXT          NOT NULL,
+            embedding    VECTOR(768)   NOT NULL,
+            source       VARCHAR(500)  NOT NULL,
+            page         INTEGER,
+            section      VARCHAR(500),
+            chunk_index  INTEGER       NOT NULL,
+            access_level VARCHAR(50)   NOT NULL DEFAULT 'all'
+                         CHECK (access_level IN ('all', 'manager', 'hr_admin')),
+            created_at   TIMESTAMPTZ DEFAULT NOW()
+        )
+    """)
+    await conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_it_documents_source ON it_documents(source)"
+    )
+    await conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_it_documents_access_level ON it_documents(access_level)"
+    )
+
+    # -- ivfflat vector index for IT documents ------------------------------
+    try:
+        await conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_it_documents_embedding
+            ON it_documents
+            USING ivfflat (embedding vector_cosine_ops)
+            WITH (lists = 100)
+        """)
+        print("Vector index (ivfflat) created on it_documents.embedding")
+    except Exception as exc:
+        print(f"WARNING — could not create IT vector index: {exc}")
+
+
 # ---------------------------------------------------------------------------
 # Database initialization (called on startup)
 # ---------------------------------------------------------------------------

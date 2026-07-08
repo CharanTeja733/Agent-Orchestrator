@@ -38,10 +38,20 @@ logger = logging.getLogger(__name__)
 class IngestionService:
     """Orchestrates document ingestion: parse, chunk, embed, store."""
 
-    def __init__(self, db: AsyncSession, gemini_api_key: str) -> None:
+    def __init__(
+        self,
+        db: AsyncSession,
+        gemini_api_key: str,
+        collection_name: str = "hr_documents",
+    ) -> None:
+        from app.models.models import HRDocument, ITDocument
+
         self.db = db
         self.gemini_service = GeminiService(gemini_api_key)
-        self.document_repo = DocumentRepository(db)
+        model = (
+            ITDocument if collection_name == "it_documents" else HRDocument
+        )
+        self.document_repo = DocumentRepository(db, model_class=model)
 
     # ------------------------------------------------------------------
     # Private pipeline (no commit / rollback)

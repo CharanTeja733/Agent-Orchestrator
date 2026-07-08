@@ -50,7 +50,7 @@ _SECTION_PATTERNS = [
     # Bold-wrapped: **Section Name**
     re.compile(r"^\*\*(.+?)\*\*$", re.MULTILINE),
     # ALL-CAPS short lines (2-50 chars, only uppercase letters and spaces)
-    re.compile(r"^[A-Z][A-Z\s]{1,49}$", re.MULTILINE),
+    re.compile(r"^([A-Z][A-Z\s]{1,49})$", re.MULTILINE),
     # Numbered sections: 1. Introduction, 2.3 Policies
     re.compile(r"^\d+(?:\.\d+)*\.?\s+(.+)$", re.MULTILINE),
 ]

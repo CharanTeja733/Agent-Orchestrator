@@ -1,4 +1,7 @@
-"""Document repository — specialized queries for the hr_documents table."""
+"""Document repository — specialized queries for document collections (Feature 13).
+
+Supports multiple document collections via the *model_class* constructor parameter.
+"""
 
 from __future__ import annotations
 
@@ -10,26 +13,38 @@ from app.repositories.base import BaseRepository
 
 
 class DocumentRepository(BaseRepository[HRDocument]):
-    """Data-access layer for ``hr_documents``.
+    """Data-access layer for document collections.
 
     Extends ``BaseRepository`` with document-specific queries.
     Methods that mutate data use ``flush()`` rather than ``commit()`` so
     the caller (``IngestionService``) can manage transaction boundaries.
+
+    Parameters
+    ----------
+    db : AsyncSession
+        Active database session.
+    model_class : type, optional
+        The ORM model class for the document collection (e.g. ``HRDocument``,
+        ``ITDocument``).  Defaults to ``HRDocument`` for backward compatibility.
     """
 
-    def __init__(self, db: AsyncSession) -> None:
-        super().__init__(HRDocument, db)
+    def __init__(self, db: AsyncSession, model_class: type | None = None) -> None:
+        if model_class is None:
+            model_class = HRDocument  # backward compat
+        super().__init__(model_class, db)
+        self._table_name: str = model_class.__tablename__
+        self._index_name: str = f"idx_{self._table_name}_embedding"
 
     # ------------------------------------------------------------------
     # Source-based queries
     # ------------------------------------------------------------------
 
-    async def get_by_source(self, source: str) -> list[HRDocument]:
+    async def get_by_source(self, source: str) -> list:
         """Return all chunks for *source*, ordered by chunk_index."""
         result = await self.db.execute(
-            select(HRDocument)
-            .where(HRDocument.source == source)
-            .order_by(HRDocument.chunk_index)
+            select(self.model)
+            .where(self.model.source == source)
+            .order_by(self.model.chunk_index)
         )
         return list(result.scalars().all())
 
@@ -40,22 +55,22 @@ class DocumentRepository(BaseRepository[HRDocument]):
         calling ``commit()``.
         """
         result = await self.db.execute(
-            delete(HRDocument).where(HRDocument.source == source)
+            delete(self.model).where(self.model.source == source)
         )
         await self.db.flush()
         return result.rowcount
 
-    async def insert_chunks(self, chunks: list[dict]) -> list[HRDocument]:
+    async def insert_chunks(self, chunks: list[dict]) -> list:
         """Bulk-insert *chunks* and flush to the database.
 
-        Each dict must contain keys matching ``HRDocument`` columns:
+        Each dict must contain keys matching the document model columns:
         content, embedding, source, chunk_index, access_level,
         and optionally page, section.
 
         Uses ``add_all()`` + ``flush()`` — the caller is responsible for
         calling ``commit()``.
         """
-        instances = [HRDocument(**chunk) for chunk in chunks]
+        instances = [self.model(**chunk) for chunk in chunks]
         self.db.add_all(instances)
         await self.db.flush()
         return instances
@@ -63,7 +78,7 @@ class DocumentRepository(BaseRepository[HRDocument]):
     async def source_exists(self, source: str) -> bool:
         """Return ``True`` if at least one chunk exists for *source*."""
         result = await self.db.execute(
-            select(HRDocument.id).where(HRDocument.source == source).limit(1)
+            select(self.model.id).where(self.model.source == source).limit(1)
         )
         return result.scalar_one_or_none() is not None
 
@@ -77,13 +92,13 @@ class DocumentRepository(BaseRepository[HRDocument]):
         This uses a raw textual query because SQLAlchemy's ORM GROUP BY on
         multiple non-aggregated columns is verbose.
         """
-        query = text("""
+        query = text(f"""
             SELECT
                 source,
                 COUNT(*)            AS chunk_count,
                 MAX(access_level)   AS access_level,
                 MAX(created_at)     AS ingested_at
-            FROM hr_documents
+            FROM {self._table_name}
             GROUP BY source
             ORDER BY source
         """)
@@ -107,16 +122,16 @@ class DocumentRepository(BaseRepository[HRDocument]):
         """
         # Total distinct sources
         total_sources_result = await self.db.execute(
-            select(func.count(func.distinct(HRDocument.source)))
+            select(func.count(func.distinct(self.model.source)))
         )
         total_documents = total_sources_result.scalar_one()
 
         # Total chunks and characters
         totals_result = await self.db.execute(
             select(
-                func.count(HRDocument.id),
-                func.coalesce(func.sum(func.char_length(HRDocument.content)), 0),
-                func.max(HRDocument.created_at),
+                func.count(self.model.id),
+                func.coalesce(func.sum(func.char_length(self.model.content)), 0),
+                func.max(self.model.created_at),
             )
         )
         total_chunks, total_characters, last_ingested = totals_result.one()
@@ -124,9 +139,9 @@ class DocumentRepository(BaseRepository[HRDocument]):
         # Access-level distribution
         dist_result = await self.db.execute(
             select(
-                HRDocument.access_level,
-                func.count(HRDocument.id),
-            ).group_by(HRDocument.access_level)
+                self.model.access_level,
+                func.count(self.model.id),
+            ).group_by(self.model.access_level)
         )
         dist_rows = {row.access_level: row.count for row in dist_result}
         access_level_dist = {
@@ -136,9 +151,9 @@ class DocumentRepository(BaseRepository[HRDocument]):
         }
 
         # Largest document (by chunk count)
-        largest_query = text("""
+        largest_query = text(f"""
             SELECT source, COUNT(*) AS cnt
-            FROM hr_documents
+            FROM {self._table_name}
             GROUP BY source
             ORDER BY cnt DESC
             LIMIT 1
@@ -191,7 +206,7 @@ class DocumentRepository(BaseRepository[HRDocument]):
 
         # NOTE: ``\:`` escapes colons in SQLAlchemy text() so that the
         # PostgreSQL ``::vector`` cast operator is preserved literally.
-        query = text(r"""
+        query = text(rf"""
             SELECT
                 id,
                 content,
@@ -199,7 +214,7 @@ class DocumentRepository(BaseRepository[HRDocument]):
                 page,
                 section,
                 1 - (embedding <=> :embedding\:\:vector) AS score
-            FROM hr_documents
+            FROM {self._table_name}
             WHERE
                 access_level = ANY(:access_levels)
                 AND 1 - (embedding <=> :embedding\:\:vector) >= :min_score
@@ -230,19 +245,19 @@ class DocumentRepository(BaseRepository[HRDocument]):
         ]
 
     async def get_total_indexed_count(self) -> int:
-        """Return the total number of chunks in ``hr_documents``."""
+        """Return the total number of chunks in the document collection."""
         result = await self.db.execute(
-            select(func.count(HRDocument.id))
+            select(func.count(self.model.id))
         )
         return result.scalar_one()
 
     async def check_vector_index_exists(self) -> bool:
-        """Check whether the IVFFlat index on ``hr_documents.embedding`` exists."""
-        query = text("""
+        """Check whether the IVFFlat index on the document collection exists."""
+        query = text(f"""
             SELECT EXISTS (
                 SELECT 1
                 FROM pg_indexes
-                WHERE indexname = 'idx_hr_documents_embedding'
+                WHERE indexname = '{self._index_name}'
             )
         """)
         result = await self.db.execute(query)

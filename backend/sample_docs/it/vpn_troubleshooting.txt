@@ -1,0 +1,19 @@
+VPN TROUBLESHOOTING GUIDE
+
+Connection Issues:
+1. Check your internet connection is working
+2. Verify VPN client is installed (version 5.2 or higher)
+3. Restart the VPN client: Click tray icon → Quit → Reopen
+4. If still failing, try alternate server: vpn-backup.company.com
+5. Clear cached credentials: Settings → Clear Saved Password → Re-enter
+
+Common Error Codes:
+- Error 789: Security layer failure. Solution: Update VPN client to latest version
+- Error 809: Network connection blocked. Solution: Check firewall settings
+- Error 720: No PPP control protocols. Solution: Contact IT support
+
+Mac Users:
+- Additional step: Allow VPN in System Preferences → Security & Privacy
+- Required: macOS 12.0 or higher
+
+Contact: it-support@company.com for persistent issues

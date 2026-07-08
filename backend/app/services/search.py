@@ -7,8 +7,18 @@ import time
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
+from app.models.models import HRDocument, ITDocument
 from app.repositories.document import DocumentRepository
 from app.services.gemini import GeminiService
+
+
+def _get_document_model(collection_name: str) -> type:
+    """Map a collection name string to the corresponding ORM model class."""
+    mapping: dict[str, type] = {
+        "hr_documents": HRDocument,
+        "it_documents": ITDocument,
+    }
+    return mapping.get(collection_name, HRDocument)
 
 
 class SearchService:
@@ -18,10 +28,16 @@ class SearchService:
     search, with role-based access control filtering at the database level.
     """
 
-    def __init__(self, db: AsyncSession, gemini_api_key: str) -> None:
+    def __init__(
+        self,
+        db: AsyncSession,
+        gemini_api_key: str,
+        collection_name: str = "hr_documents",
+    ) -> None:
         self.db = db
         self.gemini_service = GeminiService(gemini_api_key)
-        self.document_repo = DocumentRepository(db)
+        model = _get_document_model(collection_name)
+        self.document_repo = DocumentRepository(db, model_class=model)
 
     # ------------------------------------------------------------------
     # Public API
