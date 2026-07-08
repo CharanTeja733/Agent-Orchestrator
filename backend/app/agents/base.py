@@ -269,6 +269,7 @@ class BaseAgent(ABC):
                     processing_time_ms=round(
                         (time.time() - overall_start) * 1000, 2
                     ),
+                    agent_name=self.agent_name,
                 )
 
                 # Attempt auto-title generation on first substantive message
@@ -351,6 +352,7 @@ class BaseAgent(ABC):
                     processing_time_ms=round(
                         (time.time() - overall_start) * 1000, 2
                     ),
+                    agent_name=self.agent_name,
                 )
 
                 await self.session_service.maybe_update_title(
@@ -437,6 +439,7 @@ class BaseAgent(ABC):
                 classification=classification,
                 tokens_used=self._estimate_tokens(full_response),
                 processing_time_ms=round(elapsed, 2),
+                agent_name=self.agent_name,
             )
 
             await self.session_service.maybe_update_title(
@@ -577,6 +580,7 @@ class BaseAgent(ABC):
                 confidence="high",
                 classification=classification,
                 tokens_used=self._estimate_tokens(answer),
+                agent_name=self.agent_name,
             )
             pipeline_steps["storage_ms"] = round((time.time() - t0) * 1000, 2)
             elapsed = (time.time() - overall_start) * 1000
@@ -628,6 +632,7 @@ class BaseAgent(ABC):
                 confidence=confidence_level,
                 classification=classification,
                 tokens_used=self._estimate_tokens(answer),
+                agent_name=self.agent_name,
             )
             pipeline_steps["storage_ms"] = round((time.time() - t0) * 1000, 2)
 
@@ -676,6 +681,7 @@ class BaseAgent(ABC):
             confidence=confidence_level,
             classification=classification,
             tokens_used=self._estimate_tokens(answer),
+            agent_name=self.agent_name,
         )
         pipeline_steps["storage_ms"] = round((time.time() - t0) * 1000, 2)
 
@@ -996,6 +1002,7 @@ class BaseAgent(ABC):
         classification: str,
         tokens_used: int,
         processing_time_ms: float | None = None,
+        agent_name: str | None = None,
     ) -> dict:
         """Persist the user message and assistant response.
 
@@ -1010,6 +1017,7 @@ class BaseAgent(ABC):
                 role="user",
                 content=query,
                 classification=classification,
+                agent_name=agent_name,
             )
 
             # Store assistant response
@@ -1022,6 +1030,7 @@ class BaseAgent(ABC):
                 confidence=confidence,
                 tokens_used=tokens_used,
                 processing_time_ms=processing_time_ms,
+                agent_name=agent_name,
             )
 
             # Touch session timestamp and extend expiry (Feature 9)

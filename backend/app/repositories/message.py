@@ -52,6 +52,7 @@ class MessageRepository(BaseRepository[Message]):
         tokens_used: int | None = None,
         classification: str | None = None,
         processing_time_ms: float | None = None,
+        agent_name: str | None = None,
     ) -> Message:
         """Create and persist a new message.
 
@@ -68,6 +69,7 @@ class MessageRepository(BaseRepository[Message]):
             tokens_used=tokens_used,
             classification=classification,
             processing_time_ms=processing_time_ms,
+            agent_name=agent_name,
         )
 
     # ------------------------------------------------------------------
@@ -155,6 +157,30 @@ class MessageRepository(BaseRepository[Message]):
         result = await self.db.execute(
             select(Message)
             .where(*conditions)
+            .order_by(Message.created_at.desc())
+            .limit(1)
+        )
+        return result.scalar_one_or_none()
+
+    async def get_last_agent_name(self, session_id: UUID) -> str | None:
+        """Return the ``agent_name`` of the most recent assistant message
+        in a session.
+
+        Used by the orchestrator (Feature 14) to route follow-up queries
+        to the same agent that handled the previous message.
+
+        Args:
+            session_id: Session to query.
+
+        Returns:
+            Agent name string (``"hr"``, ``"it"``, …) or ``None`` if no
+            matching message exists.
+        """
+        result = await self.db.execute(
+            select(Message.agent_name)
+            .where(Message.session_id == session_id)
+            .where(Message.role == "assistant")
+            .where(Message.agent_name.isnot(None))
             .order_by(Message.created_at.desc())
             .limit(1)
         )

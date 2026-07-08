@@ -354,4 +354,9 @@ async def _run_migrations(conn: asyncpg.Connection) -> None:
         "ALTER TABLE messages ADD COLUMN IF NOT EXISTS processing_time_ms DOUBLE PRECISION"
     )
 
+    # -- Feature 14: agent_name column for orchestrator session routing ---------
+    await conn.execute(
+        "ALTER TABLE messages ADD COLUMN IF NOT EXISTS agent_name VARCHAR(50)"
+    )
+
     print("Database migrations applied successfully")

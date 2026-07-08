@@ -58,6 +58,13 @@ from app.schemas.session import (
     SessionUpdateResponse,
 )
 from app.schemas.user import UserCreate, UserResponse
+from app.schemas.orchestrator import (
+    AgentInfo,
+    OrchestratorAgentsResponse,
+    OrchestratorHealthResponse,
+    OrchestratorQueryRequest,
+    OrchestratorTestResponse,
+)
 
 __all__ = [
     # classify
@@ -127,4 +134,10 @@ __all__ = [
     "QueryTestResponse",
     "RetrievedChunkDetail",
     "SourceDetail",
+    # orchestrator (Feature 14)
+    "AgentInfo",
+    "OrchestratorAgentsResponse",
+    "OrchestratorHealthResponse",
+    "OrchestratorQueryRequest",
+    "OrchestratorTestResponse",
 ]
