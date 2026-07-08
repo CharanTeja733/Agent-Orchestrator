@@ -29,6 +29,7 @@ class MessageResponse(BaseModel):
     classification: Optional[str] = None
     feedback: Optional[FeedbackResponse] = None
     created_at: datetime
+    agent_name: Optional[str] = None
 
     class Config:
         from_attributes = True

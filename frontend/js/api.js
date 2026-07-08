@@ -305,6 +305,11 @@
           callbacks.onError(data);
         }
         break;
+      case 'route':
+        if (callbacks.onRoute) {
+          callbacks.onRoute(data);
+        }
+        break;
       default:
         // Unknown event type — ignore gracefully
         break;

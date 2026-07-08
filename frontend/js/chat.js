@@ -108,7 +108,7 @@
 
   // ---- Bot Message Placeholder (before first token) ----
 
-  function addBotMessagePlaceholder() {
+  function addBotMessagePlaceholder(agentName) {
     var container = _getMessagesContainer();
     if (!container) return;
 
@@ -117,6 +117,11 @@
 
     var messageEl = document.createElement('div');
     messageEl.className = 'message message-bot streaming';
+
+    // Store agent name on element for later use (badge applied after streaming)
+    if (agentName) {
+      messageEl.setAttribute('data-agent', agentName);
+    }
 
     // Avatar
     var avatar = document.createElement('div');
@@ -183,8 +188,13 @@
 
   // ---- Finalize Bot Message (after stream completes) ----
 
-  function finalizeBotMessage(messageId, sources, confidence) {
+  function finalizeBotMessage(messageId, sources, confidence, agentName) {
     if (!currentBotMessageEl) return;
+
+    // Read agent name from parameter or fall back to data-agent attribute
+    if (!agentName) {
+      agentName = currentBotMessageEl.getAttribute('data-agent') || null;
+    }
 
     // Remove streaming class
     currentBotMessageEl.classList.remove('streaming');
@@ -192,6 +202,15 @@
     // Add message ID as data attribute
     if (messageId) {
       currentBotMessageEl.setAttribute('data-message-id', messageId);
+    }
+
+    // Add agent badge (only after streaming completes)
+    if (agentName) {
+      _addAgentBadge(currentBotMessageEl, agentName);
+      var agentClass = (window.HrUtils && window.HrUtils.getAgentConfig)
+        ? window.HrUtils.getAgentConfig(agentName).cssClass
+        : 'hr';
+      currentBotMessageEl.classList.add('message-' + agentClass);
     }
 
     // Build footer
@@ -241,6 +260,50 @@
     _setInputEnabled(true);
 
     scrollToBottom();
+  }
+
+  // ---- Agent Badge ----
+
+  function _addAgentBadge(messageEl, agentName) {
+    var config = window.HrUtils.getAgentConfig(agentName);
+    var badge = document.createElement('div');
+    badge.className = 'agent-badge agent-badge-' + config.cssClass;
+    badge.textContent = config.icon + ' ' + config.label;
+    var body = messageEl.querySelector('.message-body');
+    if (body) {
+      body.insertBefore(badge, body.firstChild);
+    }
+    return badge;
+  }
+
+  // ---- Agent Transition ----
+
+  function showAgentTransition(agentName) {
+    var container = _getMessagesContainer();
+    if (!container) return;
+    var config = window.HrUtils.getAgentConfig(agentName);
+    var transitionEl = document.createElement('div');
+    transitionEl.className = 'agent-transition';
+    transitionEl.textContent = '\u{1F504} Switched to ' + config.icon + ' ' + config.label;
+    container.appendChild(transitionEl);
+    scrollToBottom();
+  }
+
+  // ---- Active Agent Indicator ----
+
+  function showActiveAgentIndicator(agentName) {
+    var indicator = document.getElementById('active-agent-indicator');
+    if (!indicator) return;
+    if (!agentName) {
+      indicator.classList.add('hidden');
+      indicator.className = 'active-agent-indicator hidden';
+      return;
+    }
+    var config = window.HrUtils.getAgentConfig(agentName);
+    indicator.classList.remove('hidden');
+    indicator.className = 'active-agent-indicator active-agent-' + config.cssClass;
+    indicator.innerHTML = 'Currently talking to: ' + config.icon + ' <strong>' +
+      window.HrUtils.escapeHtml(config.label) + '</strong>';
   }
 
   // ---- Sources Section ----
@@ -621,6 +684,15 @@
       body.appendChild(feedbackEl);
     }
 
+    // Agent badge (bot only, for message history)
+    if (!isUser && msg.agent_name) {
+      _addAgentBadge(messageEl, msg.agent_name);
+      var agentClass2 = (window.HrUtils && window.HrUtils.getAgentConfig)
+        ? window.HrUtils.getAgentConfig(msg.agent_name).cssClass
+        : 'hr';
+      messageEl.classList.add('message-' + agentClass2);
+    }
+
     messageEl.appendChild(avatar);
     messageEl.appendChild(body);
 
@@ -639,47 +711,86 @@
     card.className = 'welcome-card';
 
     var greeting = document.createElement('h2');
-    greeting.textContent = 'Hello ' + window.HrUtils.escapeHtml(userName || 'there') + '! 👋';
+    greeting.textContent = 'Hello ' + window.HrUtils.escapeHtml(userName || 'there') + '! \u{1F44B}';
 
     var sub = document.createElement('p');
     sub.className = 'welcome-greeting';
-    sub.textContent = 'I\'m your HR assistant. How can I help you today?';
+    sub.textContent = 'I\'m your company assistant. I can connect you with:';
 
-    var capsBox = document.createElement('div');
-    capsBox.className = 'welcome-capabilities';
+    // Agent introduction cards
+    var agentList = document.createElement('div');
+    agentList.className = 'welcome-agent-list';
 
-    var capsLabel = document.createElement('p');
-    capsLabel.textContent = 'I can help you with:';
+    var hrCard = document.createElement('div');
+    hrCard.className = 'welcome-agent-card welcome-agent-hr';
+    hrCard.innerHTML = '<div class="welcome-agent-header">\u{1F4CB} <strong>HR Agent</strong></div>' +
+      '<p>Policies, leave, benefits, payroll, remote work</p>';
 
-    var capsList = document.createElement('ul');
-    var items = [
-      'Company policies and procedures',
-      'Leave and time-off policies',
-      'Benefits and insurance',
-      'Remote work guidelines',
-      'Payroll and compensation'
-    ];
-    for (var i = 0; i < items.length; i++) {
-      var li = document.createElement('li');
-      li.textContent = items[i];
-      capsList.appendChild(li);
-    }
+    var itCard = document.createElement('div');
+    itCard.className = 'welcome-agent-card welcome-agent-it';
+    itCard.innerHTML = '<div class="welcome-agent-header">\u{1F4BB} <strong>IT Support</strong></div>' +
+      '<p>Laptops, VPN, software, passwords, network issues</p>';
 
-    var capsPrompt = document.createElement('p');
-    capsPrompt.style.marginTop = '12px';
-    capsPrompt.style.fontSize = '14px';
-    capsPrompt.style.color = '#64748B';
-    capsPrompt.textContent = 'What would you like to know?';
-
-    capsBox.appendChild(capsLabel);
-    capsBox.appendChild(capsList);
-    capsBox.appendChild(capsPrompt);
+    agentList.appendChild(hrCard);
+    agentList.appendChild(itCard);
 
     card.appendChild(greeting);
     card.appendChild(sub);
-    card.appendChild(capsBox);
+    card.appendChild(agentList);
+
+    // Suggestion chips
+    var chipsContainer = _createSuggestionChips();
+    card.appendChild(chipsContainer);
 
     container.appendChild(card);
+
+    // Hide active agent indicator on new chat
+    showActiveAgentIndicator(null);
+  }
+
+  // ---- Suggestion Chips ----
+
+  var SUGGESTION_CHIPS = [
+    { text: "What's the remote work policy?", agent: "hr" },
+    { text: "How many leave days do I get?", agent: "hr" },
+    { text: "Tell me about health benefits", agent: "hr" },
+    { text: "VPN not connecting", agent: "it" },
+    { text: "Reset my password", agent: "it" },
+    { text: "Laptop won't turn on", agent: "it" }
+  ];
+
+  function _createSuggestionChips() {
+    var container = document.createElement('div');
+    container.className = 'suggestion-chips';
+
+    var label = document.createElement('p');
+    label.className = 'suggestion-label';
+    label.textContent = 'Try asking:';
+    container.appendChild(label);
+
+    var chipsRow = document.createElement('div');
+    chipsRow.className = 'suggestion-chips-row';
+
+    for (var i = 0; i < SUGGESTION_CHIPS.length; i++) {
+      var chip = SUGGESTION_CHIPS[i];
+      var chipEl = document.createElement('button');
+      chipEl.className = 'suggestion-chip suggestion-chip-' + chip.agent;
+      chipEl.textContent = chip.text;
+      chipEl.addEventListener('click', (function (text) {
+        return function () {
+          if (chatInput) {
+            chatInput.value = text;
+            _autoResizeTextarea();
+            _updateSendButton();
+          }
+          sendMessage(text);
+        };
+      })(chip.text));
+      chipsRow.appendChild(chipEl);
+    }
+
+    container.appendChild(chipsRow);
+    return container;
   }
 
   // ---- Stream Error ----
@@ -817,7 +928,7 @@
     if (chatInput) {
       chatInput.disabled = !enabled;
       chatInput.placeholder = enabled
-        ? 'Ask a question about HR policies...'
+        ? 'Ask about HR policies or IT support...'
         : 'Waiting for response...';
     }
     if (sendBtn) {
@@ -903,6 +1014,8 @@
     showLoadingIndicator: showLoadingIndicator,
     scrollToBottom: scrollToBottom,
     bindInputBar: bindInputBar,
-    enableInput: enableInput
+    enableInput: enableInput,
+    showAgentTransition: showAgentTransition,
+    showActiveAgentIndicator: showActiveAgentIndicator
   };
 })();

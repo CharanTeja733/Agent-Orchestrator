@@ -10,6 +10,7 @@
   var currentController = null;
   var pendingSources = [];
   var safetyTimer = null;
+  var lastKnownAgent = null;
 
   /**
    * Start a streaming query.
@@ -33,17 +34,37 @@
 
     // Show bot placeholder in chat
     if (window.HrChat) {
-      window.HrChat.addBotMessagePlaceholder();
+      window.HrChat.addBotMessagePlaceholder(lastKnownAgent);
     }
 
     // Reset pending sources
     pendingSources = [];
 
-    // Start the SSE stream
-    currentController = window.HrApi.apiStream('/query/', {
+    // Reset agent tracking for new stream
+    lastKnownAgent = null;
+
+    // Start the SSE stream (orchestrator endpoint for multi-agent routing)
+    currentController = window.HrApi.apiStream('/orchestrator/query', {
       query: query,
       session_id: sessionId || null
     }, {
+      onRoute: function (data) {
+        var agentName = data.agent_name || null;
+        // Detect agent transition (different agent than last message)
+        if (lastKnownAgent && agentName && agentName !== lastKnownAgent) {
+          if (window.HrChat && window.HrChat.showAgentTransition) {
+            window.HrChat.showAgentTransition(agentName);
+          }
+        }
+        lastKnownAgent = agentName;
+        // Update active agent indicator
+        if (window.HrApp) {
+          window.HrApp.setState('chat.activeAgent', agentName);
+        }
+        if (window.HrChat && window.HrChat.showActiveAgentIndicator) {
+          window.HrChat.showActiveAgentIndicator(agentName);
+        }
+      },
       onToken: function (token) {
         if (window.HrChat) {
           window.HrChat.appendToken(token);
@@ -70,6 +91,7 @@
       }
       currentController = null;
       pendingSources = [];
+      lastKnownAgent = null;
       if (window.HrApp) {
         window.HrApp.setState('chat.isStreaming', false);
       }
@@ -103,6 +125,7 @@
     }
     currentController = null;
     pendingSources = [];
+    lastKnownAgent = null;
 
     if (window.HrApp) {
       window.HrApp.setState('chat.isStreaming', false);
@@ -118,12 +141,16 @@
    * Handle successful stream completion.
    */
   function _handleDone(data) {
+    // Use agent_name from done event, falling back to route event
+    var agentName = data.agent_name || lastKnownAgent || null;
+
     // Finalize the bot message
     if (window.HrChat) {
       window.HrChat.finalizeBotMessage(
         data.message_id,
         pendingSources,
-        data.confidence
+        data.confidence,
+        agentName
       );
       // Safety net — re-enable input even if finalizeBotMessage bailed early
       window.HrChat.enableInput();
@@ -151,6 +178,7 @@
     // Reset state
     currentController = null;
     pendingSources = [];
+    lastKnownAgent = null;
 
     if (window.HrApp) {
       window.HrApp.setState('chat.isStreaming', false);
@@ -168,6 +196,7 @@
 
     currentController = null;
     pendingSources = [];
+    lastKnownAgent = null;
 
     if (window.HrApp) {
       window.HrApp.setState('chat.isStreaming', false);

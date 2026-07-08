@@ -19,7 +19,8 @@
       activeSessionId: null,
       sessions: [],
       messages: [],
-      isStreaming: false
+      isStreaming: false,
+      activeAgent: null
     },
     ui: {
       currentPage: 'login',
@@ -126,7 +127,7 @@
     if (chatPage) chatPage.classList.add('hidden');
 
     setState('ui.currentPage', 'login');
-    document.title = 'HR Q&A Agent — Sign In';
+    document.title = 'Company Assistant — Sign In';
 
     // Focus email input
     setTimeout(function () {
@@ -158,7 +159,7 @@
       window.HrChat.showWelcomeMessage(user ? user.full_name : 'there');
     }
 
-    document.title = 'HR Q&A Agent';
+    document.title = 'Company Assistant';
 
     // Focus chat input
     setTimeout(function () {

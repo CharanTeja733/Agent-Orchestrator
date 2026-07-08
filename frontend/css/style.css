@@ -1123,6 +1123,207 @@ input, select, textarea {
 }
 
 /* ==========================================================================
+   AGENT BADGE
+   ========================================================================== */
+
+.agent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  width: fit-content;
+}
+
+.agent-badge-hr {
+  background: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.agent-badge-it {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.agent-badge-orchestrator {
+  background: #F3F4F6;
+  color: #4B5563;
+}
+
+/* ==========================================================================
+   AGENT MESSAGE ACCENTS
+   ========================================================================== */
+
+.message-hr .message-bubble {
+  border-left: 3px solid #2563EB;
+}
+
+.message-it .message-bubble {
+  border-left: 3px solid #059669;
+}
+
+.message-orchestrator .message-bubble {
+  border-left: 3px solid #6B7280;
+}
+
+/* ==========================================================================
+   ACTIVE AGENT INDICATOR
+   ========================================================================== */
+
+.active-agent-indicator {
+  padding: 6px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: #F8FAFC;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition);
+}
+
+.active-agent-indicator.hidden {
+  display: none;
+}
+
+.active-agent-indicator strong {
+  font-weight: 600;
+}
+
+.active-agent-hr {
+  border-left: 3px solid #2563EB;
+  background: #EFF6FF;
+}
+
+.active-agent-it {
+  border-left: 3px solid #059669;
+  background: #ECFDF5;
+}
+
+.active-agent-orchestrator {
+  border-left: 3px solid #6B7280;
+  background: #F9FAFB;
+}
+
+/* ==========================================================================
+   AGENT TRANSITION
+   ========================================================================== */
+
+.agent-transition {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  margin: 4px 0;
+  border-top: 1px dashed var(--border);
+  border-bottom: 1px dashed var(--border);
+  background: #F8FAFC;
+  border-radius: var(--radius);
+  animation: fadeIn 0.3s ease;
+}
+
+/* ==========================================================================
+   SUGGESTION CHIPS
+   ========================================================================== */
+
+.suggestion-chips {
+  margin-top: 20px;
+}
+
+.suggestion-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.suggestion-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.suggestion-chip {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  background: #fff;
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+
+.suggestion-chip-hr {
+  border-color: #93C5FD;
+}
+
+.suggestion-chip-hr:hover {
+  background: #DBEAFE;
+  border-color: #3B82F6;
+}
+
+.suggestion-chip-it {
+  border-color: #6EE7B7;
+}
+
+.suggestion-chip-it:hover {
+  background: #D1FAE5;
+  border-color: #10B981;
+}
+
+/* ==========================================================================
+   WELCOME AGENT CARDS
+   ========================================================================== */
+
+.welcome-agent-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.welcome-agent-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  text-align: left;
+  transition: box-shadow var(--transition);
+}
+
+.welcome-agent-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.welcome-agent-hr {
+  border-left: 3px solid #2563EB;
+}
+
+.welcome-agent-it {
+  border-left: 3px solid #059669;
+}
+
+.welcome-agent-header {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.welcome-agent-header strong {
+  font-weight: 600;
+}
+
+.welcome-agent-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
    CHAT INPUT BAR
    ========================================================================== */
 
@@ -1387,5 +1588,28 @@ input, select, textarea {
 
   .auth-card {
     padding: 28px 24px;
+  }
+
+  .welcome-agent-list {
+    grid-template-columns: 1fr;
+  }
+
+  .suggestion-chips-row {
+    gap: 6px;
+  }
+
+  .suggestion-chip {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .active-agent-indicator {
+    font-size: 11px;
+    padding: 4px 12px;
+  }
+
+  .agent-transition {
+    font-size: 11px;
+    padding: 6px 12px;
   }
 }

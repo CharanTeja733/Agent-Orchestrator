@@ -294,6 +294,7 @@ class BaseAgent(ABC):
                         "retrieval_ms": None,
                         "generation_ms": None,
                         "rewriting_ms": None,
+                        "agent_name": self.agent_name,
                     },
                 )
                 return
@@ -384,6 +385,7 @@ class BaseAgent(ABC):
                             if rewriting_ms
                             else None
                         ),
+                        "agent_name": self.agent_name,
                     },
                 )
                 return
@@ -510,6 +512,7 @@ class BaseAgent(ABC):
                         if rewriting_ms
                         else None
                     ),
+                    "agent_name": self.agent_name,
                 },
             )
 

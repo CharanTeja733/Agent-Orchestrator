@@ -298,6 +298,7 @@ class SessionService:
                     "tokens_used": m.tokens_used,
                     "created_at": m.created_at,
                     "feedback": feedback_dict.get(str(m.id)),
+                    "agent_name": getattr(m, "agent_name", None),
                 }
                 for m in messages
             ],

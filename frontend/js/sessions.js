@@ -170,6 +170,23 @@
         window.HrChat.renderMessages(res.messages || []);
       }
 
+      // Determine current agent from loaded messages
+      var agentName = null;
+      if (res.messages && res.messages.length > 0) {
+        for (var i2 = res.messages.length - 1; i2 >= 0; i2--) {
+          if (res.messages[i2].role === 'assistant') {
+            agentName = res.messages[i2].agent_name || null;
+            break;
+          }
+        }
+      }
+      if (window.HrApp) {
+        window.HrApp.setState('chat.activeAgent', agentName);
+      }
+      if (window.HrChat && window.HrChat.showActiveAgentIndicator) {
+        window.HrChat.showActiveAgentIndicator(agentName);
+      }
+
     } catch (e) {
       console.error('Failed to load messages:', e);
       if (window.HrApp) {
@@ -203,7 +220,7 @@
 
     var headerEl = document.getElementById('chat-header-title');
     if (headerEl) {
-      headerEl.textContent = (session && session.title) ? session.title : 'HR Q&A Agent';
+      headerEl.textContent = (session && session.title) ? session.title : 'Company Assistant';
     }
   }
 
@@ -219,6 +236,7 @@
     if (window.HrApp) {
       window.HrApp.setState('chat.activeSessionId', null);
       window.HrApp.setState('chat.messages', []);
+      window.HrApp.setState('chat.activeAgent', null);
     }
 
     // Clear chat and show welcome
@@ -234,7 +252,7 @@
     // Update header
     var headerEl = document.getElementById('chat-header-title');
     if (headerEl) {
-      headerEl.textContent = 'HR Q&A Agent';
+      headerEl.textContent = 'Company Assistant';
     }
 
     // Remove all active highlights

@@ -131,6 +131,7 @@ class MessageResponse(BaseModel):
     classification: Optional[str] = None
     tokens_used: Optional[int] = None
     created_at: datetime
+    agent_name: Optional[str] = None
 
     class Config:
         from_attributes = True

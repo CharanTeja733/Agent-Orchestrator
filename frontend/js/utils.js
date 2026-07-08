@@ -211,6 +211,21 @@
     }
   }
 
+  // ---- Agent Configuration ----
+
+  var AGENT_CONFIG = {
+    hr: { icon: '\u{1F4CB}', label: 'HR Agent', cssClass: 'hr', color: '#2563EB' },
+    it: { icon: '\u{1F4BB}', label: 'IT Support', cssClass: 'it', color: '#059669' },
+    orchestrator: { icon: '\u{1F916}', label: 'Assistant', cssClass: 'orchestrator', color: '#6B7280' }
+  };
+
+  var AGENT_DEFAULT = AGENT_CONFIG.orchestrator;
+
+  function getAgentConfig(agentName) {
+    if (!agentName) return AGENT_DEFAULT;
+    return AGENT_CONFIG[agentName] || AGENT_DEFAULT;
+  }
+
   // Expose module
   window.HrUtils = {
     escapeHtml: escapeHtml,
@@ -223,6 +238,8 @@
     getConfidenceColor: getConfidenceColor,
     getConfidenceLabel: getConfidenceLabel,
     getRoleBadge: getRoleBadge,
-    getRoleClass: getRoleClass
+    getRoleClass: getRoleClass,
+    getAgentConfig: getAgentConfig,
+    AGENT_CONFIG: AGENT_CONFIG
   };
 })();
