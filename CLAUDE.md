@@ -24,7 +24,7 @@ There are no test runners, linters, or build scripts. The backend uses `uvicorn 
 
 ## Architecture
 
-This is a **FastAPI + PostgreSQL/pgvector + vanilla HTML/JS** multi-agent Q&A orchestrator, deployed with Docker Compose. It routes user queries to domain-specific agents (HR, IT) via an intelligent orchestrator that pre-classifies intent and delegates to the appropriate agent's RAG pipeline.
+This is a **FastAPI + PostgreSQL/pgvector + LangGraph + vanilla HTML/JS** multi-agent Q&A orchestrator, deployed with Docker Compose. It routes user queries to domain-specific agents (HR, IT) via LangGraph StateGraphs — an Orchestrator Graph for routing and per-agent Agent Graphs for the full RAG pipeline.
 
 **4 services** defined in `docker-compose.yml`:
 - `db` — `pgvector/pgvector:pg16`, port 5432
@@ -34,19 +34,19 @@ This is a **FastAPI + PostgreSQL/pgvector + vanilla HTML/JS** multi-agent Q&A or
 
 ### Backend layered architecture
 
-The backend follows **Orchestrator → Agent → Controller → Service → Repository** layering:
+The backend follows **Graph → Service → Repository** layering with two compiled LangGraph StateGraphs:
 
 ```
-orchestrator ──► agents/ ──► api/v1/ (routes) ──► services/ ──► repositories/ ──► models/ + PostgreSQL
- classify+route    RAG pipeline   thin — parse only   business logic    data access         persistence
+API Route ──► Orchestrator Graph ──► Agent Graph ──► services/ ──► repositories/ ──► models/ + PostgreSQL
+                  (routing)          (RAG pipeline)   business logic    data access        persistence
 ```
 
 | Layer | Directory | Responsibility |
 |-------|-----------|---------------|
-| Orchestration | `app/services/orchestrator.py` | Pre-classify queries, route to the right domain agent, maintain agent registry. Session-aware follow-up routing. |
-| Agents | `app/agents/` | `BaseAgent` — abstract base class with the full RAG pipeline (classify → rewrite → retrieve → confidence gate → generate → store). Domain agents (HR, IT) only define prompts/metadata as class-level attributes — no pipeline logic in subclasses. |
-| Presentation | `app/api/v1/` | Thin route handlers — parse requests, call services/orchestrator, return responses. No business logic. |
-| Business logic | `app/services/` | Stateless service classes orchestrating repositories, enforcing rules, calling external APIs (Gemini). |
+| Graphs | `app/graph/` | Two compiled LangGraph StateGraphs: **Orchestrator Graph** (4 nodes: check_override → quick_classify → map_to_agent → load_agent_config) and **Agent Graph** (9 nodes: load_context → classify → [direct\|retrieve] → confidence_gate → [generate\|fallback] → store). Node functions call existing services directly. SSE streaming via asyncio.Queue bridge. Agent config extracted from BaseAgent subclasses. |
+| Agents | `app/agents/` | `BaseAgent` — abstract base class now used as config holder (pipeline methods deprecated in favor of graphs). Domain agents (HR, IT) define only class-level attributes (prompts, templates, metadata). Introspected by `agent_registry.py`. |
+| Presentation | `app/api/v1/` | Thin route handlers — build state dicts, invoke graphs, yield SSE events. No business logic. |
+| Business logic | `app/services/` | Stateless service classes orchestrating repositories, enforcing rules, calling external APIs (Gemini). Called by graph node functions. |
 | Data access | `app/repositories/` | `BaseRepository[T]` with CRUD + entity-specific repos. Centralizes all SQL (including raw asyncpg for analytics). |
 | ORM models | `app/models/` | SQLAlchemy `DeclarativeBase` models — for querying only, not DDL. |
 | Schemas | `app/schemas/` | Pydantic request/response models, split per domain. Separate from ORM models. |
@@ -87,23 +87,25 @@ All routers are aggregated in `app/api/v1/__init__.py` into a single `v1_router`
 
 **Configuration** (`backend/app/config.py`): `pydantic-settings.BaseSettings` reads from `.env`. ~40 settings including Gemini model params (temperature, top_p, max_tokens), RAG thresholds (confidence gate, retrieval top_k), and cleanup intervals. Requires `SECRET_KEY` ≥ 32 chars. The `.env` file is gitignored; `.env.example` is the template.
 
-**RAG Pipeline** (`app/agents/base.py`): The `BaseAgent` class provides the full pipeline: classify → rewrite (context-dependent follow-ups) → vector retrieval → confidence gate → Gemini generation (or fallback) → store message pair. The orchestrator pre-classifies for routing and caches the result on the agent, so the agent skips redundant re-classification. SSE streaming via `sse-starlette`, emitting `route` (from orchestrator), `token`, `sources`, `confidence`, `classification`, and `done` events.
+**RAG Pipeline** (`app/graph/`): The Agent Graph (`agent_graph.py`) provides the full pipeline as a compiled StateGraph with 9 nodes: `load_context → classify_message → [respond_directly | rewrite_query → retrieve_context → apply_confidence_gate → [generate_fallback | generate_response → store_and_finish]]`. Node functions in `nodes.py` call existing services. The Orchestrator Graph classifies first and passes the result via shared state (`classification_result` field), so the agent skips redundant re-classification. SSE streaming via `sse-starlette` + `asyncio.Queue` bridge (`streaming.py`), emitting `route` (from orchestrator), `token`, `sources`, and `done` events.
 
 **Frontend** (`frontend/`): Single-page app with two views (login, chat). 7 vanilla JS modules loaded as IIFEs (utils, api, auth, streaming, sessions, chat, app). Features: SSE token streaming, session sidebar with CRUD, feedback thumbs-up/down with reason panel, confidence badges, source citations, auto token refresh, responsive CSS. Served via nginx with `proxy_buffering off` for SSE passthrough. The nginx config proxies `/api/*` to `backend:8000` with 3600s timeouts.
 
 ## Important patterns
 
-- **Layered architecture**: All new features must follow the Orchestrator → Agent → Controller → Service → Repository pattern. Routes in `api/v1/` are thin (parse → call service/orchestrator → return). Business logic goes in `services/`. Database queries go in `repositories/` (extend `BaseRepository[T]` from `app/repositories/base.py`). Services accept `AsyncSession` directly, not via FastAPI `Depends` — this keeps them usable from scripts/tasks.
-- **Agent abstraction**: All domain agents extend `BaseAgent` (`app/agents/base.py`) — an abstract base class providing the complete RAG pipeline. Subclasses only define class-level attributes (prompts, response templates, metadata). **Never override pipeline methods in subclasses** — the base class handles classify → rewrite → retrieve → confidence gate → generate → store. Adding a new agent requires: (1) a `BaseAgent` subclass with prompts, (2) a prompt module in `app/prompts/`, and (3) one entry in `OrchestratorService.AGENT_REGISTRY`.
-- **Orchestrator routing**: The `OrchestratorService` pre-classifies every query (using `ClassifierService`) and routes to the appropriate agent. It caches the classification result on the agent to avoid redundant LLM calls. Session-aware follow-ups automatically route to the same agent as the previous message. The `requested_agent` parameter allows explicit agent override.
+- **LangGraph StateGraphs**: The orchestrator and RAG pipeline are compiled LangGraph StateGraphs, NOT procedural code. Two graphs: **Orchestrator Graph** (4 nodes: `check_override → quick_classify → map_to_agent → load_agent_config`) for routing, and **Agent Graph** (9 nodes: `load_context → classify → [direct|retrieve] → confidence_gate → [generate|fallback] → store`) for the RAG pipeline. Each node is an async function that receives typed state and returns a partial update dict. Conditional edges (`route_after_classify`, `route_after_confidence`, `route_after_override_check`) determine branching. State flows through nodes via `TypedDict` schemas in `app/graph/state.py`.
+- **Graph → Service → Repository layering**: Routes in `api/v1/` build state dicts and invoke graphs. Node functions in `app/graph/nodes.py` call existing services directly. Services accept `AsyncSession` directly, not via FastAPI `Depends`. This keeps graphs usable from scripts/tasks.
+- **SSE streaming via asyncio.Queue**: LangGraph's `ainvoke()` returns only final state. To preserve token-by-token streaming, `run_agent_graph_with_sse()` starts the graph as a background `asyncio.Task` while node functions (`generate_response`, `store_and_finish`) push `token`/`sources`/`done` events to an `asyncio.Queue`. The API route yields from the queue. A `None` sentinel signals completion. See `app/graph/streaming.py`.
+- **Agent config extractor**: `_extract_agent_config()` in `app/graph/agent_registry.py` introspects `BaseAgent` subclass attributes at import time, producing flat config dicts unpacked into `AgentState`. Adding a new agent requires: (1) a `BaseAgent` subclass with prompts, (2) a prompt module in `app/prompts/`, and (3) one entry in `agent_registry.py::_load_configs()`.
+- **Orchestrator routing (deprecated)**: The `OrchestratorService` in `app/services/orchestrator.py` is deprecated — kept only for health checks. The Orchestrator Graph replaces its routing logic. The `requested_agent` parameter still allows explicit agent override via the `check_override` node.
 - **No migration framework**: Tables are created at startup via raw SQL in `database.py`. New tables go in `create_tables()` (use `IF NOT EXISTS` for idempotency). Schema changes to existing tables go in `_run_migrations()` using `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` or equivalent guards.
 - **No ORM DDL**: The SQLAlchemy models in `app/models/models.py` are for querying only — they don't drive table creation.
 - **Async everywhere**: All database access is async (`asyncpg` + SQLAlchemy async). Use `await` on all DB calls; sync code will block the event loop.
-- **Spec-driven development**: Feature specs live in `.claude/specs/` (14 specs, features 1–14) and describe what to build before coding. The git history follows these specs sequentially.
+- **Spec-driven development**: Feature specs live in `.claude/specs/` (14 specs, features 1–14) and describe what to build before coding. The LangGraph migration (Spec 15) replaces the manual pipeline in specs 12–14 with compiled StateGraphs. The git history follows these specs sequentially.
 - **SSE streaming**: The `/orchestrator/query` and `/query` endpoints stream responses via Server-Sent Events. Tokens arrive as `data: {"type":"token","content":"..."}` events, plus a `route` event from the orchestrator indicating which agent is responding. The nginx config must have `proxy_buffering off` for this to work. The frontend uses `ReadableStream` to consume SSE in real time.
 - **Structured logging**: JSON-formatted logs via `app/core/logger.py`. The `RequestLoggingMiddleware` emits a log on every request with duration, status, and X-Request-ID. A `DBLogHandler` persists high-severity logs to the `system_logs` table.
 - **Background cleanup**: `SessionCleanup` and `LogCleanup` run as asyncio tasks in the FastAPI lifespan, periodically deactivating expired sessions and purging old logs.
-- **Prompt management**: LLM prompts live in `app/prompts/` as separate modules (one per agent), not inline in services. This keeps them versionable and easy to tune.
+- **Prompt management**: LLM prompts live in `app/prompts/` as separate modules (one per agent), not inline in services. At startup, `agent_registry.py::_extract_agent_config()` introspects `BaseAgent` subclasses to produce flat config dicts for the graph's `AgentState`. This keeps prompts versionable and easy to tune.
 - **Adminer Dracula theme**: `ADMINER_DESIGN=dracula` is set — don't change it without asking.
 
 ## Current state (what's wired vs. planned)
@@ -127,3 +129,6 @@ All routers are aggregated in `app/api/v1/__init__.py` into a single `v1_router`
 | HR Agent (policies, benefits, leave — `hr_documents` collection) | |
 | IT Agent (VPN, passwords, laptops, software — `it_documents` collection) | |
 | Agent Orchestrator (auto-classify → route → delegate, session-aware follow-ups, agent discovery API) | |
+| **LangGraph StateGraphs** — Orchestrator Graph (4 nodes) + Agent Graph (9 nodes) replacing manual pipeline | |
+| **asyncio.Queue SSE bridge** — preserves token-by-token streaming contract with LangGraph | |
+| **Agent config extractor** — introspects BaseAgent subclasses into flat config dicts | |

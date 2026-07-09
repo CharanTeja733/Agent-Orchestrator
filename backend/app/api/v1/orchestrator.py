@@ -1,16 +1,20 @@
 """Agent Orchestrator endpoints — unified query routing (Feature 14).
 
 Provides a single entry point that automatically routes queries to the
-appropriate domain agent (HR or IT).  Also serves agent discovery and
-aggregated health checks.
+appropriate domain agent (HR or IT) via LangGraph StateGraphs.  Also serves
+agent discovery and aggregated health checks.
 
 Reference: ``.claude/specs/14-agent-orchestrator.md`` Section 4.
+LangGraph migration: Replaces the manual ``OrchestratorService`` +
+``BaseAgent.process_query()`` pipeline with two compiled StateGraphs.
 """
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
+import time
 
 from fastapi import APIRouter, Depends, HTTPException
 from sse_starlette.sse import EventSourceResponse
@@ -19,6 +23,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import settings
 from app.core.deps import get_current_user
 from app.database import get_db
+from app.graph import (
+    DEFAULT_AGENT,
+    build_agent_graph,
+    build_orchestrator_graph,
+    get_available_agents,
+    run_agent_graph_test,
+    run_agent_graph_with_sse,
+)
+from app.graph.nodes import _sse_event
 from app.models.models import User
 from app.schemas.orchestrator import (
     AgentInfo,
@@ -32,6 +45,11 @@ from app.services.orchestrator import OrchestratorService
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/orchestrator", tags=["Orchestrator"])
+
+# Compiled once at module level — state is passed per-invocation so this is
+# safe across concurrent requests.
+_orchestrator_graph = build_orchestrator_graph()
+_agent_graph = build_agent_graph()
 
 
 # ---------------------------------------------------------------------------
@@ -57,34 +75,80 @@ async def orchestrator_query_stream(
 
     async def event_generator():
         try:
-            orch = OrchestratorService(
-                db=db, gemini_api_key=settings.GEMINI_API_KEY
-            )
-            agent, agent_name = await orch.route_query(
-                query=request.query,
-                user=current_user,
-                session_id=request.session_id,
-                requested_agent=request.agent_name,
-            )
-
-            # Emit route event so the frontend knows which agent is responding
-            from app.agents.base import BaseAgent
-
-            yield BaseAgent._sse_event("route", {
-                "agent_name": agent_name,
-                "display_name": type(agent).display_name,
+            # ── Step 1: Run orchestrator graph ──────────────────────────
+            orch_state = await _orchestrator_graph.ainvoke({
+                "query": request.query,
+                "user_id": current_user.id,
+                "full_name": current_user.full_name,
+                "user_role": current_user.role,
+                "session_id": request.session_id,
+                "requested_agent": request.agent_name,
+                "db": db,
+                "gemini_api_key": settings.GEMINI_API_KEY,
             })
 
-            # Delegate to the chosen agent's streaming pipeline
-            async for sse_event in agent.process_query(
-                query=request.query,
-                user=current_user,
-                session_id=request.session_id,
+            if orch_state.get("error"):
+                yield {
+                    "event": "error",
+                    "data": json.dumps({
+                        "error": orch_state["error"],
+                        "detail": orch_state["error"],
+                        "error_type": "routing_failed",
+                    }),
+                }
+                return
+
+            agent_config = orch_state["agent_config"]
+            agent_name = orch_state["agent_name"]
+
+            # Emit route event (before agent graph starts)
+            yield _sse_event("route", {
+                "agent_name": agent_name,
+                "display_name": agent_config["display_name"],
+            })
+
+            # ── Step 2: Build agent state ──────────────────────────────
+            agent_state = {
+                # Inputs
+                "query": request.query,
+                "user_id": current_user.id,
+                "full_name": current_user.full_name,
+                "user_role": current_user.role,
+                "session_id": request.session_id,
+                # Agent config (all attributes flattened into state)
+                **agent_config,
+                # Infrastructure
+                "db": db,
+                "gemini_api_key": settings.GEMINI_API_KEY,
+                # Pipeline initial values
+                "classification_result": (
+                    orch_state.get("classification_result") or {}
+                ),
+                "history_messages": [],
+                "history_dicts": [],
+                "search_query": request.query,
+                "retrieved_chunks": [],
+                "confidence_level": "",
+                "gate_action": "",
+                "full_response": "",
+                "sources": [],
+                "message_id": None,
+                "overall_start": time.time(),
+                "classification_ms": None,
+                "rewriting_ms": None,
+                "retrieval_ms": None,
+                "generation_ms": None,
+                "storage_ms": None,
+                "error": None,
+            }
+
+            # ── Step 3: Run agent graph with SSE streaming ───────────────
+            async for sse_event in run_agent_graph_with_sse(
+                _agent_graph, agent_state
             ):
                 yield sse_event
 
         except ValueError as exc:
-            # Invalid agent_name override
             logger.warning("Orchestrator routing error: %s", exc)
             yield {
                 "event": "error",
@@ -127,25 +191,58 @@ async def orchestrator_query_test(
     with routing metadata.
 
     Routes automatically based on query classification (or explicit
-    ``agent_name`` override), then delegates to the chosen agent's
-    ``process_query_test()``.
+    ``agent_name`` override), then delegates to the agent graph in test mode.
     """
     try:
-        orch = OrchestratorService(
-            db=db, gemini_api_key=settings.GEMINI_API_KEY
-        )
-        agent, agent_name = await orch.route_query(
-            query=request.query,
-            user=current_user,
-            session_id=request.session_id,
-            requested_agent=request.agent_name,
-        )
+        # ── Step 1: Run orchestrator graph ──────────────────────────
+        orch_state = await _orchestrator_graph.ainvoke({
+            "query": request.query,
+            "user_id": current_user.id,
+            "full_name": current_user.full_name,
+            "user_role": current_user.role,
+            "session_id": request.session_id,
+            "requested_agent": request.agent_name,
+            "db": db,
+            "gemini_api_key": settings.GEMINI_API_KEY,
+        })
 
-        result = await agent.process_query_test(
-            query=request.query,
-            user=current_user,
-            session_id=request.session_id,
-        )
+        if orch_state.get("error"):
+            raise ValueError(orch_state["error"])
+
+        agent_config = orch_state["agent_config"]
+        agent_name = orch_state["agent_name"]
+
+        # ── Step 2: Build agent state ──────────────────────────────
+        agent_state = {
+            "query": request.query,
+            "user_id": current_user.id,
+            "full_name": current_user.full_name,
+            "user_role": current_user.role,
+            "session_id": request.session_id,
+            **agent_config,
+            "db": db,
+            "gemini_api_key": settings.GEMINI_API_KEY,
+            "classification_result": orch_state.get("classification_result") or {},
+            "history_messages": [],
+            "history_dicts": [],
+            "search_query": request.query,
+            "retrieved_chunks": [],
+            "confidence_level": "",
+            "gate_action": "",
+            "full_response": "",
+            "sources": [],
+            "message_id": None,
+            "overall_start": time.time(),
+            "classification_ms": None,
+            "rewriting_ms": None,
+            "retrieval_ms": None,
+            "generation_ms": None,
+            "storage_ms": None,
+            "error": None,
+        }
+
+        # ── Step 3: Run agent graph in test mode ───────────────────
+        result = await run_agent_graph_test(_agent_graph, agent_state)
         result["agent_name"] = agent_name
         return result
 
@@ -167,18 +264,13 @@ async def orchestrator_query_test(
 
 
 @router.get("/agents", response_model=OrchestratorAgentsResponse)
-async def list_agents(
-    db: AsyncSession = Depends(get_db),
-):
+async def list_agents():
     """List all registered agents with their capabilities.
 
     Returns metadata for every agent in the orchestrator's registry,
     including the human-readable display name and description.
     """
-    orch = OrchestratorService(
-        db=db, gemini_api_key=settings.GEMINI_API_KEY
-    )
-    agents_data = orch.get_available_agents()
+    agents_data = get_available_agents()
 
     return OrchestratorAgentsResponse(
         agents=[
@@ -190,7 +282,7 @@ async def list_agents(
             )
             for a in agents_data
         ],
-        default_agent=OrchestratorService.DEFAULT_AGENT,
+        default_agent=DEFAULT_AGENT,
     )
 
 
@@ -203,7 +295,11 @@ async def list_agents(
 async def orchestrator_health(
     db: AsyncSession = Depends(get_db),
 ):
-    """Return the aggregated health status of all registered agents."""
+    """Return the aggregated health status of all registered agents.
+
+    Uses the existing ``OrchestratorService`` for health checks since it
+    exercises the full agent stack (DB, Gemini, vector search).
+    """
     orch = OrchestratorService(
         db=db, gemini_api_key=settings.GEMINI_API_KEY
     )

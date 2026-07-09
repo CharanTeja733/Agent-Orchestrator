@@ -1,6 +1,6 @@
 # Multi-Agent Q&A Orchestrator
 
-An AI-powered multi-agent Q&A system built with **FastAPI**, **PostgreSQL/pgvector**, and **Google Gemini**. Users ask questions in natural language and are automatically routed to the right domain agent (HR or IT) via an intelligent orchestrator — with streaming responses, conversation history, and an admin analytics dashboard.
+An AI-powered multi-agent Q&A system built with **FastAPI**, **PostgreSQL/pgvector**, **LangGraph**, and **Google Gemini**. Users ask questions in natural language and are automatically routed to the right domain agent (HR or IT) via a LangGraph-powered orchestrator — with streaming responses, conversation history, and an admin analytics dashboard.
 
 ## Architecture
 
@@ -23,7 +23,7 @@ An AI-powered multi-agent Q&A system built with **FastAPI**, **PostgreSQL/pgvect
                      └──────────────┘
 ```
 
-The orchestrator pre-classifies every query (using Gemini), then routes to the appropriate domain agent. Each agent runs its own RAG pipeline with domain-specific prompts, document collections, and fallback responses. Follow-up questions are automatically routed to the same agent as the previous message.
+Two **LangGraph StateGraphs** power the system — an **Orchestrator Graph** (classify → route → load agent config) followed by an **Agent Graph** (RAG pipeline: classify → retrieve → confidence gate → generate/fallback → store). The orchestrator caches its classification result in the agent's state, avoiding redundant LLM calls. Each agent runs its own RAG pipeline with domain-specific prompts, document collections, and fallback responses. Follow-up questions are automatically routed to the same agent as the previous message.
 
 **4 Docker services:**
 | Service | Technology | Port | Purpose |
@@ -85,12 +85,14 @@ Four users are seeded on first startup:
 
 ## Features
 
-### Multi-Agent Orchestration
-- **Automatic routing** — queries are classified and routed to the right domain agent (HR or IT)
+### LangGraph-Powered Orchestration
+- **Two StateGraphs** — an Orchestrator Graph routes queries; per-agent Agent Graphs run the full RAG pipeline with typed state flowing through nodes
+- **Automatic routing** — queries are classified and routed to the right domain agent (HR or IT) via conditional edges
 - **Agent discovery API** — frontend can list available agents and their capabilities
-- **Pluggable agents** — adding a new agent requires only a new agent class + one registry entry
-- **Session-aware follow-ups** — follow-up questions route to the same agent as the previous message
-- **Explicit agent override** — users (or the frontend) can target a specific agent directly
+- **Pluggable agents** — adding a new agent requires only a new agent class + one registry entry; the config extractor auto-discovers attributes
+- **Session-aware follow-ups** — follow-up questions route to the same agent as the previous message via state-based edge conditions
+- **Explicit agent override** — users (or the frontend) can target a specific agent directly, bypassing classification
+- **Classification caching** — the orchestrator classifies once and passes the result through state, saving an LLM call
 
 ### Chat & Q&A
 - **Streaming responses** — answers stream token-by-token via Server-Sent Events (SSE)
@@ -144,41 +146,45 @@ Full interactive docs at http://localhost:8000/docs.
 
 ## Backend Architecture
 
-The backend follows a **Controller → Service → Repository** layered pattern with an **Agent Abstraction Layer**:
+The backend follows a **Graph → Service → Repository** layered pattern with **LangGraph StateGraphs**:
 
 ```
-                 ┌─────────────────────────┐
-                 │   OrchestratorService   │  ← classify → route → delegate
-                 └───────────┬─────────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              ▼              ▼              ▼
-        ┌──────────┐  ┌──────────┐  ┌──────────┐
-        │ HR Agent │  │ IT Agent │  │ (future) │  ← BaseAgent subclasses
-        └──────────┘  └──────────┘  └──────────┘
-              │              │
-              ▼              ▼
-    ┌─────────────────────────────────────┐
-    │ api/v1/ (routes) ──► services/ ──►  │
-    │ repositories/ ──► models/ + PG      │
-    └─────────────────────────────────────┘
+API Route (orchestrator.py)
+  │
+  ├─ Orchestrator Graph (StateGraph — 4 nodes)
+  │     check_override → quick_classify → map_to_agent → load_agent_config
+  │
+  ├─ "route" SSE event
+  │
+  └─ Agent Graph (StateGraph — 9 nodes, per-agent RAG pipeline)
+        load_context → classify_message
+          → [direct]   respond_directly → END
+          → [retrieval] rewrite_query? → retrieve → confidence_gate
+              → [fallback]  generate_fallback → END
+              → [generate]  generate_response → store_and_finish → END
 ```
 
 | Layer | Directory | Responsibility |
 |-------|-----------|---------------|
-| Orchestration | `backend/app/services/orchestrator.py` | Classify & route queries to the right domain agent |
-| Agents | `backend/app/agents/` | `BaseAgent` (abstract RAG pipeline) + domain agents (HR, IT) |
-| Presentation | `backend/app/api/v1/` | Thin route handlers — parse, call service, return response |
-| Business Logic | `backend/app/services/` | Stateless services orchestrating repositories, calling Gemini |
-| Data Access | `backend/app/repositories/` | `BaseRepository[T]` with CRUD + entity-specific queries |
+| Graphs | `backend/app/graph/` | Two compiled LangGraph StateGraphs — Orchestrator Graph (routing) and Agent Graph (RAG pipeline). Node functions, conditional edges, streaming bridge, agent config registry. |
+| Agents | `backend/app/agents/` | `BaseAgent` (ABC) + domain agents (HR, IT) — now used as config holders; their class attributes are introspected by the graph's config extractor. |
+| Presentation | `backend/app/api/v1/` | Thin route handlers — build state, invoke graphs, yield SSE events. No business logic. |
+| Business Logic | `backend/app/services/` | Stateless services orchestrating repositories, calling Gemini. Called by graph node functions. |
+| Data Access | `backend/app/repositories/` | `BaseRepository[T]` with CRUD + entity-specific queries. Centralizes all SQL. |
 | ORM Models | `backend/app/models/` | SQLAlchemy models (querying only, not DDL) |
 | Schemas | `backend/app/schemas/` | Pydantic request/response models |
 | Cross-cutting | `backend/app/core/` | Security, dependencies, exceptions, logging, cleanup |
 | Prompts | `backend/app/prompts/` | LLM prompt templates per agent (versionable, separate from logic) |
 
-### Agent Abstraction (BaseAgent)
+### LangGraph Pipeline (replaces BaseAgent.process_query)
 
-All domain agents extend `BaseAgent` — an abstract base class that provides the complete RAG pipeline. Subclasses only define **class-level attributes** (prompts, response templates, metadata); no pipeline logic lives in subclasses.
+The RAG pipeline is now a compiled LangGraph `StateGraph` with typed state flowing through 9 nodes. Node functions (`backend/app/graph/nodes.py`) call existing services (`GeminiService`, `SearchService`, `ClassifierService`, `SessionService`) directly — no new wrappers.
+
+SSE streaming is preserved via an **asyncio.Queue producer/consumer pattern**: the agent graph runs as a background `asyncio.Task` while node functions push `token` events to the queue in real time. The API route yields events from the queue, producing the exact same `route → token* → sources → done` contract the frontend expects.
+
+### Agent Configuration (BaseAgent subclasses as config holders)
+
+Domain agents extend `BaseAgent` and define only **class-level attributes** (prompts, response templates, metadata). The `_extract_agent_config()` function in `backend/app/graph/agent_registry.py` introspects these classes at import time to produce flat config dicts consumed by `AgentState`.
 
 ```
 class HRAgent(BaseAgent):
@@ -189,39 +195,35 @@ class HRAgent(BaseAgent):
     # ... prompts, templates, fallback responses ...
 ```
 
-Adding a new agent requires: (1) a new `BaseAgent` subclass, (2) a prompt module, and (3) one line in `OrchestratorService.AGENT_REGISTRY`.
+Adding a new agent requires: (1) a new `BaseAgent` subclass with prompts, (2) a prompt module in `prompts/`, and (3) one entry in `agent_registry.py`.
 
-### RAG Pipeline (per-agent)
+### RAG Pipeline (Agent StateGraph)
+
+The Agent Graph executes the full RAG pipeline with conditional branching:
 
 ```
-User Question
-    │
-    ▼
-Orchestrator Pre-classification ──► hr_question | it_question | follow_up | greeting | ...
-    │
-    ▼
-Agent Routing ──► HR Agent | IT Agent
-    │
-    ▼
-Query Classifier ──► policy | procedure | benefits | technical_issue | off_topic | chitchat
-    │
-    ▼
-Context Rewriter ──► rewrites follow-up questions using conversation history
-    │
-    ▼
-Vector Retrieval ──► pgvector cosine similarity (top-k = 5, min score = 0.5)
-    │
-    ▼
-Confidence Gate ──► high (≥0.75) | medium (≥0.50) | low (≥0.30) | none (<0.30)
-    │
-    ▼
-Gemini Generation ──► streaming SSE response with sources & confidence
-    │
-    ▼
-Message Storage ──► user message + assistant response saved to session
+START
+  │
+  ▼
+load_context ──► Get/create session, load conversation history
+  │
+  ▼
+classify_message ──► Use cached classification from orchestrator, or classify fresh
+  │
+  ├─ [requires_retrieval=False] → respond_directly → END
+  │     (greetings, bot questions, out-of-domain)
+  │
+  ├─ [requires_rewriting=True] → rewrite_query → retrieve_context
+  └─ [no rewriting needed] → retrieve_context
+        │
+        ▼
+      apply_confidence_gate
+        │
+        ├─ [generate] → generate_response (Gemini streaming) → store_and_finish → END
+        └─ [fallback] → generate_fallback (template-based) → END
 ```
 
-The orchestrator caches its classification result on the agent, so the agent's pipeline skips the redundant second classification call.
+Classification result is cached from the Orchestrator Graph via shared state — no redundant LLM calls.
 
 ## Project Structure
 
@@ -229,12 +231,21 @@ The orchestrator caches its classification result on the agent, so the agent's p
 agent-orchestrator/
 ├── backend/
 │   ├── app/
-│   │   ├── agents/            # Agent abstraction + domain agents
-│   │   │   ├── base.py        # BaseAgent — reusable RAG pipeline ABC
+│   │   ├── graph/             # LangGraph StateGraphs (9 files)
+│   │   │   ├── state.py              # TypedDict schemas: OrchestratorState, AgentState
+│   │   │   ├── orchestrator_graph.py # Orchestrator Graph builder (4 nodes)
+│   │   │   ├── agent_graph.py        # Agent Graph builder (9 nodes)
+│   │   │   ├── nodes.py              # 13 node functions + extracted helpers
+│   │   │   ├── conditional_edges.py   # Edge routing callables
+│   │   │   ├── streaming.py          # asyncio.Queue SSE bridge
+│   │   │   ├── agent_registry.py     # Config extractor from agent classes
+│   │   │   └── test_handler.py       # Non-streaming test endpoint
+│   │   ├── agents/            # Agent abstraction + domain agents (config holders)
+│   │   │   ├── base.py        # BaseAgent ABC (pipeline methods deprecated)
 │   │   │   ├── hr_agent.py    # HR domain agent (policies, benefits)
 │   │   │   └── it_agent.py    # IT domain agent (tech support)
 │   │   ├── api/v1/            # Route handlers (9 routers)
-│   │   │   ├── orchestrator.py  # Unified query routing + agent discovery
+│   │   │   ├── orchestrator.py  # Graph invocation: orch graph → route event → agent graph
 │   │   │   └── ...
 │   │   ├── core/              # Security, deps, exceptions, logging, cleanup
 │   │   ├── middleware/        # Request logging middleware
@@ -242,7 +253,7 @@ agent-orchestrator/
 │   │   ├── prompts/           # LLM prompt templates (hr_agent, it_agent, classifier)
 │   │   ├── repositories/      # Data access layer
 │   │   ├── schemas/           # Pydantic request/response schemas
-│   │   ├── services/          # Business logic + orchestrator
+│   │   ├── services/          # Business logic (OrchestratorService deprecated)
 │   │   └── utils/             # Seed data, document parsing, chunking, embeddings
 │   ├── Dockerfile
 │   └── requirements.txt
@@ -311,14 +322,15 @@ The backend starts up with this sequence: `init_db()` → `run_migrations()` →
 | Component | Technology |
 |-----------|-----------|
 | Backend Framework | FastAPI (Python 3.12) |
+| Orchestration | LangGraph StateGraphs (typed state, conditional edges) |
 | Database | PostgreSQL 16 + pgvector |
 | LLM | Google Gemini (embeddings + generation) |
 | Frontend | Vanilla HTML/CSS/JS (no framework) |
 | Reverse Proxy | nginx (Alpine) |
 | Containerization | Docker Compose |
 | Auth | JWT (python-jose) + bcrypt (passlib) |
-| Streaming | Server-Sent Events (sse-starlette) |
-| Agent Pattern | Abstract Base Class with pluggable domain agents |
+| Streaming | Server-Sent Events (sse-starlette + asyncio.Queue bridge) |
+| Agent Pattern | ABC with pluggable domain agents (config holders) |
 
 ## License
 

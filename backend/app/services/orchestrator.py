@@ -5,11 +5,17 @@ pre-classifies queries for routing, handles session-based follow-up routing,
 and aggregates agent health checks.
 
 Reference: ``.claude/specs/14-agent-orchestrator.md``
+
+.. deprecated::
+    Use :mod:`app.graph` (LangGraph StateGraphs) instead.
+    ``OrchestratorService`` is kept for health checks and backward
+    compatibility.  New features should use the graph-based pipeline.
 """
 
 from __future__ import annotations
 
 import logging
+import warnings
 from typing import Optional
 from uuid import UUID
 
@@ -25,6 +31,13 @@ from app.services.classifier import ClassifierService
 from app.services.gemini import GeminiService
 
 logger = logging.getLogger(__name__)
+
+warnings.warn(
+    "OrchestratorService is deprecated. "
+    "Use app.graph.orchestrator_graph + app.graph.agent_graph instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 
 class OrchestratorService:
