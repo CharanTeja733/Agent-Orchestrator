@@ -122,9 +122,29 @@ class ClassifierService:
         # Guard against None response (e.g. content blocked by safety filter)
         if raw_response is None:
             logger.warning(
-                "Gemini returned None for classification — falling back to hr_question"
+                "Gemini returned None for classification — using heuristic fallback"
             )
-            raw_response = ""
+            classification, confidence = self._heuristic_classify(message)
+            logger.warning(
+                "Heuristic fallback result: %s (confidence=%.2f)",
+                classification,
+                confidence,
+            )
+            requires_retrieval = classification in ("follow_up", "hr_question", "it_question")
+            requires_rewriting = classification == "follow_up"
+            action = CLASSIFICATION_ACTIONS.get(classification, "retrieve")
+            direct_response = DIRECT_RESPONSES.get(classification)
+            elapsed_ms = (time.time() - start_time) * 1000
+            return {
+                "message": message,
+                "classification": classification,
+                "confidence": confidence,
+                "requires_retrieval": requires_retrieval,
+                "requires_rewriting": requires_rewriting,
+                "action": action,
+                "direct_response": direct_response,
+                "processing_time_ms": round(elapsed_ms, 2),
+            }
 
         # Parse and validate the response
         classification, confidence = self._parse_response(raw_response)
@@ -257,6 +277,7 @@ class ClassifierService:
             "out": "out_of_domain",
             "follow": "follow_up",
             "hr": "hr_question",
+            "it": "it_question",
         }
         if first_word in fuzzy_map:
             logger.debug(
@@ -315,7 +336,35 @@ class ClassifierService:
             if re.search(pattern, msg):
                 return "bot_question", 0.80
 
-        # ---- Out of Domain (math, jokes, non-HR) ----
+        # ---- IT Support Questions ----
+        it_patterns = [
+            r"\bvpn\b",                                                      # VPN issues
+            r"\bpassword\s+(reset|change|forgot|unlock|renew)",              # password reset/change
+            r"\b(reset|change|forgot|unlock)\s+(my\s+)?password",            # reset my password
+            r"\b(laptop|computer|desktop|macbook|workstation)\s+",           # hardware
+            r"\b(won'?t|not|doesn'?t|can'?t|isn'?t)\s+(start|boot|turn\s*on|work|connect|power|charge)",  # device won't work
+            r"\b(software|app|application|program)\s+(install|update|crash)",  # software issues
+            r"\b(install|update|upgrade|patch)\s+(the\s+)?(software|app|application)",  # installation
+            r"\b(email|mail|outlook|gmail|inbox)\s+(not\s+)?(work|send|receive|connect|access|sync)",  # email issues
+            r"\b(network|wifi|wi-fi|internet|connect|connection|lan|ethernet)\b",  # network
+            r"\b(printer|print|scan|scanner)\b",                            # printer
+            r"\b(account|login|log\s*in|sign\s*in)\s+(issue|problem|locked|blocked|access|not\s+work)",  # account access
+            r"\b(it|tech|technical)\s+(support|help|issue|problem|question)",  # explicit IT mentions
+            r"\b(access|permission)\s+(denied|issue|problem|error)",        # access issues
+            r"\b(system|server)\s+(down|error|issue|problem|not\s+work)",   # system issues
+            r"\b(blue\s*screen|bsod|crash|freeze|frozen|hang|slow|lag)",    # common device issues
+            r"\b(mfa|2fa|multi.?factor|authenticator)\b",                   # MFA / 2FA
+            r"\b(error|bug|glitch)\s+(message|code|popup)\b",               # error messages
+            r"\b(monitor|screen|display|keyboard|mouse|headset)\s+",        # peripherals
+            r"\b(file|folder)\s+(not|can'?t|won'?t)\s+(open|save|access|find)",  # file issues
+            r"\b(backup|restore|recovery)\b",                               # backup/recovery
+            r"\b(phishing|spam|virus|malware|security)\s+(email|alert|warning)",  # security
+        ]
+        for pattern in it_patterns:
+            if re.search(pattern, msg):
+                return "it_question", 0.85
+
+        # ---- Out of Domain (math, jokes, non-HR/non-IT) ----
         out_of_domain_patterns = [
             r"^what\s+is\s+\d+\s*[\+\-\*\/\^]\s*\d+",           # "what is 1 + 1"
             r"^\d+\s*[\+\-\*\/\^]\s*\d+",                         # "1 + 1"

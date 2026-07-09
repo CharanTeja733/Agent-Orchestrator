@@ -14,7 +14,7 @@ import json
 import logging
 import re
 import time
-from abc import ABC
+from abc import ABCj
 from typing import AsyncIterator, Optional
 from uuid import UUID
 
@@ -162,6 +162,7 @@ class BaseAgent(ABC):
         self.session_repo = SessionRepository(db)
         self.message_repo = MessageRepository(db)
         self.session_service = SessionService(db)
+        self._cached_classification: dict | None = None
 
     # ------------------------------------------------------------------
     # Factory
@@ -399,16 +400,27 @@ class BaseAgent(ABC):
                 confidence=confidence_level,
             )
 
-            # Step 5: Stream generation
+            # Step 5: Stream generation (with rate-limit fallback)
             t0 = time.time()
-            async for token in self.gemini_service.generate_stream(
-                prompt=prompt,
-                temperature=self.response_temperature,
-                max_output_tokens=self.max_completion_tokens,
-                top_p=0.95,
-            ):
-                full_response += token
-                yield self._sse_event("token", {"token": token})
+            try:
+                async for token in self.gemini_service.generate_stream(
+                    prompt=prompt,
+                    temperature=self.response_temperature,
+                    max_output_tokens=self.max_completion_tokens,
+                    top_p=0.95,
+                ):
+                    full_response += token
+                    yield self._sse_event("token", {"token": token})
+            except Exception as gen_exc:
+                logger.warning(
+                    "Generation failed (likely rate-limited), "
+                    "falling back to chunk-based response: %s",
+                    gen_exc,
+                )
+                # Build a fallback response from retrieved chunks
+                full_response = self._build_rate_limit_fallback(chunks)
+                for token in self._tokenize(full_response):
+                    yield self._sse_event("token", {"token": token})
             generation_ms = (time.time() - t0) * 1000
 
             logger.info(
@@ -664,12 +676,20 @@ class BaseAgent(ABC):
         )
 
         t0 = time.time()
-        answer = await self.gemini_service.generate(
-            prompt=prompt,
-            temperature=self.response_temperature,
-            max_output_tokens=self.max_completion_tokens,
-            top_p=0.95,
-        )
+        try:
+            answer = await self.gemini_service.generate(
+                prompt=prompt,
+                temperature=self.response_temperature,
+                max_output_tokens=self.max_completion_tokens,
+                top_p=0.95,
+            )
+        except Exception as gen_exc:
+            logger.warning(
+                "Generation failed (likely rate-limited) in test mode, "
+                "falling back to chunk-based response: %s",
+                gen_exc,
+            )
+            answer = self._build_rate_limit_fallback(chunks)
         pipeline_steps["generation_ms"] = round((time.time() - t0) * 1000, 2)
 
         sources = self._build_sources_from_chunks(chunks)
@@ -790,7 +810,19 @@ class BaseAgent(ABC):
     async def _classify_message(
         self, message: str, history: list[dict]
     ) -> dict:
-        """Delegate to :class:`ClassifierService.classify`."""
+        """Delegate to :class:`ClassifierService.classify`.
+
+        If a cached classification was set by the orchestrator (to avoid
+        redundant API calls), it is consumed and returned instead.
+        """
+        if self._cached_classification is not None:
+            cached = self._cached_classification
+            self._cached_classification = None  # consume once
+            logger.debug(
+                "Using cached classification from orchestrator: %s",
+                cached.get("classification"),
+            )
+            return cached
         return await self.classifier_service.classify(message, history)
 
     # ------------------------------------------------------------------
@@ -925,6 +957,41 @@ class BaseAgent(ABC):
 
         related = "\n".join(excerpts) if excerpts else "(No related excerpts found)"
         return self.soft_fallback_template.format(related_excerpts=related)
+
+    def _build_rate_limit_fallback(self, chunks: list[dict]) -> str:
+        """Build a helpful response from retrieved chunks when Gemini is unavailable.
+
+        Used when the generation API is rate-limited — the user still gets
+        the relevant document excerpts instead of a generic error.
+        """
+        if not chunks:
+            return (
+                "I found some relevant information but I'm currently unable "
+                "to generate a complete response due to API rate limits. "
+                "Please try again in a minute, or contact the IT Service Desk "
+                "at ext. 4357 for urgent issues."
+            )
+
+        lines = [
+            "⚠️ **Service is temporarily busy — showing retrieved results instead "
+            "of a generated response.**\n",
+            "Here's what I found that may help:\n",
+        ]
+        for i, ch in enumerate(chunks[:3], 1):
+            source = ch.get("source", "Unknown")
+            section = ch.get("section", "")
+            content = ch.get("content", "")
+            label = f"**{source}**"
+            if section:
+                label += f" — {section}"
+            lines.append(f"{i}. {label}\n> {content[:300].strip()}...\n")
+
+        lines.append(
+            "---\n"
+            "🔁 Please try your query again shortly, or contact the IT Service "
+            "Desk at ext. 4357 for immediate help."
+        )
+        return "\n".join(lines)
 
     def _get_direct_response(self, classification: str, user_name: str, query: str = "") -> str:
         """Return the pre-built response for non-retrieval classifications.

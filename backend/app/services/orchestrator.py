@@ -106,6 +106,9 @@ class OrchestratorService:
     ) -> tuple[BaseAgent, str]:
         """Determine which agent should handle *query* and return an instance.
 
+        As a side effect, caches the classification result on the agent so
+        it skips the redundant second classification call in its pipeline.
+
         Args:
             query: Raw user message.
             user: Authenticated user ORM object.
@@ -135,7 +138,8 @@ class OrchestratorService:
             return agent, agent_name
 
         # 2. Pre-classify for routing
-        classification = await self._quick_classify(query, session_id)
+        classification_result = await self._quick_classify(query, session_id)
+        classification = classification_result["classification"]
         agent_name = await self._classification_to_agent(
             classification, session_id
         )
@@ -143,6 +147,8 @@ class OrchestratorService:
             "Orchestrator routing: %s → %s", classification, agent_name
         )
         agent = self._create_agent(agent_name)
+        # Cache classification so the agent's pipeline skips re-classifying
+        agent._cached_classification = classification_result
         return agent, agent_name
 
     # ------------------------------------------------------------------
@@ -208,11 +214,14 @@ class OrchestratorService:
 
     async def _quick_classify(
         self, query: str, session_id: Optional[UUID]
-    ) -> str:
+    ) -> dict:
         """Classify *query* using :class:`ClassifierService`.
 
         Fetches conversation history if a *session_id* is provided so the
         classifier can detect follow-ups.
+
+        Returns:
+            Full classification dict from :class:`ClassifierService.classify`.
         """
         history: list[dict] = []
         if session_id:
@@ -232,7 +241,7 @@ class OrchestratorService:
                 )
 
         result = await self.classifier.classify(query, history)
-        return result["classification"]
+        return result
 
     async def _classification_to_agent(
         self, classification: str, session_id: Optional[UUID]
