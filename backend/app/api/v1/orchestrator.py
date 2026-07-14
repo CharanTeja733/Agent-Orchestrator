@@ -142,6 +142,30 @@ async def orchestrator_query_stream(
                 "error": None,
             }
 
+            # ── Tool registry (Feature 16) ───────────────────────────────
+            if agent_config.get("agent_name") == "hr":
+                from app.repositories.leave import LeaveRepository
+                from app.services.search import SearchService
+                from app.tools import (
+                    GetLeaveBalanceTool,
+                    SearchPolicyTool,
+                    ToolRegistry,
+                )
+
+                search_service = SearchService(
+                    db,
+                    settings.GEMINI_API_KEY,
+                    collection_name=agent_config.get(
+                        "collection_name", "hr_documents"
+                    ),
+                )
+                registry = ToolRegistry()
+                registry.register(SearchPolicyTool(search_service))
+                registry.register(GetLeaveBalanceTool(LeaveRepository(db)))
+                agent_state["tool_registry"] = registry
+                agent_state["tools_enabled"] = True
+                agent_state["tool_results"] = []
+
             # ── Step 3: Run agent graph with SSE streaming ───────────────
             async for sse_event in run_agent_graph_with_sse(
                 _agent_graph, agent_state
@@ -240,6 +264,28 @@ async def orchestrator_query_test(
             "storage_ms": None,
             "error": None,
         }
+
+        # ── Tool registry (Feature 16) ──────────────────────────────
+        if agent_config.get("agent_name") == "hr":
+            from app.repositories.leave import LeaveRepository
+            from app.services.search import SearchService
+            from app.tools import (
+                GetLeaveBalanceTool,
+                SearchPolicyTool,
+                ToolRegistry,
+            )
+
+            search_service = SearchService(
+                db,
+                settings.GEMINI_API_KEY,
+                collection_name=agent_config.get("collection_name", "hr_documents"),
+            )
+            registry = ToolRegistry()
+            registry.register(SearchPolicyTool(search_service))
+            registry.register(GetLeaveBalanceTool(LeaveRepository(db)))
+            agent_state["tool_registry"] = registry
+            agent_state["tools_enabled"] = True
+            agent_state["tool_results"] = []
 
         # ── Step 3: Run agent graph in test mode ───────────────────
         result = await run_agent_graph_test(_agent_graph, agent_state)

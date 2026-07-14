@@ -135,6 +135,11 @@ class AgentState(TypedDict):
     generation_ms: Optional[float]
     storage_ms: Optional[float]
 
+    # -- Tool-use (Feature 16) --
+    tool_registry: NotRequired[Optional[Any]]  # ToolRegistry instance
+    tools_enabled: NotRequired[bool]           # Whether agent supports tools
+    tool_results: NotRequired[list[dict]]      # Results from executed tools
+
     # -- Streaming / mode --
     _event_queue: Optional[Any]  # asyncio.Queue, set by streaming wrapper
     _test_mode: bool  # True for /test endpoint

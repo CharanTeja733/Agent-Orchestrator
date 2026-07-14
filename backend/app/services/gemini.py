@@ -389,6 +389,32 @@ class GeminiService:
         return results[0]
 
     # ------------------------------------------------------------------
+    # Private — safety settings builder
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _build_safety_settings() -> list[types.SafetySetting]:
+        """Return safety settings with all harm categories set to BLOCK_NONE."""
+        return [
+            types.SafetySetting(
+                category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
+                threshold=types.HarmBlockThreshold.BLOCK_NONE,
+            ),
+            types.SafetySetting(
+                category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                threshold=types.HarmBlockThreshold.BLOCK_NONE,
+            ),
+            types.SafetySetting(
+                category=types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                threshold=types.HarmBlockThreshold.BLOCK_NONE,
+            ),
+            types.SafetySetting(
+                category=types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                threshold=types.HarmBlockThreshold.BLOCK_NONE,
+            ),
+        ]
+
+    # ------------------------------------------------------------------
     # Public — text generation (non-streaming)
     # ------------------------------------------------------------------
 
@@ -421,24 +447,7 @@ class GeminiService:
             temperature=temperature,
             max_output_tokens=max_output_tokens,
             top_p=top_p,
-            safety_settings=[
-                types.SafetySetting(
-                    category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
-                    threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                ),
-                types.SafetySetting(
-                    category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                    threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                ),
-                types.SafetySetting(
-                    category=types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                    threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                ),
-                types.SafetySetting(
-                    category=types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                    threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                ),
-            ],
+            safety_settings=self._build_safety_settings(),
         )
 
         logger.debug(
@@ -513,24 +522,7 @@ class GeminiService:
             temperature=temperature,
             max_output_tokens=max_output_tokens,
             top_p=top_p,
-            safety_settings=[
-                types.SafetySetting(
-                    category=types.HarmCategory.HARM_CATEGORY_HARASSMENT,
-                    threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                ),
-                types.SafetySetting(
-                    category=types.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                    threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                ),
-                types.SafetySetting(
-                    category=types.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                    threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                ),
-                types.SafetySetting(
-                    category=types.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                    threshold=types.HarmBlockThreshold.BLOCK_NONE,
-                ),
-            ],
+            safety_settings=self._build_safety_settings(),
         )
 
         queue: asyncio.Queue[str | None] = asyncio.Queue()
@@ -567,6 +559,252 @@ class GeminiService:
         # If the stream failed, raise the error so callers can handle it
         if stream_error:
             raise stream_error[0]
+
+    # ------------------------------------------------------------------
+    # Public — function / tool calling (Feature 16)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _build_tool_declarations(tools: list[dict]) -> list[types.Tool]:
+        """Convert internal tool dicts into Google ``types.Tool`` objects.
+
+        Each tool dict should have:
+          - ``name`` (str) — unique function name
+          - ``description`` (str) — what the function does
+          - ``parameters`` (dict) — JSON Schema for the function's arguments
+
+        Returns a list containing a single ``types.Tool`` wrapping all
+        function declarations (Gemini's contract: one ``Tool`` per
+        ``tools`` entry; each ``Tool`` can hold multiple declarations).
+        """
+        declarations: list[types.FunctionDeclaration] = []
+        for tool in tools:
+            declarations.append(
+                types.FunctionDeclaration(
+                    name=tool["name"],
+                    description=tool["description"],
+                    parameters=tool.get("parameters"),
+                )
+            )
+        return [types.Tool(function_declarations=declarations)]
+
+    async def generate_with_tools(
+        self,
+        prompt: str,
+        tools: list[dict],
+        temperature: float = 0.3,
+        max_output_tokens: int = 1024,
+    ) -> dict:
+        """Call Gemini with function declarations. Returns text OR function_calls.
+
+        This is the FIRST call in a manual function-calling loop — Gemini
+        either responds with plain text (no tool needed) or with
+        ``function_calls`` that the caller must execute.
+
+        Args:
+            prompt: Full prompt string (system + user).
+            tools: List of tool dicts (name, description, parameters).
+            temperature: Creativity control (default 0.3).
+            max_output_tokens: Max tokens (default 1024).
+
+        Returns:
+            A dict with:
+            - ``{"type": "text", "content": "..."}`` when Gemini answers directly.
+            - ``{"type": "function_calls", "calls": [{"name": ..., "args": {...}, "id": ...}]}``
+              when Gemini wants to call one or more functions.
+        """
+        if not prompt:
+            raise ValueError("prompt is required")
+
+        tool_objs = self._build_tool_declarations(tools)
+        config = types.GenerateContentConfig(
+            temperature=temperature,
+            max_output_tokens=max_output_tokens,
+            safety_settings=self._build_safety_settings(),
+            tools=tool_objs,
+        )
+
+        def _do_generate() -> dict:
+            response = self.client.models.generate_content(
+                model=self.GENERATION_MODEL,
+                contents=prompt,
+                config=config,
+            )
+
+            # Check for function calls first
+            if hasattr(response, "function_calls") and response.function_calls:
+                calls = []
+                for fc in response.function_calls:
+                    calls.append({
+                        "name": fc.name,
+                        "args": dict(fc.args) if fc.args else {},
+                        "id": fc.id if hasattr(fc, "id") else None,
+                    })
+                logger.info(
+                    "Gemini returned %d function call(s): %s",
+                    len(calls),
+                    ", ".join(c["name"] for c in calls),
+                )
+                return {"type": "function_calls", "calls": calls}
+
+            # Plain text response
+            text = response.text or ""
+            return {"type": "text", "content": text}
+
+        return await self._call_with_retry(
+            _do_generate,
+            GeminiGenerationError,
+            context="generation with tools",
+        )
+
+    async def generate_with_tools_and_history(
+        self,
+        prompt: str,
+        function_calls: list[dict],
+        function_results: list[dict],
+        tools: list[dict],
+        temperature: float = 0.3,
+        max_output_tokens: int = 1024,
+    ) -> dict:
+        """Continue a conversation after function calls were executed.
+
+        Sends the full history back to Gemini: original user prompt →
+        model's function calls → function results.  Gemini can either
+        respond with text or request more function calls (multi-round).
+
+        Args:
+            prompt: The ORIGINAL user prompt that started the conversation.
+            function_calls: List of ``{"name": ..., "args": ..., "id": ...}``
+                from the previous ``generate_with_tools`` response.
+            function_results: List of ``{"tool_name": ..., "data": ..., "error": ...}``
+                from executing the functions.
+            tools: Same tool declarations as the first call.
+            temperature: Creativity control.
+            max_output_tokens: Max tokens.
+
+        Returns:
+            Same dict shape as :meth:`generate_with_tools`.
+        """
+        tool_objs = self._build_tool_declarations(tools)
+        config = types.GenerateContentConfig(
+            temperature=temperature,
+            max_output_tokens=max_output_tokens,
+            safety_settings=self._build_safety_settings(),
+            tools=tool_objs,
+        )
+
+        def _do_generate() -> dict:
+            # Build the contents list with full conversation history
+            contents: list[types.Content] = []
+
+            # 1. User's original message
+            contents.append(
+                types.Content(
+                    role="user",
+                    parts=[types.Part(text=prompt)],
+                )
+            )
+
+            # 2. Model's function call(s)
+            model_parts: list[types.Part] = []
+            for fc in function_calls:
+                fc_id = fc.get("id")
+                fc_name = fc["name"]
+                fc_args = fc.get("args", {})
+                model_parts.append(
+                    types.Part(
+                        function_call=types.FunctionCall(
+                            id=fc_id,
+                            name=fc_name,
+                            args=fc_args,
+                        )
+                    )
+                )
+            contents.append(
+                types.Content(role="model", parts=model_parts)
+            )
+
+            # 3. Function results (as user role with function_response parts)
+            result_parts: list[types.Part] = []
+            for i, fr in enumerate(function_results):
+                fc = function_calls[i] if i < len(function_calls) else {}
+                fc_name = fc.get("name", fr.get("tool_name", "unknown"))
+                fc_id = fc.get("id")
+                # Build response payload
+                response_data = {
+                    "tool_name": fr.get("tool_name", fc_name),
+                    "data": fr.get("data", {}),
+                    "error": fr.get("error"),
+                }
+                result_parts.append(
+                    types.Part(
+                        function_response=types.FunctionResponse(
+                            id=fc_id,
+                            name=fc_name,
+                            response=response_data,
+                        )
+                    )
+                )
+            contents.append(
+                types.Content(role="user", parts=result_parts)
+            )
+
+            response = self.client.models.generate_content(
+                model=self.GENERATION_MODEL,
+                contents=contents,
+                config=config,
+            )
+
+            # Check for function calls (model could request more tools)
+            if hasattr(response, "function_calls") and response.function_calls:
+                calls = []
+                for fc in response.function_calls:
+                    calls.append({
+                        "name": fc.name,
+                        "args": dict(fc.args) if fc.args else {},
+                        "id": fc.id if hasattr(fc, "id") else None,
+                    })
+                return {"type": "function_calls", "calls": calls}
+
+            # Final text response
+            text = response.text or ""
+            return {"type": "text", "content": text}
+
+        return await self._call_with_retry(
+            _do_generate,
+            GeminiGenerationError,
+            context="generation with tools (history)",
+        )
+
+    async def generate_stream_with_tool_results(
+        self,
+        prompt: str,
+        temperature: float = 0.3,
+        max_output_tokens: int = 1024,
+        top_p: float = 0.95,
+    ) -> AsyncIterator[str]:
+        """Stream generation after all tool results have been gathered.
+
+        This is a convenience wrapper around :meth:`generate_stream` that
+        is called AFTER the function-calling loop completes.  The *prompt*
+        should already include the formatted tool results.
+
+        Args:
+            prompt: Full prompt with tool results injected.
+            temperature: Creativity control.
+            max_output_tokens: Max tokens.
+            top_p: Nucleus sampling.
+
+        Yields:
+            Text tokens as they arrive from Gemini.
+        """
+        async for token in self.generate_stream(
+            prompt=prompt,
+            temperature=temperature,
+            max_output_tokens=max_output_tokens,
+            top_p=top_p,
+        ):
+            yield token
 
     # ------------------------------------------------------------------
     # Public — classification

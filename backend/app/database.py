@@ -268,6 +268,27 @@ async def create_tables(conn: asyncpg.Connection) -> None:
     except Exception as exc:
         print(f"WARNING — could not create IT vector index: {exc}")
 
+    # -- leave_balances (Feature 16) ----------------------------------------
+    await conn.execute("""
+        CREATE TABLE IF NOT EXISTS leave_balances (
+            id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            user_id         UUID         NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+            leave_type      VARCHAR(50)  NOT NULL CHECK (leave_type IN ('annual', 'sick', 'personal')),
+            total_allocated INTEGER      NOT NULL DEFAULT 0,
+            used            INTEGER      NOT NULL DEFAULT 0,
+            year            INTEGER      NOT NULL DEFAULT EXTRACT(YEAR FROM NOW())::INTEGER,
+            created_at      TIMESTAMPTZ DEFAULT NOW(),
+            updated_at      TIMESTAMPTZ DEFAULT NOW(),
+            UNIQUE(user_id, leave_type, year)
+        )
+    """)
+    await conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_leave_balances_user_id ON leave_balances(user_id)"
+    )
+    await conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_leave_balances_year ON leave_balances(year)"
+    )
+
 
 # ---------------------------------------------------------------------------
 # Database initialization (called on startup)

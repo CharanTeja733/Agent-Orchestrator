@@ -168,8 +168,29 @@ class ITDocument(Base):
 
 
 # ---------------------------------------------------------------------------
+# LeaveBalance (Feature 16)
+# ---------------------------------------------------------------------------
+
+
+class LeaveBalance(Base):
+    __tablename__ = "leave_balances"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    leave_type = Column(String(50), nullable=False)
+    total_allocated = Column(Integer, nullable=False, default=0)
+    used = Column(Integer, nullable=False, default=0)
+    year = Column(Integer, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+    user = relationship("User")
+
+
+# ---------------------------------------------------------------------------
 # SystemLog (Feature 11)
 # ---------------------------------------------------------------------------
+
 
 class SystemLog(Base):
     __tablename__ = "system_logs"

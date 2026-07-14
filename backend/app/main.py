@@ -13,7 +13,7 @@ from app.core.exceptions import AppException
 from app.core.logger import setup_logging
 from app.database import ASYNCPG_URL, AsyncSessionLocal, init_db
 from app.middleware.logging import RequestLoggingMiddleware
-from app.utils.seed import seed_users
+from app.utils.seed import seed_leave_balances, seed_users
 
 
 @asynccontextmanager
@@ -22,6 +22,7 @@ async def lifespan(app: FastAPI):
     setup_logging(AsyncSessionLocal)
     await init_db()
     await seed_users()
+    await seed_leave_balances()
 
     # Start background session cleanup (Feature 9)
     cleanup = SessionCleanup(AsyncSessionLocal)

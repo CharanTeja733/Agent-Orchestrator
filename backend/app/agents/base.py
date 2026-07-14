@@ -392,12 +392,21 @@ class BaseAgent(ABC):
                 return
 
             # --- Generate path (high / medium confidence) -----------------
+            # Step 3.5: Tool hooks (Feature 16)
+            tool_results = await self._run_tool_hooks(
+                query=query,
+                user=user,
+                search_query=search_query,
+                chunks=chunks,
+            )
+
             # Step 4: Build prompt
             prompt = self._build_prompt(
                 query=search_query,
                 chunks=chunks,
                 history_messages=history_messages,
                 confidence=confidence_level,
+                tool_results=tool_results,
             )
 
             # Step 5: Stream generation (with rate-limit fallback)
@@ -668,11 +677,20 @@ class BaseAgent(ABC):
             }
 
         # Generate
+        # Step 3.5: Tool hooks (Feature 16)
+        tool_results = await self._run_tool_hooks(
+            query=query,
+            user=user,
+            search_query=search_query,
+            chunks=chunks,
+        )
+
         prompt = self._build_prompt(
             query=search_query,
             chunks=chunks,
             history_messages=history_messages,
             confidence=confidence_level,
+            tool_results=tool_results,
         )
 
         t0 = time.time()
@@ -874,6 +892,48 @@ class BaseAgent(ABC):
             return ("no_match", "fallback")
 
     # ------------------------------------------------------------------
+    # Private — Tool hooks (Feature 16)
+    # ------------------------------------------------------------------
+
+    async def _run_tool_hooks(
+        self,
+        query: str,
+        user: Any,
+        search_query: str,
+        chunks: list[dict],
+    ) -> list[dict] | None:
+        """Override in subclasses to execute tools before prompt building.
+
+        Returns a list of tool result dicts (each with ``tool_name``,
+        ``data``, and optional ``error``), or ``None`` if no tools are
+        needed.  The base implementation returns ``None``.
+        """
+        return None
+
+    @staticmethod
+    def _format_tool_results_for_prompt(tool_results: list[dict]) -> str:
+        """Format tool execution results for prompt injection."""
+        if not tool_results:
+            return ""
+
+        sections: list[str] = []
+        for tr in tool_results:
+            if tr.get("error"):
+                continue
+            data = tr.get("data", {})
+            if not data:
+                continue
+            label = data.get("label", tr.get("tool_name", "").upper())
+            formatted = data.get("formatted", "")
+            if formatted:
+                sections.append(f"---\n{label}:\n{formatted}\n---")
+
+        if not sections:
+            return ""
+
+        return "ADDITIONAL INFORMATION FROM TOOLS:\n" + "\n".join(sections)
+
+    # ------------------------------------------------------------------
     # Private — Step 4: Build prompt
     # ------------------------------------------------------------------
 
@@ -883,9 +943,21 @@ class BaseAgent(ABC):
         chunks: list[dict],
         history_messages: list,
         confidence: str,
+        tool_results: list[dict] | None = None,
     ) -> str:
-        """Assemble the full prompt with system prompt + user template."""
+        """Assemble the full prompt with system prompt + user template.
+
+        When *tool_results* is provided (Feature 16), formatted tool data
+        is injected before the retrieved context.
+        """
         context_str = self._format_context_for_prompt(chunks)
+
+        # Append tool results if present (Feature 16)
+        if tool_results:
+            tool_section = self._format_tool_results_for_prompt(tool_results)
+            if tool_section:
+                context_str = f"{context_str}\n\n{tool_section}"
+
         history_str = self._format_history_for_prompt(history_messages)
         confidence_note = (
             self.confidence_note_medium if confidence == "medium" else ""

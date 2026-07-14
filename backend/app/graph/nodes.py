@@ -114,6 +114,33 @@ def _messages_to_history_dicts(messages: list) -> list[dict]:
     return [{"role": m.role, "content": m.content} for m in messages]
 
 
+def _format_tool_results_for_prompt(tool_results: list[dict]) -> str:
+    """Format tool execution results for insertion into the generation prompt.
+
+    Each tool result dict should have ``tool_name``, ``data`` (with optional
+    ``formatted`` string and ``label`` string), and optional ``error``.
+    """
+    if not tool_results:
+        return ""
+
+    sections: list[str] = []
+    for tr in tool_results:
+        if tr.get("error"):
+            continue
+        data = tr.get("data", {})
+        if not data:
+            continue
+        label = data.get("label", tr.get("tool_name", "").upper())
+        formatted = data.get("formatted", "")
+        if formatted:
+            sections.append(f"---\n{label}:\n{formatted}\n---")
+
+    if not sections:
+        return ""
+
+    return "ADDITIONAL INFORMATION FROM TOOLS:\n" + "\n".join(sections)
+
+
 def _build_prompt(state: dict[str, Any]) -> str:
     """Assemble the full prompt with system prompt + user template.
 
@@ -122,6 +149,14 @@ def _build_prompt(state: dict[str, Any]) -> str:
     context_str = _format_context_for_prompt(
         state.get("retrieved_chunks", []), state["context_chunk_template"]
     )
+
+    # Append tool results section if present (Feature 16)
+    tool_results = state.get("tool_results", [])
+    if tool_results:
+        tool_section = _format_tool_results_for_prompt(tool_results)
+        if tool_section:
+            context_str = f"{context_str}\n\n{tool_section}"
+
     history_str = _format_history_for_prompt(
         state.get("history_messages", []),
         state["history_entry_template"],
@@ -190,6 +225,42 @@ def _build_rate_limit_fallback(chunks: list[dict]) -> str:
         "---\n"
         "🔁 Please try your query again shortly, or contact the IT Service "
         "Desk at ext. 4357 for immediate help."
+    )
+    return "\n".join(lines)
+
+
+def _build_tool_fallback_response(
+    tool_results: list[dict], chunks: list[dict]
+) -> str:
+    """Build a data-driven response from tool results when Gemini is unavailable.
+
+    This ensures users still see their personal leave balance even when
+    the Gemini API is rate-limited.
+    """
+    lines: list[str] = [
+        "⚠️ **Service is temporarily busy, but here's your data:**\n",
+    ]
+
+    for tr in tool_results:
+        if tr.get("error"):
+            continue
+        data = tr.get("data", {})
+        label = data.get("label", tr.get("tool_name", "").upper())
+        formatted = data.get("formatted", "")
+        if formatted:
+            lines.append(f"**{label}:**")
+            lines.append(formatted)
+            lines.append("")
+
+    if not lines[1:]:  # No tool data — fall back to chunks
+        return _build_rate_limit_fallback(chunks)
+
+    lines.append(
+        "---\n"
+        "🔁 The AI is temporarily unable to generate a full response "
+        "due to API rate limits. The data above comes directly from "
+        "your employee records. Please try again shortly for a more "
+        "detailed answer."
     )
     return "\n".join(lines)
 
@@ -733,50 +804,132 @@ async def generate_response(state: dict[str, Any]) -> dict[str, Any]:
 
     Step 4-5 — the core generation node.  Pushes ``token`` events in real
     time.  Falls back to a rate-limit response if generation fails.
+
+    When tools are enabled (Feature 16), uses a manual function-calling loop:
+    call Gemini with tools → execute any function_calls → send results back →
+    repeat until text response → stream or return final answer.
     """
     gemini_api_key = state["gemini_api_key"]
     gemini = GeminiService(gemini_api_key)
-    prompt = _build_prompt(state)
     queue = state.get("_event_queue")
     test_mode = state.get("_test_mode", False)
     full_response = ""
     t0 = time.time()
 
-    try:
-        if test_mode:
-            # Non-streaming for /test endpoint
-            full_response = await gemini.generate(
-                prompt=prompt,
-                temperature=state.get("response_temperature", 0.3),
-                max_output_tokens=state.get("max_completion_tokens", 1024),
-                top_p=0.95,
+    # -- Tool-enabled path (Feature 16) ------------------------------------
+    # Always execute get_leave_balance for HR agent — it's a cheap DB
+    # query. Results are injected into the prompt so the LLM can produce
+    # a personalised answer in a SINGLE generation call (no extra
+    # function-calling round-trip that would burn API quota).
+    tools_enabled = state.get("tools_enabled") and state.get("tool_registry")
+    if tools_enabled:
+        registry = state["tool_registry"]
+        tool_context = {
+            "db": state["db"],
+            "user_id": str(state["user_id"]),
+            "user_role": state.get("user_role", "employee"),
+            "gemini_api_key": gemini_api_key,
+            "collection_name": state.get("collection_name", "hr_documents"),
+        }
+
+        # Execute the leave-balance tool directly (no LLM decision needed)
+        executed_results: list[dict] = []
+        try:
+            tr = await registry.execute_tool(
+                "get_leave_balance", {}, tool_context
             )
-        else:
-            # Streaming — push each token as it arrives
-            async for token in gemini.generate_stream(
-                prompt=prompt,
-                temperature=state.get("response_temperature", 0.3),
-                max_output_tokens=state.get("max_completion_tokens", 1024),
-                top_p=0.95,
-            ):
-                full_response += token
-                if queue is not None:
+            if tr.is_success and tr.data.get("balances"):
+                executed_results.append({
+                    "tool_name": tr.tool_name,
+                    "data": tr.data,
+                    "error": tr.error,
+                })
+                state["tool_results"] = executed_results
+        except Exception as tool_exc:
+            logger.warning("Leave balance tool failed: %s", tool_exc)
+
+        # Build prompt WITH tool results included
+        prompt = _build_prompt(state)
+
+        # Single Gemini call — same as the non-tool path
+        try:
+            if test_mode:
+                full_response = await gemini.generate(
+                    prompt=prompt,
+                    temperature=state.get("response_temperature", 0.3),
+                    max_output_tokens=state.get("max_completion_tokens", 1024),
+                    top_p=0.95,
+                )
+            else:
+                async for token in gemini.generate_stream(
+                    prompt=prompt,
+                    temperature=state.get("response_temperature", 0.3),
+                    max_output_tokens=state.get("max_completion_tokens", 1024),
+                    top_p=0.95,
+                ):
+                    full_response += token
+                    if queue is not None:
+                        await queue.put(
+                            _sse_event("token", {"token": token})
+                        )
+        except Exception as gen_exc:
+            logger.warning("Generation failed (rate-limited): %s", gen_exc)
+            # Build a data-driven fallback from tool results + chunks
+            if executed_results:
+                full_response = _build_tool_fallback_response(
+                    executed_results, state.get("retrieved_chunks", [])
+                )
+            else:
+                full_response = _build_rate_limit_fallback(
+                    state.get("retrieved_chunks", [])
+                )
+            if queue is not None and not test_mode:
+                for token in _tokenize(full_response):
                     await queue.put(
                         _sse_event("token", {"token": token})
                     )
-    except Exception as exc:
-        logger.warning("Generation failed (likely rate-limited): %s", exc)
-        full_response = _build_rate_limit_fallback(
-            state.get("retrieved_chunks", [])
-        )
-        if queue is not None and not test_mode:
-            for token in _tokenize(full_response):
-                await queue.put(
-                    _sse_event("token", {"token": token})
+
+    else:
+        # -- Original path (no tools) ----------------------------------
+        prompt = _build_prompt(state)
+        try:
+            if test_mode:
+                full_response = await gemini.generate(
+                    prompt=prompt,
+                    temperature=state.get("response_temperature", 0.3),
+                    max_output_tokens=state.get("max_completion_tokens", 1024),
+                    top_p=0.95,
                 )
+            else:
+                async for token in gemini.generate_stream(
+                    prompt=prompt,
+                    temperature=state.get("response_temperature", 0.3),
+                    max_output_tokens=state.get("max_completion_tokens", 1024),
+                    top_p=0.95,
+                ):
+                    full_response += token
+                    if queue is not None:
+                        await queue.put(
+                            _sse_event("token", {"token": token})
+                        )
+        except Exception as exc:
+            logger.warning("Generation failed (likely rate-limited): %s", exc)
+            full_response = _build_rate_limit_fallback(
+                state.get("retrieved_chunks", [])
+            )
+            if queue is not None and not test_mode:
+                for token in _tokenize(full_response):
+                    await queue.put(
+                        _sse_event("token", {"token": token})
+                    )
 
     generation_ms = (time.time() - t0) * 1000
-    logger.info("Generation complete: %d tokens, %.1fms", len(full_response), generation_ms)
+    logger.info(
+        "Generation complete: %d tokens, %.1fms%s",
+        len(full_response),
+        generation_ms,
+        " (with tools)" if tools_enabled else "",
+    )
 
     return {
         "full_response": full_response,
