@@ -114,6 +114,7 @@ async def orchestrator_query_stream(
                 "user_id": current_user.id,
                 "full_name": current_user.full_name,
                 "user_role": current_user.role,
+                "user_email": current_user.email,
                 "session_id": request.session_id,
                 # Agent config (all attributes flattened into state)
                 **agent_config,
@@ -165,6 +166,28 @@ async def orchestrator_query_stream(
                 agent_state["tool_registry"] = registry
                 agent_state["tools_enabled"] = True
                 agent_state["tool_results"] = []
+
+            elif agent_config.get("agent_name") == "it":
+                try:
+                    from app.services.jira import JiraService
+                    from app.tools import GetMyTicketsTool, ToolRegistry
+
+                    jira_service = JiraService(
+                        base_url=settings.JIRA_BASE_URL,
+                        email=settings.JIRA_BOT_EMAIL,
+                        api_token=settings.JIRA_API_TOKEN,
+                        timeout=settings.JIRA_REQUEST_TIMEOUT_SECONDS,
+                        max_results=settings.JIRA_MAX_RESULTS,
+                    )
+                    registry = ToolRegistry()
+                    registry.register(GetMyTicketsTool(jira_service))
+                    agent_state["tool_registry"] = registry
+                    agent_state["tools_enabled"] = True
+                    agent_state["tool_results"] = []
+                except ValueError:
+                    logger.info(
+                        "Jira not configured — IT Agent will run without tickets"
+                    )
 
             # ── Step 3: Run agent graph with SSE streaming ───────────────
             async for sse_event in run_agent_graph_with_sse(
@@ -242,6 +265,7 @@ async def orchestrator_query_test(
             "user_id": current_user.id,
             "full_name": current_user.full_name,
             "user_role": current_user.role,
+            "user_email": current_user.email,
             "session_id": request.session_id,
             **agent_config,
             "db": db,
@@ -286,6 +310,28 @@ async def orchestrator_query_test(
             agent_state["tool_registry"] = registry
             agent_state["tools_enabled"] = True
             agent_state["tool_results"] = []
+
+        elif agent_config.get("agent_name") == "it":
+            try:
+                from app.services.jira import JiraService
+                from app.tools import GetMyTicketsTool, ToolRegistry
+
+                jira_service = JiraService(
+                    base_url=settings.JIRA_BASE_URL,
+                    email=settings.JIRA_BOT_EMAIL,
+                    api_token=settings.JIRA_API_TOKEN,
+                    timeout=settings.JIRA_REQUEST_TIMEOUT_SECONDS,
+                    max_results=settings.JIRA_MAX_RESULTS,
+                )
+                registry = ToolRegistry()
+                registry.register(GetMyTicketsTool(jira_service))
+                agent_state["tool_registry"] = registry
+                agent_state["tools_enabled"] = True
+                agent_state["tool_results"] = []
+            except ValueError:
+                logger.info(
+                    "Jira not configured — IT Agent will run without tickets"
+                )
 
         # ── Step 3: Run agent graph in test mode ───────────────────
         result = await run_agent_graph_test(_agent_graph, agent_state)

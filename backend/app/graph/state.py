@@ -75,6 +75,7 @@ class AgentState(TypedDict):
     user_id: UUID
     full_name: str
     user_role: str
+    user_email: str
     session_id: Optional[UUID]
 
     # -- Agent configuration (injected from registry, one dict per agent) --

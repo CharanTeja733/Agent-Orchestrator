@@ -126,6 +126,37 @@ class ClassificationError(Exception):
 
 
 # ---------------------------------------------------------------------------
+# Jira API exceptions (Feature 17)
+# Separate hierarchy — not HTTP-layer errors, similar to GeminiAPIError
+# ---------------------------------------------------------------------------
+
+
+class JiraAPIError(Exception):
+    """Base exception for Jira API errors."""
+
+    def __init__(self, message: str, status_code: int | None = None):
+        self.message = message
+        self.status_code = status_code
+        super().__init__(self.message)
+
+
+class JiraAuthError(JiraAPIError):
+    """Jira authentication failed (401) or access denied (403)."""
+
+
+class JiraNotFoundError(JiraAPIError):
+    """User or resource not found in Jira (404)."""
+
+
+class JiraRateLimitError(JiraAPIError):
+    """Jira rate limit exceeded (429)."""
+
+
+class JiraTimeoutError(JiraAPIError):
+    """Jira request timed out."""
+
+
+# ---------------------------------------------------------------------------
 # Session-specific exceptions (Feature 9)
 # ---------------------------------------------------------------------------
 

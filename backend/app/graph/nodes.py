@@ -816,37 +816,72 @@ async def generate_response(state: dict[str, Any]) -> dict[str, Any]:
     full_response = ""
     t0 = time.time()
 
-    # -- Tool-enabled path (Feature 16) ------------------------------------
-    # Always execute get_leave_balance for HR agent — it's a cheap DB
-    # query. Results are injected into the prompt so the LLM can produce
-    # a personalised answer in a SINGLE generation call (no extra
-    # function-calling round-trip that would burn API quota).
+    # -- Tool-enabled path (Feature 16 + 17) --------------------------------
     tools_enabled = state.get("tools_enabled") and state.get("tool_registry")
     if tools_enabled:
         registry = state["tool_registry"]
+        agent_name = state.get("agent_name", "")
         tool_context = {
             "db": state["db"],
             "user_id": str(state["user_id"]),
+            "user_email": state.get("user_email", ""),
             "user_role": state.get("user_role", "employee"),
             "gemini_api_key": gemini_api_key,
             "collection_name": state.get("collection_name", "hr_documents"),
         }
 
-        # Execute the leave-balance tool directly (no LLM decision needed)
         executed_results: list[dict] = []
-        try:
-            tr = await registry.execute_tool(
-                "get_leave_balance", {}, tool_context
-            )
-            if tr.is_success and tr.data.get("balances"):
-                executed_results.append({
-                    "tool_name": tr.tool_name,
-                    "data": tr.data,
-                    "error": tr.error,
-                })
-                state["tool_results"] = executed_results
-        except Exception as tool_exc:
-            logger.warning("Leave balance tool failed: %s", tool_exc)
+
+        # -- HR agent: always execute get_leave_balance (cheap local DB query)
+        if agent_name == "hr":
+            try:
+                tr = await registry.execute_tool(
+                    "get_leave_balance", {}, tool_context
+                )
+                if tr.is_success and tr.data.get("balances"):
+                    executed_results.append({
+                        "tool_name": tr.tool_name,
+                        "data": tr.data,
+                        "error": tr.error,
+                    })
+                    state["tool_results"] = executed_results
+            except Exception as tool_exc:
+                logger.warning("Leave balance tool failed: %s", tool_exc)
+
+        # -- IT agent: use Gemini function calling (Jira is an external API)
+        elif agent_name == "it":
+            try:
+                tool_decls = registry.get_tool_declarations()
+                # Build a lightweight prompt for tool selection
+                tool_prompt = _build_prompt(state)
+                selection = await gemini.generate_with_tools(
+                    prompt=tool_prompt,
+                    tools=tool_decls,
+                    temperature=0.1,
+                    max_output_tokens=200,
+                )
+                if selection.get("type") == "function_calls":
+                    for call in selection.get("calls", []):
+                        try:
+                            tr = await registry.execute_tool(
+                                call["name"], call.get("args", {}), tool_context
+                            )
+                            if tr.is_success:
+                                executed_results.append({
+                                    "tool_name": tr.tool_name,
+                                    "data": tr.data,
+                                    "error": tr.error,
+                                })
+                        except Exception as tool_exc:
+                            logger.warning(
+                                "IT tool '%s' failed: %s",
+                                call.get("name"),
+                                tool_exc,
+                            )
+                    if executed_results:
+                        state["tool_results"] = executed_results
+            except Exception as tool_exc:
+                logger.warning("IT tool selection failed: %s", tool_exc)
 
         # Build prompt WITH tool results included
         prompt = _build_prompt(state)

@@ -8,6 +8,7 @@ from app.tools.base import BaseTool, ToolResult
 from app.tools.registry import ToolRegistry
 from app.tools.search_policy import SearchPolicyTool
 from app.tools.get_leave_balance import GetLeaveBalanceTool
+from app.tools.get_my_tickets import GetMyTicketsTool
 
 __all__ = [
     "BaseTool",
@@ -15,4 +16,5 @@ __all__ = [
     "ToolRegistry",
     "SearchPolicyTool",
     "GetLeaveBalanceTool",
+    "GetMyTicketsTool",
 ]

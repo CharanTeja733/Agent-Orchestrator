@@ -18,6 +18,13 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str
     SECRET_KEY: str
 
+    # Jira Integration (Feature 17)
+    JIRA_BASE_URL: str = ""
+    JIRA_API_TOKEN: str = ""
+    JIRA_BOT_EMAIL: str = ""
+    JIRA_REQUEST_TIMEOUT_SECONDS: int = 10
+    JIRA_MAX_RESULTS: int = 20
+
     # Document ingestion
     MAX_FILE_SIZE_MB: int = 20
     CHUNK_SIZE: int = 1000
